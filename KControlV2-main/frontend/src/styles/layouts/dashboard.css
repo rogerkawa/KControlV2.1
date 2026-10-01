@@ -1,0 +1,181 @@
+.dashboard {
+  display: none;
+  padding: 2rem;
+}
+
+.dashboard.active {
+  display: block;
+}
+
+.dashboard h2 {
+  margin-bottom: 1.5rem;
+  color: var(--text-primary);
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  gap: 1rem;
+  align-items: start;
+}
+.dashboard-grid .dashboard-box {
+  width: 100%;
+  justify-self: stretch;
+}
+.dashboard-box,
+.dashboard-card {
+  background: var(--bg-primary);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+}
+
+.dashboard-card {
+  border-left: 5px solid #dc2626;
+  width: 100%;
+}
+
+.dashboard-card span {
+  color: var(--text-secondary);
+  font-size: .9rem;
+}
+
+.dashboard-card strong {
+  display: block;
+  font-size: 2.5rem;
+  color: #dc2626;
+  margin: .4rem 0;
+}
+
+.dashboard-card p {
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.dashboard-box {
+  width: 100%;
+  max-width: none;
+  overflow-x: auto;
+}
+.retirada,
+.dSemana,
+.ranking {
+  margin-top: 1rem;
+}
+
+.dashboard-box h3 {
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+}
+
+.dashboard-box table {
+  width: 100% !important;
+  min-width: 100% !important;
+  border-collapse: collapse;
+}
+
+.dashboard-box th,
+.dashboard-box td {
+    width: 33.33%;
+  padding: .9rem;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.dashboard-box th {
+  color: var(--text-primary);
+  font-size: .85rem;
+  text-transform: uppercase;
+}
+
+.dashboard-box td {
+  color: var(--text-secondary);
+}
+.dashboard-charts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.retirada,
+.dSemana {
+  height: 340px;
+}
+#graficoSetores,
+#graficoDiasSemana {
+  width: 100% !important;
+  height: 240px !important;
+}
+.dSemana{
+    margin-left: auto;
+    display: flex;
+    flex-direction: column;
+    text-align: end;
+}
+#rankingSalas {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.ranking-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    padding: .9rem 1rem;
+
+    border-radius: 12px;
+
+    background: #f8fafc;
+}
+
+.ranking-posicao {
+    width: 35px;
+    height: 35px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #2563eb;
+    color: white;
+    font-weight: 600;
+}
+
+.ranking-sala {
+    flex: 1;
+    font-weight: 500;
+}
+
+.ranking-total {
+    font-weight: 700;
+    color: #2563eb;
+}
+@media (max-width: 1100px) {
+  .dashboard-grid,
+  .dashboard-charts {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-card,
+  .dashboard-box,
+  .dashboard-grid .dashboard-box {
+    width: 100%;
+    max-width: 100%;
+    justify-self: stretch;
+  }
+
+  .dashboard-box table {
+    width: 100%;
+    min-width: 100%;
+  }
+}
+@media (max-width: 768px) {
+  .dashboard-grid,
+  .dashboard-charts {
+    grid-template-columns: 1fr;
+  }
+}

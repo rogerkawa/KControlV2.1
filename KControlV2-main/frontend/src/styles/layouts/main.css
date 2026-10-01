@@ -1,0 +1,305 @@
+.principal{
+    grid-template-columns: repeat(2, 1fr);
+    grid-row: auto;
+    gap: 15px;
+}
+.card-form{
+    width:100%;
+    max-width:700px;
+    color: var(--text-primary);
+    background:var(--bg-primary);
+    border:1px solid var(--border);
+    border-radius:20px;
+    padding:2rem;
+    display:flex;
+    flex-direction:column;
+    gap:1.5rem;
+    box-shadow:
+    0 10px 30px rgba(15,23,42,.05);
+}
+
+.card-header h2{
+    font-size:1.5rem;
+    font-weight:600;
+    color:var(--text-primary);
+}
+
+.card-header p{
+    margin-top:.4rem;
+    color:var(--text-secondary);
+    font-size:.95rem;
+}
+
+.tipo-movimentacao{
+    background:#f3f4f6;
+
+    border-radius:12px;
+
+    padding:.3rem;
+
+    display:flex;
+}
+
+.tipo-movimentacao button{
+    flex:1;
+
+    border:none;
+    background:none;
+
+    padding:.9rem;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    font-weight:500;
+
+    transition:.3s;
+}
+
+.tipo-movimentacao .ativo{
+    background:linear-gradient(
+    90deg,
+    #3157ff,
+    #654cff
+    );
+
+    color:white;
+}
+
+.grid-2{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:1rem;
+}
+
+.campo{
+    display:flex;
+    flex-direction:column;
+    gap:.5rem;
+}
+
+.campo label{
+    font-size:.9rem;
+    font-weight:500;
+    color:var(--text-secondary);
+}
+
+.campo input,
+.campo select,
+.campo textarea{
+    width:100%;
+
+    border:1px solid #d1d5db;
+
+    border-radius:10px;
+
+    padding:.9rem 1rem;
+
+    font-size:.95rem;
+
+    outline:none;
+
+    transition:.3s;
+}
+
+.campo input:focus,
+.campo select:focus,
+.campo textarea:focus{
+
+    border-color:var(--accent-50);
+
+    box-shadow:
+    0 0 0 4px
+    rgba(49,87,255,.15);
+}
+
+.btn-registrar{
+    width:100%;
+    margin-top: 1.5rem;
+    border:none;
+    padding:1rem;
+    border-radius:12px;
+    background: #374151;
+    color:white;
+    font-size:1rem;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.btn-registrar:hover{
+    transform:translateY(-2px);
+    background: #3C3489;
+}
+.turn{
+    display: flex;
+    flex-direction: column;
+    color: black;
+}
+.turn > label{
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+.radios{
+    display: flex;
+    gap: 20px;
+}
+.form-check-label{
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+}
+.atividade-box{
+    grid-column: 2;
+    margin-top: 30px;
+    background: var(--bg-primary);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    color: var(--text-primary);
+}
+.atividade-item{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+}
+.atividade-nome{
+    font-weight: 600;
+}
+
+.atividade-info{
+    color: var(--text-primary);
+    opacity: .7;
+    font-size: 14px;
+}
+.status-chaves {
+    grid-column: 2;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-block: 1rem;
+}
+
+.status-card {
+  background: var(--bg-primary);
+  border-radius: 1rem;
+  padding: 1rem;
+  box-shadow: 0 0.5rem 1.5rem rgba(0,0,0,.08);
+}
+
+.status-card span {
+  display: block;
+  font-size: .85rem;
+  color: var(--text-primary);
+}
+
+.status-card strong {
+  font-size: 1.8rem;
+  color: var(--text-secondary);
+}
+.content,
+.right,
+.dashboard {
+  min-width: 0;
+}
+.salas-em-uso {
+  margin-top: 1rem;
+  width: 100%;
+  overflow: hidden;
+}
+
+.salas-em-uso__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  margin-bottom: .75rem;
+}
+
+.salas-em-uso__header h3 {
+  font-size: .95rem;
+  font-weight: 700;
+  color: var(--text, #eaf4ff);
+}
+
+.salas-em-uso__header span {
+  font-size: .75rem;
+  color: rgba(234, 244, 255, .65);
+}
+
+.salas-em-uso__lista {
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  gap: .75rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: .6rem;
+  scroll-snap-type: x mandatory;
+}
+
+.salas-em-uso__lista::-webkit-scrollbar {
+  height: .4rem;
+}
+
+.salas-em-uso__lista::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, .25);
+  border-radius: 999px;
+}
+
+.sala-uso-card {
+  flex: 0 0 11rem;
+  scroll-snap-align: start;
+  border-radius: 1rem;
+  padding: .85rem;
+  background: rgba(255, 255, 255, .08);
+  border: 1px solid rgba(255, 255, 255, .12);
+}
+
+.sala-uso-card strong {
+  display: block;
+  font-size: .95rem;
+  color: var(--text, #fff);
+  margin-bottom: .35rem;
+}
+
+.sala-uso-card span {
+  display: block;
+  font-size: .75rem;
+  color: rgba(234, 244, 255, .7);
+}
+
+.sala-uso-card small {
+  display: inline-block;
+  margin-top: .6rem;
+  padding: .25rem .55rem;
+  border-radius: 999px;
+  font-size: .7rem;
+  background: rgba(96, 165, 250, .18);
+  color: #bfdbfe;
+}
+.status-header{
+    grid-column: span 3;
+    color: var(--text-primary);
+}
+#filtroTurno {
+  border: 1px solid rgba(255, 255, 255, .15);
+  background: rgba(255, 255, 255, .08);
+  color: var(--text-primary);
+  padding: .55rem .8rem;
+  border-radius: .75rem;
+  outline: none;
+  cursor: pointer;
+}
+
+#filtroTurno option {
+  background: #111827;
+  color: #fff;
+}
+@media (max-width: 768px) {
+    .principal{
+        grid-template-columns: 1fr;
+    }
+}

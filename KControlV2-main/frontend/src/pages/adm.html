@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KControl</title>
+    <link rel="icon" href="src/assets/images/KControl Logo.png">
+    <link rel="stylesheet" href="../styles/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
+    <script type="module" src="../scripts/app.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+    <!-- Sidebar -->
+    <nav class="sidebar" id="sidebar" aria-label="Navegação principal">
+
+        <div class="sb-header">
+            <div class="logo-mark"><i class="ti ti-bolt" aria-hidden="true"></i></div>
+            <span class="logo-name">KControlV2</span>
+            <button class="toggle-btn" id="toggleBtn" aria-label="Recolher menu">
+                <i class="ti ti-chevron-left" aria-hidden="true"></i>
+            </button>
+        </div>
+
+        <div class="sb-nav">
+            <span class="sb-label">Principal</span>
+            <a class="nav-item active" href="#" data-page="registro">
+                <i class="ti ti-clipboard-list"></i>
+                <span>Registro</span>
+            </a>
+            <a class="nav-item" href="#" data-page="dashboard">
+                <i class="ti ti-layout-dashboard" aria-hidden="true"></i>
+                <span>Dashboard</span>
+            </a>
+            <a class="nav-item" href="#" data-page="admin">
+                <i class="ti ti-check" aria-hidden="true"></i>
+                <span>Administração</span>
+            </a>
+            <a class="nav-item" href="#" data-page="Calendário">
+                <i class="ti ti-calendar" aria-hidden="true"></i>
+                <span>Calendário</span>
+            </a>
+
+            <span class="sb-label" style="margin-top: 8px">Análise</span>
+            <a class="nav-item" href="#" data-page="Relatórios">
+                <i class="ti ti-chart-bar" aria-hidden="true"></i>
+                <span>Relatórios</span>
+            </a>
+            <a class="nav-item" href="#" data-page="Analytics">
+                <i class="ti ti-trending-up" aria-hidden="true"></i>
+                <span>Analytics</span>
+            </a>
+
+            <span class="sb-label" style="margin-top: 8px">Time</span>
+            <a class="nav-item" href="#" data-page="Membros">
+                <i class="ti ti-users" aria-hidden="true"></i>
+                <span>Membros</span>
+            </a>
+            <a class="nav-item" href="#" data-page="Mensagens">
+                <i class="ti ti-message" aria-hidden="true"></i>
+                <span>Mensagens</span>
+            </a>
+        </div>
+
+        <div class="sb-footer">
+            <a class="nav-item" href="#" data-page="Configurações">
+                <i class="ti ti-settings" aria-hidden="true"></i>
+                <span>Configurações</span>
+            </a>
+            <div class="user-row">
+                <div class="avatar">RK</div>
+                <div class="user-info">
+                    <div class="user-name">user</div>
+                    <div class="user-role">role</div>
+                </div>
+            </div>
+        </div>
+
+    </nav>
+
+    <!-- Mobile overlay -->
+    <div class="overlay" id="overlay" ></div>
+
+    <!-- Main -->
+    <div class="main">
+        <header class="topbar">
+            <button class="mobile-toggle" id="mobileToggle" aria-label="Abrir menu" >
+                <i class="ti ti-menu-2" aria-hidden="true"></i>
+            </button>
+            <span class="topbar-title" id="topbarTitle">Registro de Chaves</span>
+            <div class="topbar-right">
+                <button class="icon-btn" aria-label="Buscar"><i class="ti ti-search" aria-hidden="true"></i></button>
+                <button class="icon-btn" aria-label="Notificações"><i class="ti ti-bell"
+                        aria-hidden="true"></i></button>
+                <button class="icon-btn" aria-label="Perfil"><i class="ti ti-user" aria-hidden="true"></i></button>
+            </div>
+        </header>
+
+        <div class="content">
+
+            <section id="registro" class="principal page active">
+                <div class="card-form">
+                    <div class="card-header">
+                        <h2>Registrar Retirada ou Devolução</h2>
+                        <p>
+                            Preencha os dados abaixo para registrar a movimentação da chave.
+                        </p>
+                    </div>
+                    <form>
+                        <div class="grid-2">
+                            <div class="campo">
+                                <label>Setor</label>
+                                <select name="setor" id="setor">
+                                    <option value="" disabled selected>Selecione o setor</option>
+                                    <option value="TI">Técnico em Informática</option>
+                                    <option value="RH">Registros Humanos</option>
+                                    <option value="Financeiro">Gestão Financeira</option>
+                                    <option value="Produção">Produção</option>
+                                </select>
+                            </div>
+                            <div class="campo">
+                                <label>Sala / Local</label>
+                                <select name="sala" id="sala">
+                                    <option value="" disabled selected>Selecione a sala</option>
+                                    <option value="" disabled>Setor A</option>
+                                    <option value="A1">Sala A1</option>
+                                    <option value="A2">Sala A2</option>
+                                    <option value="A3">Sala A3</option>
+                                    <option value="A4">Sala A4</option>
+                                    <option value="" disabled>Setor B</option>
+                                    <option value="B1">Sala B1</option>
+                                    <option value="B2">Sala B2</option>
+                                    <option value="B3">Sala B3</option>
+                                    <option value="B4">Sala B4</option>
+                                    <option value="" disabled>Setor C</option>
+                                    <option value="C1">Sala C1</option>
+                                    <option value="C2">Sala C2</option>
+                                    <option value="C3">Sala C3</option>
+                                    <option value="C4">Sala C4</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="campo">
+                            <label>Responsável</label>
+                            <input type="text" placeholder="Digite o nome do responsável" type="text" name="nome"
+                                id="nome">
+                        </div>
+                        <div class="turn">
+                            <label for="">Turno</label>
+                            <div class="radios">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="turno" id="radioDefault1"
+                                        value="Manhã">
+                                    <label class="form-check-label" for="radioDefault1">
+                                        Manhã
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="turno" id="radioDefault2"
+                                        value="Tarde" checked>
+                                    <label class="form-check-label" for="radioDefault2">
+                                        Tarde
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="turno" id="radioDefault3"
+                                        value="Noite">
+                                    <label class="form-check-label" for="radioDefault3">
+                                        Noite
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="campo">
+                            <label>Data</label>
+                            <input type="date" id="data">
+                        </div>
+                        <div class="campo">
+                            <label>Hora da Retirada</label>
+                            <input type="time" name="horasRetirada" id="horasRetirada">
+                        </div>
+                        <button class="btn-registrar" type="submit" id="liveToastBtn">
+                            Registrar
+                        </button>
+                        <!-- Toast Bem Vindo -->
+                        <!-- <div class="toast-container position-fixed bottom-0 end-0 p-3">
+                            <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                                <div class="toast-header">
+                                    <i class="bi-key-fill"></i>
+                                    <strong class="me-auto">LogiTech</strong>
+                                    <small>Now</small>
+                                    <button type="button" class="btn-close" data-bs-dismiss="toast"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="toast-body">Dados enviado com sucesso</div>
+                            </div>
+                        </div> -->
+                    </form>
+
+                </div>
+                <div class="right">
+                    <div class="atividade-box">
+                        <h3><i class="bi bi-hourglass-split"></i> Últimas Retiradas</h3>
+                        <div id="atividade"></div>
+                    </div>
+                    <div class="status-chaves">
+                        <div class="status-header">
+                            <div>
+                                <span>Status</span>
+                                <h3>Salas disponíveis por turno</h3>
+                            </div>
+
+                            <select id="filtroTurno">
+                                <option value="Manhã">Manhã</option>
+                                <option value="Tarde">Tarde</option>
+                                <option value="Noite">Noite</option>
+                            </select>
+                        </div>
+                        <div class="status-card">
+                            <span>Disponíveis</span>
+                            <strong id="salasDisponiveis">0</strong>
+                        </div>
+                        <div class="status-card">
+                            <span>Em uso</span>
+                            <strong id="salasEmUso">0</strong>
+                        </div>
+                        <div class="status-card">
+                            <span>Total</span>
+                            <strong id="totalSalas">0</strong>
+                        </div>
+                    </div>
+                    <div class="salas-em-uso">
+                        <div class="salas-em-uso__header">
+                            <h3>Salas em uso</h3>
+                            <span id="qtdSalasEmUso">0 ativas</span>
+                        </div>
+
+                        <div class="salas-em-uso__lista" id="listaSalasEmUso">
+                            <!-- cards via JS -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section dashboard -->
+            <section id="dashboard" class="page dashboard">
+                <h2>Dashboard</h2>
+
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <span>Chaves pendentes</span>
+                        <strong id="totalPendentes">0</strong>
+                        <p>Aguardando devolução</p>
+                    </div>
+                    <div class="dashboard-box">
+                        <h3>Lista de pendentes</h3>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Sala</th>
+                                    <th>Responsável</th>
+                                    <th>Retirada</th>
+                                </tr>
+                            </thead>
+                            <tbody id="listaPendentes"></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="dashboard-charts">
+                    <div class="dashboard-box retirada">
+                        <h3>Retiradas por setor</h3>
+                        <canvas id="graficoSetores"></canvas>
+                    </div>
+                    <div class="dashboard-box dSemana">
+                        <h3>Retiradas por Dia da Semana</h3>
+                        <canvas id="graficoDiasSemana"></canvas>
+                    </div>
+                </div>
+                <div class="dashboard-box ranking">
+                    <h3>Top 5 Salas Mais Utilizadas</h3>
+
+                    <div id="rankingSalas"></div>
+                </div>
+            </section>
+
+            <!-- Section Tabela de Registros -->
+            <section class="page" id="admin">
+                <main class="mainAdmin">
+                    <section class="title">
+                        <i class="bi bi-list-columns-reverse"></i>
+                        <div>
+                            <h1>Registro de Retiradas</h1>
+                            <span>Visualize o registro de chaves retiradas</span>
+                        </div>
+                    </section>
+                    <!-- table -->
+                    <table class="table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>SETOR</th>
+                                <th>SALA</th>
+                                <th>DATA</th>
+                                <th>RESPONSÁVEL</th>
+                                <th>TURNO</th>
+                                <th>HORA DA RETIRADA</th>
+                                <th>HORA DA ENTREGA</th>
+                                <th colspan="2">AÇÕES</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table">
+
+                        </tbody>
+                    </table>
+                    <button class="clear btn btn-outline-danger">Limpar Registros</button>
+                    <span class="aviso">Registro limpo automaticamente as 23h</span>
+                </main>
+                <footer>
+                    Desenvolvido por <a href="https://github.com/rogerkawa" target="_blank">RogerDev </a>-
+                    &copy;Todos os direitos reservados
+                </footer>
+                <!-- Modal editar -->
+                <div id="modalEditar" class="modalEditar escondido">
+                    <div class="conteudoEditar">
+                        <div class="topoEditar">
+                            <div class="editarIcone">
+                                <i class="bi bi-pencil-square"></i>
+                            </div>
+                            <button id="fecharEditar">
+                                <i class="bi bi-x-lg"></i>
+                            </button>
+
+                        </div>
+                        <h2>Editar Registro</h2>
+                        <span>
+                            Atualize as informações da retirada.
+                        </span>
+
+                        <div class="grupoInput">
+                            <label for="editarNome">Responsável</label>
+                            <input type="text" id="editarNome">
+                        </div>
+
+                        <div class="grupoInput">
+                            <label for="editarSala">Sala</label>
+                            <!-- <input type="text" id="editarSala"> -->
+                            <select class="form-select" name="editarSala" id="editarSala">
+                                <option value="" selected disabled>Selecione a Sala</option>
+                                <option value="" disabled selected>Selecione a sala</option>
+                                <option value="" disabled>Setor A</option>
+                                <option value="A1">Sala A1</option>
+                                <option value="A2">Sala A2</option>
+                                <option value="A3">Sala A3</option>
+                                <option value="A4">Sala A4</option>
+                                <option value="" disabled>Setor B</option>
+                                <option value="B1">Sala B1</option>
+                                <option value="B2">Sala B2</option>
+                                <option value="B3">Sala B3</option>
+                                <option value="B4">Sala B4</option>
+                                <option value="" disabled>Setor C</option>
+                                <option value="C1">Sala C1</option>
+                                <option value="C2">Sala C2</option>
+                                <option value="C3">Sala C3</option>
+                                <option value="C4">Sala C4</option>
+                            </select>
+                        </div>
+
+                        <div class="grupoInput">
+                            <label for="editarEntrega">Horário da Entrega</label>
+                            <input type="time" id="editarEntrega">
+                        </div>
+
+                        <div class="acoesEditar">
+                            <button id="cancelarEditar">
+                                Cancelar
+                            </button>
+                            <button id="salvarEdicao">
+                                Salvar Alterações
+                            </button>
+                        </div>
+            </section>
+
+
+
+        </div>
+
+
+
+    </div>
+    </div>
+</body>
+
+</html>

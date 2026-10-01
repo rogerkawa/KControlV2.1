@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta
+      name="description"
+      content="Acesse o KControl, sistema de gerenciamento e controle de chaves."
+    />
+
+    <title>Login | KControl</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+    />
+    <link rel="stylesheet" href="./styles/autenticacao.css" />
+    <script type="module" src="scripts/api/login.js" defer></script>
+    <script type="module" src="scripts/verSenha.js" defer></script>
+    <script type="module" src="./scripts/modules/alternarTela.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+  </head>
+
+  <body class="auth-body">
+    <!-- animação -->
+    <div class="transicao-pagina" id="transicaoPagina">
+
+    <svg
+        class="transicao-pagina__svg"
+        viewBox="0 0 100 100"
+        preserveAspectRatio="none"
+    >
+
+        <path
+            id="transicaoPath"
+            d="
+                M 0 100
+                L 0 100
+                Q 50 100 100 100
+                L 100 100
+                Z
+            "
+        ></path>
+
+    </svg>
+
+</div>
+
+    <main class="auth-container">
+      <section class="auth-apresentacao">
+        <header class="auth-logo">
+
+          <img src="assets/images/logoKcontrol.png" alt="logo Kcontrol">
+        </header>
+
+        <div class="auth-apresentacao-conteudo">
+          <span class="auth-etiqueta">
+            <i class="bi bi-shield-check"></i>
+
+            Gerenciamento inteligente
+          </span>
+
+          <h1>
+            Controle de chaves
+            <span>simples e seguro.</span>
+          </h1>
+
+          <p>
+            Gerencie retiradas, devoluções e responsáveis de forma centralizada
+            e organizada.
+          </p>
+
+          <div class="auth-beneficios">
+            <div class="auth-beneficio">
+              <i class="bi bi-check-lg"></i>
+              <span>Controle de retiradas e devoluções</span>
+            </div>
+
+            <div class="auth-beneficio">
+              <i class="bi bi-check-lg"></i>
+              <span>Histórico de movimentações</span>
+            </div>
+
+            <div class="auth-beneficio">
+              <i class="bi bi-check-lg"></i>
+              <span>Acesso seguro por usuário</span>
+            </div>
+          </div>
+        </div>
+
+        <footer class="auth-apresentacao-rodape">
+          <span> KControl </span>
+
+          <span> Sistema de gerenciamento de chaves </span>
+        </footer>
+      </section>
+
+      <section class="auth-area-formulario">
+        <div class="auth-formulario-container">
+          <header class="auth-formulario-cabecalho">
+            <div class="auth-icone-mobile">
+              <i class="bi bi-key-fill"></i>
+            </div>
+
+            <span class="auth-subtitulo"> Bem-vindo de volta </span>
+
+            <h2>Acesse sua conta</h2>
+
+            <p>Informe suas credenciais para acessar o KControl.</p>
+          </header>
+
+          <form id="formularioLogin" class="auth-formulario">
+            <div class="auth-grupo">
+              <label for="email"> E-mail </label>
+
+              <div class="auth-input">
+                <i class="bi bi-envelope"></i>
+
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="seuemail@exemplo.com"
+                  autocomplete="email"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="auth-grupo">
+              <label for="senha"> Senha </label>
+
+              <div class="auth-input">
+                <i class="bi bi-lock"></i>
+
+                <input
+                  type="password"
+                  id="senha"
+                  name="senha"
+                  placeholder="Digite sua senha"
+                  autocomplete="current-password"
+                  required
+                />
+
+                <button
+                  type="button"
+                  class="auth-ver-senha"
+                  id="botaoVerSenha"
+                  aria-label="Mostrar senha"
+                >
+                  <i class="bi bi-eye"></i>
+                </button>
+              </div>
+            </div>
+
+            <div
+              id="mensagemLogin"
+              class="auth-mensagem"
+              aria-live="polite"
+            ></div>
+
+            <button type="submit" id="botaoEntrar" class="auth-botao">
+              <span> Entrar </span>
+
+              <i class="bi bi-arrow-right"></i>
+            </button>
+          </form>
+
+          <div class="auth-divisor">
+            <span></span>
+
+            <p>ou</p>
+
+            <span></span>
+          </div>
+
+          <p class="auth-link">
+            Ainda não possui uma conta?
+
+            <a href="./pages/cadastro.html" id="linkCadastro"> Criar conta </a>
+          </p>
+
+          <p class="auth-seguranca">
+            <i class="bi bi-shield-lock"></i>
+
+            Seus dados são protegidos pelo KControl.
+          </p>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

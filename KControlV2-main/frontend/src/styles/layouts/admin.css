@@ -1,0 +1,352 @@
+.mainAdmin{
+    width: 80vw;
+    margin: 50px auto;
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+table{
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    background: var(--table);
+    color: var(--text-primary);
+}
+
+td , th{
+    word-wrap: break-word;
+    text-align: center;
+    padding: 10px;
+    border: 1px solid var(--border);
+}
+.title{
+    display: flex;
+    align-items: start;
+    gap: 20px;
+    color: var(--text-primary);
+}
+.title div h1{
+    font-size: 1.8rem;
+}
+.title div span{
+    font-size: 0.9rem;
+}
+.bi-list-columns-reverse{
+    color: var(--text-primary);
+    font-size: 1.7rem;
+}
+thead tr{
+    text-align: center;
+}
+thead tr th{
+    font-size: 0.7rem;
+}
+.clear{
+    display: inline-flex;
+    align-items: center;
+    margin-top: 1.2rem;
+    gap: .5rem;
+    padding: .65rem 1rem;
+    border: 1px solid #ef4444;
+    background: transparent;
+    border-radius: 8px;
+    color: #ef4444;
+    font-size: .875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: .2s ease;
+}
+
+.clear:hover{
+    background: #ef4444;
+    color: #fff;
+}
+
+.clear:active{
+    transform: scale(.98);
+}
+
+.editar,
+.remover{
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+
+    padding: .55rem .9rem;
+
+    border-radius: 8px;
+    border: 1px solid transparent;
+
+    font-size: .875rem;
+    font-weight: 500;
+
+    cursor: pointer;
+    transition: .2s ease;
+}
+
+/* Editar */
+.editar{
+    background: #2563eb;
+    color: #fff;
+    border: 1px solid #2563eb;
+}
+
+.editar:hover{
+    background: #1d4ed8;
+}
+
+/* Remover */
+.remover{
+    background: transparent;
+    color: #dc2626;
+    border: 1px solid #dc2626;
+}
+
+.remover:hover{
+    background: #dc2626;
+    color: #fff;
+}
+#admin{
+    border: 1px solid;
+    padding: 20px;
+}
+
+.modalEditar{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(15,23,42,0.65);
+    z-index: 99999;
+    backdrop-filter: blur(4px);
+}
+
+.escondido{
+    display: none !important;
+}
+
+.conteudoEditar{
+    width: 420px;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    border-radius: 22px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    animation: aparecerEditar .3s ease;
+    box-shadow:
+        0 20px 40px rgba(0,0,0,0.2);
+}
+
+.topoEditar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.editarIcone{
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    background: #dbeafe;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.editarIcone i{
+    font-size: 1.8rem;
+    color: #2563eb;
+}
+
+#fecharEditar{
+    border: none;
+    background: transparent;
+    font-size: 1.1rem;
+    cursor: pointer;
+    color: #64748b;
+    transition: .3s;
+}
+
+#fecharEditar:hover{
+    transform: rotate(90deg);
+    color: #111827;
+}
+
+.conteudoEditar h2{
+    margin: 0;
+    color: var(--text-primary);
+}
+
+.conteudoEditar span{
+    color: #64748b;
+}
+
+.grupoInput{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.grupoInput label{
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.grupoInput input{
+    height: 50px;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 0 15px;
+    outline: none;
+    transition: .3s;
+}
+
+.grupoInput input:focus{
+    border-color: #2563eb;
+    box-shadow:
+        0 0 0 4px rgba(37,99,235,0.15);
+}
+
+.acoesEditar{
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+#cancelarEditar{
+    border: none;
+    background: #e5e7eb;
+    color: #111827;
+    padding: 12px 18px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: .3s;
+}
+
+#cancelarEditar:hover{
+    background: #d1d5db;
+}
+
+#salvarEdicao{
+    border: none;
+    background: #2563eb;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: .3s;
+}
+
+#salvarEdicao:hover{
+    background: #1d4ed8;
+}
+
+.form-select{
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    padding: 1rem;
+    border-radius: 12px;
+}
+.form-select:focus{
+    border-color: #2563eb;
+    box-shadow:
+        0 0 0 4px rgba(37,99,235,0.15);
+}
+.aviso{
+    margin-top: 15px;
+    color: var(--text-secondary);
+}
+
+footer{
+    color: var(--text-tertiary);
+    text-align: center;
+}
+a{
+    text-decoration: none;
+    color: #3b82f6;
+    transition: 0.5s;
+}
+a:hover{
+    text-decoration: underline;
+}
+
+@keyframes aparecerEditar{
+    from{
+        opacity: 0;
+        transform: translateY(20px) scale(.95);
+    }
+
+    to{
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+@media (max-width: 1100px){
+    table{
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+}
+@media (max-width: 768px){
+
+    header{
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+        padding: 20px;
+    }
+
+    .header{
+        width: 100%;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+
+    .bi-key{
+        margin-left: 0;
+        font-size: 2rem;
+        padding: 0.7rem;
+    }
+
+    main{
+        width: 95vw;
+    }
+
+    .title{
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .title div h1{
+        font-size: 1.4rem;
+    }
+
+    .title div span{
+        font-size: 0.8rem;
+    }
+
+    td, th{
+        font-size: 0.9rem;
+        padding: 8px;
+    }
+
+    #admin{
+        width: 100%;
+        padding: 15px;
+    }
+
+}
