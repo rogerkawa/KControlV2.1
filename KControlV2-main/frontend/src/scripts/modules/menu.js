@@ -12,35 +12,6 @@ export default function navbar() {
   const user = document.getElementById('user-name')
   const role = document.getElementById('user-role')
 
-/*   async function verifyUser() {
-        const token = localStorage.getItem('token')
-
-    // Não possui token
-    if (!token) {
-        window.location.href = '../index.html'
-        return
-    }
-    try {
-
-        const result = await app.findUserAuthenticator()
-
-        const user =  await result.user
-
-        user.innerText = user.email
-        role.innerText = user.role
-
-    } catch (error) {
-
-        console.error(error)
-        console.error("ERRO NO DASHBOARD:", error)
-
-        // Token inválido ou expirado
-        localStorage.removeItem('token')
-        window.location.href = 'login.html'
-    }
-  }
-  verifyUser() */
-
 
   toggleBtn.addEventListener("click", () => {
     sidebar.classList.toggle("collapsed");

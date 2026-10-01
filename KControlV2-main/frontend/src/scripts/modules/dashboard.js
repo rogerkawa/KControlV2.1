@@ -1,4 +1,30 @@
+import app from "../api/api.js";
+
 let graficoSetores = null;
+
+document.addEventListener("DOMContentLoaded", async () => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+        window.location.replace("../index.html");
+        return;
+    }
+
+    try {
+        const result = await app.findUserAuthenticator();
+
+        if (result.user.role !== "admin") {
+            window.location.replace("cadastro.html");
+            return;
+        }
+        carregarDashboard();
+
+    } catch (error) {
+        localStorage.removeItem("token");
+        window.location.replace("../index.html");
+    }
+});
+
 
 export default function carregarDashboard() {
   const chaves = JSON.parse(localStorage.getItem("chaves")) || [];

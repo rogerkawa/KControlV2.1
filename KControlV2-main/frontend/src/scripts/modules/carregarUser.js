@@ -42,7 +42,7 @@ function gerarIniciais(nome) {
     return partes[0][0].toUpperCase();
   }
 
-  const primeiraInicial = partes[0][0];//["caio", "nascmento"]
+  const primeiraInicial = partes[0][0];//["caio", "nascimento"]
   const segundaInicial = partes[1][0];
 
   return `${primeiraInicial}${segundaInicial}`.toUpperCase();

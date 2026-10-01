@@ -21,8 +21,16 @@ async function manipulaForm(event) {
     const result = await app.loginUser({ email, senha });
 
     localStorage.setItem("token", result.token);
+    const resultado = await app.findUserAuthenticator()
+    const user = resultado.user;
 
+    //window.location.href = "pages/adm.html";
+    console.log(user.role)
+    if (user.role === "admin") {
     window.location.href = "pages/adm.html";
+} else {
+    window.location.href = "pages/user.html";
+}
   } catch (error) {
     console.error(error);
     alert(`Erro ao logar com usuário: ${error.message}`);

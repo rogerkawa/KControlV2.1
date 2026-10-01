@@ -146,16 +146,13 @@ export default function registro() {
 
   /* Limpeza automatica */
 
-  function limpezaAutomatica() {
-    console.log("inicio");
+/*   function limpezaAutomatica() {
+
     const horaLimpeza = 23; // 23h
     const agora = new Date();
     const horaAtual = agora.getHours();
     const hoje = agora.toLocaleDateString();
-
-    console.log(horaAtual);
-    console.log(hoje);
-
+    
     const ultimaLimpeza = localStorage.getItem("ultimaLimpeza");
     console.log(ultimaLimpeza);
 
@@ -169,11 +166,12 @@ export default function registro() {
     }
     console.log("ate aqui foi");
   }
+  
   setInterval(() => {
     limpezaAutomatica();
-  }, 60000);
+  }, 60000); 
 
-  limpezaAutomatica();
+  limpezaAutomatica(); */
 
   //Dispara o evento de atualizar a pagina
   document.addEventListener("chavesAtualizadas", () => {

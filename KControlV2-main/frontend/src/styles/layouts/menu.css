@@ -30,33 +30,8 @@
       border-bottom: 0.5px solid var(--border);
       flex-shrink: 0;
     }
-
-    .logo-mark {
-      width: 30px;
-      height: 30px;
-      background: var(--accent);
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-    .logo-mark.desativado{
-      display: none;
-    }
-
-    .logo-mark i {
-      color: #fff;
-      font-size: 16px;
-    }
-
-    .logo-name {
-      font-size: 15px;
-      font-weight: 500;
-      color: var(--text-primary);
-      white-space: nowrap;
-      opacity: 1;
-      transition: opacity var(--tr);
+    .sb-header img{
+      width: 80%;
     }
 
     .sidebar.collapsed .logo-name {
@@ -437,4 +412,10 @@
       .mobile-toggle {
         display: flex;
       }
-    }
+}
+
+@media (max-width: 768px) {
+  .overlay{
+    backdrop-filter: blur(2px);
+  }
+}
