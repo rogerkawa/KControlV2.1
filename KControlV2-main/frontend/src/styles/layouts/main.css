@@ -480,12 +480,12 @@ form {
 .salas-em-uso__header h3 {
   font-size: .95rem;
   font-weight: 700;
-  color: var(--text, #eaf4ff);
+  color: var(--text-primary);
 }
 
 .salas-em-uso__header span {
   font-size: .75rem;
-  color: rgba(234, 244, 255, .65);
+  color: var(--accent);
 }
 
 .salas-em-uso__lista {
@@ -504,7 +504,7 @@ form {
 }
 
 .salas-em-uso__lista::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, .25);
+  background: var(--bg-primary);
   border-radius: 999px;
 }
 
@@ -513,21 +513,21 @@ form {
   scroll-snap-align: start;
   border-radius: 1rem;
   padding: .85rem;
-  background: rgba(255, 255, 255, .08);
-  border: 1px solid rgba(255, 255, 255, .12);
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
 }
 
 .sala-uso-card strong {
   display: block;
   font-size: .95rem;
-  color: var(--text, #fff);
+  color: var(--text-primary);
   margin-bottom: .35rem;
 }
 
 .sala-uso-card span {
   display: block;
   font-size: .75rem;
-  color: rgba(234, 244, 255, .7);
+  color: var(--text-primary);
 }
 
 .sala-uso-card small {
@@ -545,7 +545,7 @@ form {
 }
 #filtroTurno {
   border: 1px solid rgba(255, 255, 255, .15);
-  background: rgba(255, 255, 255, .08);
+  background: var(--bg-secondary);
   color: var(--text-primary);
   padding: .55rem .8rem;
   border-radius: .75rem;
@@ -554,8 +554,8 @@ form {
 }
 
 #filtroTurno option {
-  background: #111827;
-  color: #fff;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
 }
 
 

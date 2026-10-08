@@ -6,27 +6,31 @@ export default async function carregarUsuario() {
 
     const user = result.user;
 
-    const userName = document.querySelector(".user-name");
-    const userRole = document.querySelector(".user-role");
-    const avatar = document.querySelector(".avatar");
+    const userName = document.querySelectorAll(".user-name");
+    const userRole = document.querySelectorAll(".user-role");
+    //const avatar = document.querySelector(".avatar");
 
 
-    if (userName) {
-      userName.textContent = user.nome;
-    }
-
-    if (userRole) {
-      if (userRole) {
-      userRole.textContent =
+    userName.forEach((usuario)=>{
+       if (userName) {
+      usuario.textContent = user.nome;
+    } 
+    
+  })
+    
+  userRole.forEach(element => {
+      if (element) {
+      element.textContent =
         user.role === "admin"
           ? "Administrador"
           : "Usuário";
-    }
-    }
+}
+    
+});
 
-    if (avatar) {
+    /* if (avatar) {
       avatar.textContent = gerarIniciais(user.nome);
-    }
+    } */
 
   } catch (error) {
     console.error("Erro ao carregar usuário:", error);

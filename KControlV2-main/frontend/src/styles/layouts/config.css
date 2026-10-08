@@ -1,0 +1,55 @@
+
+.config{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.btnTema{
+    width: 10vw;
+    padding: 0.8rem 2rem;
+    border-radius: 0.8rem;
+    border: none;
+    background-color: var(--text-primary);
+    color: var(--bg-primary);
+    cursor: pointer;
+}
+.profile{
+    display: flex;
+    flex-direction: column;
+}
+.profile > div{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.avatarConfig {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+    position: relative;
+    display: block;
+}
+
+.avatarConfig img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.avatar-edit {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    opacity: 0;
+    transition: 0.2s;
+}
+
+.avatarConfig:hover .avatar-edit {
+    opacity: 1;
+}

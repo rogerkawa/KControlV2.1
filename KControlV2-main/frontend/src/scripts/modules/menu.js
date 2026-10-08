@@ -12,6 +12,9 @@ export default function navbar() {
   const user = document.getElementById('user-name')
   const role = document.getElementById('user-role')
 
+const profileButton = document.querySelector("#profileButton");
+const profileMenu = document.querySelector("#profileMenu");
+
 
   toggleBtn.addEventListener("click", () => {
     sidebar.classList.toggle("collapsed");
@@ -46,6 +49,27 @@ export default function navbar() {
       closeMobile();
     });
   });
+
+
+
+/* Menu de opções */
+profileButton.addEventListener("click", (event) => {
+    event.stopPropagation();
+
+    const aberto = profileMenu.classList.toggle("active");
+
+    profileButton.setAttribute("aria-expanded", aberto);
+});
+/* Fechar quando clicar fora */
+document.addEventListener("click", (event) => {
+    if (!profileMenu.contains(event.target) &&
+        !profileButton.contains(event.target)) {
+
+        profileMenu.classList.remove("active");
+
+        profileButton.setAttribute("aria-expanded", "false");
+    }
+});
 
   mobileToggle.addEventListener("click", openMobile);
   overlay.addEventListener("click", closeMobile);

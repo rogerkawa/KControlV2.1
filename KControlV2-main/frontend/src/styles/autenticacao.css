@@ -24,23 +24,7 @@
 }
 
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg-primary: #1c1c1a;
-    --bg-secondary: #252523;
-    --bg-tertiary: #111110;
 
-    --text-primary: #f0efeb;
-    --text-secondary: #b4b2a9;
-    --text-tertiary: #888780;
-
-    --border: rgba(255, 255, 255, 0.1);
-    --border-hover: rgba(255, 255, 255, 0.22);
-
-    --accent-50: #2a2857;
-    --accent-800: #afa9ec;
-  }
-}
 
 
 .auth-body,
