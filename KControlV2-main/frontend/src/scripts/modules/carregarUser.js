@@ -8,9 +8,14 @@ export default async function carregarUsuario() {
 
     const userName = document.querySelectorAll(".user-name");
     const userRole = document.querySelectorAll(".user-role");
+    const userEmail = document.querySelector(".user-email");
     //const avatar = document.querySelector(".avatar");
 
+    console.log(userEmail)
 
+    if(userEmail){
+      userEmail.textContent = user.email
+    }
     userName.forEach((usuario)=>{
        if (userName) {
       usuario.textContent = user.nome;

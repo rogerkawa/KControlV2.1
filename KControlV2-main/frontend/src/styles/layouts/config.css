@@ -6,7 +6,7 @@
 }
 
 .btnTema{
-    width: 10vw;
+    width: 30%;
     padding: 0.8rem 2rem;
     border-radius: 0.8rem;
     border: none;
@@ -22,6 +22,8 @@
     display: flex;
     flex-direction: column;
     gap: 5px;
+    padding: 1rem 0;
+    color: var(--text-secondary);
 }
 .avatarConfig {
     width: 100px;
@@ -52,4 +54,8 @@
 
 .avatarConfig:hover .avatar-edit {
     opacity: 1;
+}
+
+.user-email{
+    color: var(--text-secondary);
 }
