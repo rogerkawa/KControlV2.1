@@ -42,9 +42,15 @@ const hora_retirada = document.getElementById('horasRetirada')
 
 const form = document.getElementById('chavesRegistro');
 
-console.log('Formulário encontrado:', form);
+console.log("Arquivo registerkey.js executado");
+console.log("Formulário encontrado:", form);
 
-form.addEventListener('submit', keyRegister);
+if (!form) {
+    console.error("Formulário #chavesRegistro não encontrado!");
+} else {
+    form.addEventListener("submit", keyRegister);
+    console.log("Evento submit registrado!");
+}
 
 /* Verificação de campos */
 
@@ -93,11 +99,15 @@ form.addEventListener('submit', keyRegister);
   }
 
 async function keyRegister(event) {
+  console.log('prestou')
+  
     event.preventDefault()
 
     console.log("Submit executado!");
 
     const result = await app.findUserAuthenticator();
+
+    console.log("Resultado da autenticação:", result);
     console.log("Resultado da autenticação:", result);
     console.log("Usuário:", result?.user);
     console.log("ID do usuário:", result?.user?.id);
@@ -119,6 +129,7 @@ async function keyRegister(event) {
         data_retirada.value,
         hora_retirada.value,
       );
+      
       login.validation()
 
       /* Vem da api */

@@ -12,6 +12,7 @@
     <script type="module" src="../scripts/app.js" defer></script>
     <script type="module" src="../scripts/api/setorSala.js" defer></script>
     <script type="module" src="../scripts/api/registerkey.js" defer></script>
+    <script type="module" src="../scripts/api/membros.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -76,7 +77,7 @@
             <div class="user-row">
                 <div class="avatar">
                     <img class="user-avatar" src="../assets/images/defaultAvatar.png" alt="">
-                    
+
                 </div>
                 <div class="user-info">
                     <div class="user-name">Usuário</div>
@@ -455,6 +456,348 @@
                     </div>
                     <button id="btnTema" class="btnTema btnToggleTema">Alterar Tema</button>
                 </div>
+            </section>
+
+
+            <!-- Seção de gerenciamento de membros -->
+            <section class="page" id="Membros">
+
+                <div class="membros-container">
+
+                    <!-- Cabeçalho -->
+                    <header class="membros-header">
+                        <div class="membros-heading">
+                            <span class="membros-eyebrow">
+                                <i class="ti ti-users"></i>
+                                GERENCIAMENTO
+                            </span>
+
+                            <h1>Gerenciar membros</h1>
+
+                            <p>
+                                Visualize e gerencie os usuários cadastrados
+                                no sistema.
+                            </p>
+                        </div>
+                    </header>
+
+                    <!-- Indicadores -->
+                    <div class="membros-stats">
+
+                        <article class="membros-stat-card">
+                            <div class="membros-stat-icon">
+                                <i class="ti ti-users"></i>
+                            </div>
+
+                            <div class="membros-stat-info">
+                                <span>Total de membros</span>
+                                <strong id="totalMembros">0</strong>
+                                <small>Usuários cadastrados</small>
+                            </div>
+                        </article>
+
+                        <article class="membros-stat-card">
+                            <div class="membros-stat-icon">
+                                <i class="ti ti-shield-check"></i>
+                            </div>
+
+                            <div class="membros-stat-info">
+                                <span>Administradores</span>
+                                <strong id="totalAdmins">0</strong>
+                                <small>Com acesso administrativo</small>
+                            </div>
+                        </article>
+
+                    </div>
+
+                    <!-- Área de listagem -->
+                    <div class="membros-panel">
+
+                        <div class="membros-panel-header">
+                            <div>
+                                <h2>Usuários cadastrados</h2>
+                                <p>Consulte e gerencie os membros da instituição.</p>
+                            </div>
+
+                            <span class="membros-counter" id="contadorMembros">
+                                0 membros
+                            </span>
+                        </div>
+
+                        <!-- Busca e filtros -->
+                        <div class="membros-toolbar">
+
+                            <div class="membros-search">
+                                <i class="ti ti-search"></i>
+
+                                <input type="search" id="buscarMembro" placeholder="Buscar por nome ou e-mail..."
+                                    aria-label="Buscar membros">
+
+                                <kbd>⌕</kbd>
+                            </div>
+
+                            <div class="membros-filtros" role="group" aria-label="Filtrar membros por cargo">
+
+                                <button type="button" class="membros-filtro active" data-filtro="todos"
+                                    aria-pressed="true">
+                                    Todos
+                                </button>
+
+                                <button type="button" class="membros-filtro" data-filtro="admin" aria-pressed="false">
+                                    Administradores
+                                </button>
+
+                                <button type="button" class="membros-filtro" data-filtro="user" aria-pressed="false">
+                                    Usuários
+                                </button>
+
+                            </div>
+                        </div>
+
+                        <!-- Tabela -->
+                        <div class="membros-table-wrapper">
+
+                            <table class="membros-table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Membro</th>
+                                        <th scope="col">E-mail</th>
+                                        <th scope="col">Cargo</th>
+                                        <th scope="col">Identificação</th>
+                                        <th scope="col" class="membros-col-acoes">
+                                            Ações
+                                        </th>
+                                    </tr>
+                                </thead>
+
+                                <!--
+                        O JavaScript poderá preencher este tbody
+                        com os membros retornados pela API.
+                    -->
+                                <tbody id="listaMembros">
+
+                                    <!-- Exemplo visual: substitua pelos dados da API -->
+                                    <tr>
+                                        <td>
+                                            <div class="membro-identidade">
+                                                <div class="membro-avatar">MC</div>
+
+                                                <div class="membro-dados">
+                                                    <strong>Mariana Costa</strong>
+                                                    <span>Membro do sistema</span>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <span class="membro-email">
+                                                mariana@instituicao.com
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            <span class="membro-role admin">
+                                                <i class="ti ti-shield-check"></i>
+                                                Administrador
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            <span class="membro-id">#001</span>
+                                        </td>
+
+                                        <td>
+                                            <div class="membro-acoes">
+                                                <button type="button" class="membro-btn-editar"
+                                                    aria-label="Editar Mariana Costa" title="Editar membro">
+                                                    <i class="ti ti-pencil"></i>
+                                                </button>
+
+                                                <button type="button" class="membro-btn-remover"
+                                                    aria-label="Remover Mariana Costa" title="Remover membro">
+                                                    <i class="ti ti-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <div class="membro-identidade">
+                                                <div class="membro-avatar membro-avatar-alt">
+                                                    LO
+                                                </div>
+
+                                                <div class="membro-dados">
+                                                    <strong>Lucas Oliveira</strong>
+                                                    <span>Membro do sistema</span>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <span class="membro-email">
+                                                lucas@instituicao.com
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            <span class="membro-role user">
+                                                <i class="ti ti-user"></i>
+                                                Usuário
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            <span class="membro-id">#002</span>
+                                        </td>
+
+                                        <td>
+                                            <div class="membro-acoes">
+                                                <button type="button" class="membro-btn-editar"
+                                                    aria-label="Editar Lucas Oliveira" title="Editar membro">
+                                                    <i class="ti ti-pencil"></i>
+                                                </button>
+
+                                                <button type="button" class="membro-btn-remover"
+                                                    aria-label="Remover Lucas Oliveira" title="Remover membro">
+                                                    <i class="ti ti-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+
+                            <!-- Estado vazio -->
+                            <div class="membros-vazio" id="membrosVazio" hidden>
+                                <div class="membros-vazio-icon">
+                                    <i class="ti ti-users-minus"></i>
+                                </div>
+
+                                <h3>Nenhum membro encontrado</h3>
+
+                                <p>
+                                    Tente pesquisar por outro nome ou e-mail.
+                                </p>
+                            </div>
+
+                        </div>
+
+                        <!-- Rodapé da tabela -->
+                        <footer class="membros-table-footer">
+                            <span>Gerenciamento de usuários</span>
+
+                            <div class="membros-paginacao">
+                                <button type="button" aria-label="Página anterior" disabled>
+                                    <i class="ti ti-chevron-left"></i>
+                                </button>
+
+                                <span class="membros-pagina-atual">1</span>
+
+                                <button type="button" aria-label="Próxima página" disabled>
+                                    <i class="ti ti-chevron-right"></i>
+                                </button>
+                            </div>
+                        </footer>
+
+                    </div>
+                </div>
+
+                <!-- Modal de edição -->
+                <div class="membros-modal" id="modalEditarMembro" role="dialog" aria-modal="true"
+                    aria-labelledby="tituloEditarMembro" hidden>
+
+                    <div class="membros-modal-card">
+
+                        <div class="membros-modal-header">
+                            <div class="membros-modal-icon">
+                                <i class="ti ti-user-edit"></i>
+                            </div>
+
+                            <button type="button" class="membros-modal-fechar" aria-label="Fechar modal">
+                                <i class="ti ti-x"></i>
+                            </button>
+                        </div>
+
+                        <h2 id="tituloEditarMembro">Editar membro</h2>
+
+                        <p class="membros-modal-descricao">
+                            Atualize os dados e as permissões deste usuário.
+                        </p>
+
+                        <form id="formEditarMembro">
+
+                            <div class="membros-form-campo">
+                                <label for="editarMembroNome">Nome completo</label>
+
+                                <input type="text" id="editarMembroNome" name="nome" placeholder="Nome do membro"
+                                    required>
+                            </div>
+
+                            <div class="membros-form-campo">
+                                <label for="editarMembroEmail">E-mail</label>
+
+                                <input type="email" id="editarMembroEmail" name="email"
+                                    placeholder="usuario@instituicao.com" required>
+                            </div>
+
+                            <div class="membros-form-campo">
+                                <label for="editarMembroRole">Cargo / Permissão</label>
+
+                                <select id="editarMembroRole" name="role" required>
+                                    <option value="user">Usuário</option>
+                                    <option value="admin">Administrador</option>
+                                </select>
+                            </div>
+
+                            <div class="membros-modal-acoes">
+                                <button type="button" class="membros-btn-cancelar">
+                                    Cancelar
+                                </button>
+
+                                <button type="submit" class="membros-btn-salvar">
+                                    <i class="ti ti-check"></i>
+                                    Salvar alterações
+                                </button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Modal de confirmação de remoção -->
+                <div class="membros-modal" id="modalRemoverMembro" role="alertdialog" aria-modal="true"
+                    aria-labelledby="tituloRemoverMembro" hidden>
+
+                    <div class="membros-modal-card membros-modal-confirmacao">
+
+                        <div class="membros-confirmacao-icon">
+                            <i class="ti ti-trash"></i>
+                        </div>
+
+                        <h2 id="tituloRemoverMembro">Remover membro?</h2>
+
+                        <p class="membros-modal-descricao">
+                            Essa ação poderá impedir o usuário de acessar o sistema.
+                            Confirme somente se tiver certeza.
+                        </p>
+
+                        <div class="membros-modal-acoes">
+                            <button type="button" class="membros-btn-cancelar">
+                                Cancelar
+                            </button>
+
+                            <button type="button" class="membros-btn-confirmar-remocao">
+                                <i class="ti ti-trash"></i>
+                                Remover membro
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+
             </section>
 
 

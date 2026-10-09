@@ -17,7 +17,7 @@ async function getKey() {
 async function registerKey(
     id_usuario,
     id_setor,
-    id_chave,
+    id_sala,
     responsavel,
     turno,
     data_retirada,
@@ -40,7 +40,7 @@ async function registerKey(
   const [dados] = await conect.query(sql, [
     id_usuario,
     id_setor,
-    id_chave,
+    id_sala,
     responsavel,
     turno,
     data_retirada,

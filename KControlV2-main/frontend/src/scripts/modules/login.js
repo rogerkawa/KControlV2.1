@@ -1,4 +1,7 @@
 
+/* ======================================
+Codigo usado quando tava em local storage
+========================================== */
 import carregarDashboard from "./dashboard.js";
 
 export default function login() {
