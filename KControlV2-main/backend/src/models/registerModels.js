@@ -14,17 +14,27 @@ async function getKey() {
   }
 }
 
-async function registerKey(id_usuario, id_setor, id_chave, responsavel, turno) {
+async function registerKey(
+    id_usuario,
+    id_setor,
+    id_chave,
+    responsavel,
+    turno,
+    data_retirada,
+    hora_retirada
+  ) {
   const sql = `
         INSERT INTO registros
         (
             id_usuario,
             id_setor,
-            id_chave,
+            id_sala,
             responsavel,
-            turno
+            turno,
+            data_retirada,
+            hora_retirada
         )
-        VALUES (?, ?, ?, ?, ?)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
     `;
 
   const [dados] = await conect.query(sql, [
@@ -33,6 +43,8 @@ async function registerKey(id_usuario, id_setor, id_chave, responsavel, turno) {
     id_chave,
     responsavel,
     turno,
+    data_retirada,
+    hora_retirada
   ]);
 
   return dados;

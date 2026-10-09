@@ -1,4 +1,4 @@
-import app from "../api/api.js";
+
 
 export default function navbar() {
   const sidebar = document.getElementById("sidebar");

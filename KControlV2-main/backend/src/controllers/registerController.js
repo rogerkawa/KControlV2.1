@@ -1,4 +1,4 @@
-import registerModels from "../models/registerModels";
+import registerModels from "../models/registerModels.js";
 
 class registerKey {
   static async getKeys(req, res) {
@@ -13,40 +13,64 @@ class registerKey {
     }
   }
 
-  static async registerKey(req, res) {
+
+static async registerKey(req, res) {
     try {
-      const { 
-        id_setor,
-        id_chave, 
-        responsavel, 
-        turno 
-    } = req.body;
+        const {
+            id_setor,
+            id_sala,
+            responsavel,
+            turno,
+            data_retirada,
+            hora_retirada
+        } = req.body;
 
-    if(!id_setor || !id_chave || !responsavel || !turno){
-        return res.status(400).json({message: 'Todos os campos são obrigatórios'})
-    }
+        if (
+            !id_setor ||
+            !id_sala ||
+            !responsavel?.trim() ||
+            !turno ||
+            !data_retirada ||
+            !hora_retirada
+        ) {
+            return res.status(400).json({
+                message: "Todos os campos são obrigatórios."
+            });
+        }
 
-      const id_usuario = req.user.id;
+        if (!["M", "T", "N"].includes(turno)) {
+            return res.status(400).json({
+                message: "Turno inválido."
+            });
+        }
 
-      const result = await registerModels.registerKey(
-        id_usuario,
-        id_setor,
-        id_chave,
-        responsavel,
-        turno,
-      );
+        // O ID deve vir do usuário autenticado.
+        const id_usuario = req.user.id;
 
-      return res.status(201).json({
-        message: "Retirada registrada com sucesso!",
-        id: result.insertId,
-      });
+        const result = await registerModels.registerKey(
+            id_usuario,
+            Number(id_setor),
+            Number(id_sala),
+            responsavel.trim(),
+            turno,
+            data_retirada,
+            hora_retirada
+        );
+
+        return res.status(201).json({
+            message: "Retirada registrada com sucesso!",
+            id: result.insertId
+        });
+
     } catch (error) {
-      console.error(error);
-      return res.status(500).json({
-        message: "Erro de servidor!",
-      });
+        console.error("Erro ao registrar retirada:", error);
+
+        return res.status(500).json({
+            message: "Erro ao registrar a retirada."
+        });
     }
-  }
+}
+
 }
 
 export default registerKey;

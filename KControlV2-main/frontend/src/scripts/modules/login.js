@@ -5,7 +5,6 @@ export default function login() {
   const setor = document.getElementById("setor");
   const sala = document.getElementById("sala");
   const responsavel = document.getElementById("nome");
-  /*  */
   const data = document.getElementById("data");
   const hrsRetirada = document.getElementById("horasRetirada");
   const btnRegistro = document.querySelector(".btn-registrar");
@@ -13,7 +12,7 @@ export default function login() {
 
 
 
-  // pega registros já existentes ou um array vazio
+  
   let chaves = JSON.parse(localStorage.getItem("chaves")) || [];
 
   class Login {
@@ -129,7 +128,7 @@ export default function login() {
   function renderizarAtividades() {
     atividade.innerHTML = "";
 
-    // cria uma copia do array e pega os 3 ultimos elementos
+    
     const ultimos = chaves.slice(-3).reverse();
 
     ultimos.forEach((item) => {
