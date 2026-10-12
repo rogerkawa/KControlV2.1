@@ -118,6 +118,9 @@ function criarLinhaMembro(membro) {
     const email = membro.email ?? "E-mail não informado";
     const role = String(membro.role ?? "user").toLowerCase();
 
+    console.log("Usuário recebido:", membro);
+    console.log("ID do usuário:", id);
+
     // Gera as iniciais do avatar
     const iniciais = nome
         .trim()
@@ -231,7 +234,6 @@ async function updateMembers(id_usuario, nome, email, role) {
 
     await verifyResponse(response);
 
-    // Considera que o backend responde com JSON.
     return await response.json();
 }
 
@@ -250,6 +252,34 @@ async function deleteMembers(id_usuario) {
 
     return await response.json();
 }
+
+
+async function carregarTotais() {
+    try {
+        const response = await fetch(`${url_base}/membros/totais`,
+            {
+                headers: httpAuth()
+            }
+        )
+
+        await verifyResponse(response)
+
+        const dados = await response.json();
+
+        document.querySelector("#totalMembros").textContent =
+            dados.totalUsuarios;
+        document.querySelector("#contadorMembros").textContent =
+            `${dados.totalUsuarios} membros`
+
+        document.querySelector("#totalAdmins").textContent =
+            dados.totalAdmins
+
+    } catch (error) {
+        console.error("Erro ao carregar totais:", error);
+    }
+}
+
+carregarTotais();
 
 
 // INICIALIZAÇÃO DA PÁGINA
@@ -300,7 +330,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // Aceita { user: {...} }, { membro: {...} }
             // ou o próprio objeto do membro.
-            const membro = data.user ?? data.membro ?? data;
+            const membro = data.user;
+            console.log(membro)
 
             if (!membro || !membro.nome) {
                 throw new Error(
@@ -348,6 +379,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         try {
+            console.log(membroSelecionadoId)
             await updateMembers(
                 membroSelecionadoId,
                 nome,

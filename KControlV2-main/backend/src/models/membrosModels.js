@@ -45,9 +45,23 @@ async function removeMembers(id_usuario) {
     return result.affectedRows;
 }
 
+async function contarUsuarios() {
+    const sql = `
+        SELECT
+            COUNT(*) AS totalUsuarios,
+            SUM(CASE WHEN role = 'admin' THEN 1 ELSE 0 END) AS totalAdmins
+        FROM usuarios
+    `;
+
+    const [rows] = await conect.query(sql);
+
+    return rows[0];
+}
+
 export default {
     findAll,
     findById,
     updateMembers,
-    removeMembers
+    removeMembers,
+    contarUsuarios
 };

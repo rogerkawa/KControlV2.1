@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken'
 function authMiddleware(req,res,next){
 
     //logica do middleware
+    console.log("REQUISIÇÃO RECEBIDA:", req.method, req.originalUrl);
 
     const authorization = req.headers.authorization
 
@@ -17,7 +18,10 @@ function authMiddleware(req,res,next){
 
     const payload = jwt.verify(token, process.env.JWT_SECRET)
 
+    console.log("PAYLOAD DO JWT:", payload);
     req.user = payload
+
+    console.log("REQ.USER:", req.user);
 
     next()
     } catch (error) {

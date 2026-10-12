@@ -45,10 +45,10 @@ async function findById(req, res) {
 
 async function updateMembers(req, res) {
     try {
-        const { id_usuario } = req.params;
+        const { id } = req.params;
         const { nome, email, role } = req.body;
 
-        if (!/^[1-9]\d*$/.test(id_usuario)) {
+        if (!/^[1-9]\d*$/.test(id)) {
             return res.status(400).json({
                 message: "ID inválido."
             });
@@ -66,7 +66,7 @@ async function updateMembers(req, res) {
             });
         }
 
-        const user = await membrosModels.findById(id_usuario);
+        const user = await membrosModels.findById(id);
 
         if (!user) {
             return res.status(404).json({
@@ -77,7 +77,7 @@ async function updateMembers(req, res) {
         // Impede que o administrador remova seu
         // próprio privilégio por esta operação.
         if (
-            Number(id_usuario) === Number(req.user.id_usuario) &&
+            Number(id) === Number(req.user.id) &&
             role !== "admin"
         ) {
             return res.status(400).json({
@@ -85,7 +85,7 @@ async function updateMembers(req, res) {
             });
         }
 
-        await membrosModels.updateMembers(id_usuario, {
+        await membrosModels.updateMembers(id, {
             nome: nome.trim(),
             email: email.trim(),
             role
@@ -111,22 +111,22 @@ async function updateMembers(req, res) {
 
 async function removeMembers(req, res) {
     try {
-        const { id_usuario } = req.params;
+        const { id } = req.params;
 
-        if (!/^[1-9]\d*$/.test(id_usuario)) {
+        if (!/^[1-9]\d*$/.test(id)) {
             return res.status(400).json({
                 message: "ID inválido."
             });
         }
 
         // Impede que o administrador exclua a própria conta.
-        if (Number(id_usuario) === Number(req.user.id_usuario)) {
+        if (Number(id) === Number(req.user.id)) {
             return res.status(400).json({
                 message: "Você não pode remover sua própria conta por esta operação."
             });
         }
 
-        const user = await membrosModels.findById(id_usuario);
+        const user = await membrosModels.findById(id);
 
         if (!user) {
             return res.status(404).json({
@@ -134,7 +134,7 @@ async function removeMembers(req, res) {
             });
         }
 
-        await membrosModels.removeMembers(id_usuario);
+        await membrosModels.removeMembers(id);
 
         return res.status(200).json({
             message: "Membro removido com sucesso."
@@ -148,9 +148,24 @@ async function removeMembers(req, res) {
     }
 }
 
+async function contarUsuarios(req, res) {
+    try {
+        const totais = await membrosModels.contarUsuarios();
+
+        res.status(200).json(totais);
+    } catch (error) {
+        console.error(error);
+
+        res.status(500).json({
+            message: "Erro ao contar usuários."
+        });
+    }
+}
+
 export default {
     findAll,
     findById,
     updateMembers,
-    removeMembers
+    removeMembers,
+    contarUsuarios
 };

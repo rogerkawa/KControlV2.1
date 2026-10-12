@@ -18,8 +18,7 @@ btnTema.forEach((button)=>{
 })
 
 
-const avatarSalvo = localStorage.getItem("avatar");
-// Carregar avatar salvo
+/* const avatarSalvo = localStorage.getItem("avatar");
 
 if (avatarSalvo) {
     avatar.src = avatarSalvo;
@@ -28,7 +27,7 @@ if (avatarSalvo) {
         }); 
 }
 
-// Alterar avatar
+
 avatarInput.addEventListener("change", () => {
     const arquivo = avatarInput.files[0];
 
@@ -43,5 +42,5 @@ avatarInput.addEventListener("change", () => {
     };
 
     reader.readAsDataURL(arquivo);
-});
+}); */
 }

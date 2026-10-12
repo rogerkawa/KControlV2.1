@@ -9,6 +9,7 @@ const membrosRoutes = express.Router();
 
 
 membrosRoutes.get("/membros", authMiddleware, adminMiddleware, membrosController.findAll);
+membrosRoutes.get("/membros/totais", membrosController.contarUsuarios);
 membrosRoutes.get("/membros/:id", authMiddleware, adminMiddleware, membrosController.findById);
 membrosRoutes.put("/membros/update/:id", authMiddleware, adminMiddleware, membrosController.updateMembers);
 membrosRoutes.delete("/membros/delete/:id", authMiddleware, adminMiddleware, membrosController.removeMembers);

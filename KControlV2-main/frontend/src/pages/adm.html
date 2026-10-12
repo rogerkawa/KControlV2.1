@@ -13,6 +13,7 @@
     <script type="module" src="../scripts/api/setorSala.js" defer></script>
     <script type="module" src="../scripts/api/registerkey.js" defer></script>
     <script type="module" src="../scripts/api/membros.js" defer></script>
+    <script type="module" src="../scripts/api/avatar.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -543,11 +544,11 @@
                                     Todos
                                 </button>
 
-                                <button type="button" class="membros-filtro" data-filtro="admin" aria-pressed="false">
+                                <button type="button" class="membros-filtro" data-filtro="admin" aria-pressed="false" disabled>
                                     Administradores
                                 </button>
 
-                                <button type="button" class="membros-filtro" data-filtro="user" aria-pressed="false">
+                                <button type="button" class="membros-filtro" data-filtro="user" aria-pressed="false" disabled>
                                     Usuários
                                 </button>
 
@@ -570,20 +571,16 @@
                                     </tr>
                                 </thead>
 
-                                <!--
-                        O JavaScript poderá preencher este tbody
-                        com os membros retornados pela API.
-                    -->
                                 <tbody id="listaMembros">
 
-                                    <!-- Exemplo visual: substitua pelos dados da API -->
+                                    
                                     <tr>
                                         <td>
                                             <div class="membro-identidade">
                                                 <div class="membro-avatar">MC</div>
 
                                                 <div class="membro-dados">
-                                                    <strong>Mariana Costa</strong>
+                                                    <strong>Membro</strong>
                                                     <span>Membro do sistema</span>
                                                 </div>
                                             </div>
@@ -591,7 +588,7 @@
 
                                         <td>
                                             <span class="membro-email">
-                                                mariana@instituicao.com
+                                                membro@instituicao.com
                                             </span>
                                         </td>
 
