@@ -1,3 +1,4 @@
+import { irParaPagina } from "../modules/transicaoPagina.js";
 import app from "./api.js";
 
 const form = document.getElementById("formularioLogin");
@@ -27,9 +28,9 @@ async function manipulaForm(event) {
     //window.location.href = "pages/adm.html";
     console.log(user.role)
     if (user.role === "admin") {
-    window.location.href = "pages/adm.html";
+    irParaPagina("pages/adm.html");
 } else {
-    window.location.href = "pages/user.html";
+    irParaPagina("pages/user.html");
 }
   } catch (error) {
     console.error(error);

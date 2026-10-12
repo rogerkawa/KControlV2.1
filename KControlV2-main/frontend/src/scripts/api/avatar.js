@@ -112,12 +112,38 @@ avatarInput.addEventListener("change", async () => {
 function atualizarAvatares(avatarUrl) {
     const imagens = document.querySelectorAll(".user-avatar");
 
-    const urlCompleta = `${url_base}${avatarUrl}?v=${Date.now()}`;
+    if (!avatarUrl) return;
+
+    const urlCompleta = new URL(avatarUrl, url_base);
+
+    // Evita o cache da imagem anterior.
+    urlCompleta.searchParams.set("v", Date.now());
 
     imagens.forEach((imagem) => {
-        imagem.src = urlCompleta;
+        imagem.src = urlCompleta.href;
     });
 
-    console.log("Avatares encontrados:", imagens.length);
-    console.log("Nova URL:", urlCompleta);
+    console.log("Avatares atualizados:", imagens.length);
 }
+
+async function carregarAvatarSalvo() {
+    try {
+        const response = await fetch(`${url_base}/avatar`, {
+            method: "GET",
+            headers: httpAuthArquivo()
+        });
+
+        await verifyResponse(response);
+
+        const dados = await response.json();
+        const avatarUrl = dados.usuario?.avatar_url;
+
+        if (avatarUrl) {
+            atualizarAvatares(avatarUrl);
+        }
+    } catch (erro) {
+        console.error("Erro ao carregar avatar salvo:", erro);
+    }
+}
+
+carregarAvatarSalvo()

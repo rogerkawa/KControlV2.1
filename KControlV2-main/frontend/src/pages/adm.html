@@ -20,6 +20,20 @@
 </head>
 
 <body>
+    
+<div class="transicao-pagina" id="transicaoPagina">
+    <svg
+        class="transicao-pagina__svg"
+        viewBox="0 0 100 100"
+        preserveAspectRatio="none"
+    >
+        <path
+            id="transicaoPath"
+            d="M 0 100 L 0 100 Q 50 100 100 100 L 100 100 Z"
+        ></path>
+    </svg>
+</div>
+
     <!-- Sidebar -->
     <nav class="sidebar" id="sidebar" aria-label="Navegação principal">
 
@@ -439,7 +453,7 @@
                 <div class="config">
                     <div class="profile">
                         <label for="avatarInput" class="avatarConfig">
-                            <img id="avatarConfig" src="../assets/images/defaultAvatar.png" alt="Foto do usuário">
+                            <img id="avatarConfig" class="user-avatar" src="../assets/images/defaultAvatar.png" alt="Foto do usuário">
 
                             <span class="avatar-edit">
                                 ✎
