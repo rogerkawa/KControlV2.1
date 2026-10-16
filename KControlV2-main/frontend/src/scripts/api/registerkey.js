@@ -1,5 +1,3 @@
-import app from "./api.js"
-
 
 async function verifyResponse(response) {
     if(!response.ok){
@@ -31,6 +29,10 @@ function httpHeader(){
         'Content-Type': 'application/json',
     }
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+    carregarRegistros();
+});
 
 
 const setor = document.getElementById('setor')
@@ -98,85 +100,123 @@ if (!form) {
     }
   }
 
-async function keyRegister(event) {
-  console.log('prestou')
   
-    event.preventDefault()
+let temporizadorToast;
 
-    console.log("Submit executado!");
+function mostrarToast(titulo, mensagem) {
+    let toast = document.getElementById("toastNotificacao");
 
-    const result = await app.findUserAuthenticator();
+    if (!toast) {
+        toast = document.createElement("div");
 
-    console.log("Resultado da autenticação:", result);
-    console.log("Resultado da autenticação:", result);
-    console.log("Usuário:", result?.user);
-    console.log("ID do usuário:", result?.user?.id);
-    console.log("ID do setor:", setor.value);
-    console.log("ID da sala:", sala.value);
+        toast.id = "toastNotificacao";
+        toast.className = "toast-notificacao";
 
+        toast.setAttribute("role", "status");
+        toast.setAttribute("aria-live", "polite");
+
+        toast.innerHTML = `
+            <div class="toast-icone">
+                <i class="ti ti-check"></i>
+            </div>
+
+            <div class="toast-conteudo">
+                <p class="toast-titulo"></p>
+                <p class="toast-mensagem"></p>
+            </div>
+
+            <button
+                type="button"
+                class="toast-fechar"
+                aria-label="Fechar notificação"
+            >
+                &times;
+            </button>
+        `;
+
+        document.body.appendChild(toast);
+
+        toast.querySelector(".toast-fechar")
+            .addEventListener("click", () => {
+                toast.classList.remove("visivel");
+            });
+    }
+
+    toast.querySelector(".toast-titulo").textContent = titulo;
+    toast.querySelector(".toast-mensagem").textContent = mensagem;
+
+    clearTimeout(temporizadorToast);
+
+    toast.classList.add("visivel");
+
+    temporizadorToast = setTimeout(() => {
+        toast.classList.remove("visivel");
+    }, 4000);
+}
+
+
+
+async function keyRegister(event) {
+    event.preventDefault();
 
     try {
-    const turno = document.querySelector('[name="turno"]:checked').value
-
-    if (!turno) {
-    throw new Error("Selecione um turno.");
-}
-
-    const login = new Login(
-        setor.value,
-        sala.value,
-        responsavel.value,
-        data_retirada.value,
-        hora_retirada.value,
-      );
-      
-      login.validation()
-
-      /* Vem da api */
-      /* const existeRegistro = chaves.some(item =>
-        item.sala === sala.value &&
-        item.turno === turno.value
-    ); */
-    /* if (existeRegistro) {
-        throw new Error(
-            `A sala ${sala.value} já possui um registro no turno ${turno.value}`
+        const turnoSelecionado = document.querySelector(
+            '[name="turno"]:checked'
         );
-    } */
 
-    const register = {
-        id_setor: Number(setor.value),
-        id_sala: Number(sala.value),
-        responsavel: responsavel.value.trim(),
-        turno,
-        data_retirada: data_retirada.value,
-        hora_retirada: hora_retirada.value
+        if (!turnoSelecionado) {
+            throw new Error("Selecione um turno.");
+        }
+
+        const turno = turnoSelecionado.value;
+
+        const login = new Login(
+            setor.value,
+            sala.value,
+            responsavel.value,
+            data_retirada.value,
+            hora_retirada.value
+        );
+
+        login.validation();
+
+        const register = {
+            id_setor: Number(setor.value),
+            id_sala: Number(sala.value),
+            responsavel: responsavel.value.trim(),
+            turno,
+            data_retirada: data_retirada.value,
+            hora_retirada: hora_retirada.value
+        };
+
+        console.log("Registro salvo na API:", register);
+
+        // Só continua se a API confirmar o registro.
+        await registerUser(register);
+        if (typeof window.atualizarTabelaRegistros === "function") {
+    await window.atualizarTabelaRegistros();
+} else {
+    console.error("A função de atualização da tabela não foi inicializada.");
 }
+        
 
-    await registerUser(register)
+        mostrarToast(
+            "Retirada registrada!",
+            "O registro da chave foi salvo com sucesso."
+        );
+
+        // Limpa os campos após o sucesso.
+        document.getElementById("chavesRegistro").reset();
 
     } catch (error) {
         console.error("Erro ao registrar:", error);
-        alert(error.message || "Erro ao registrar a movimentação.");
+
+        mostrarToast(
+            "Não foi possível registrar",
+            error.message || "Ocorreu um erro ao registrar a retirada."
+        );
     }
 }
-
-
-
-async function listUsers() {
-        try {
-            const response = await fetch(`${url_base}/get/registro`,{
-            method: 'GET',
-            headers: httpAuth()
-        })
-
-        await verifyResponse(response)
-        return response.json()
-
-        } catch (error) {
-            console.error(error)
-            throw error
-        }
-    }
 
 async function registerUser(register){
     console.log("Dados enviados:", register);

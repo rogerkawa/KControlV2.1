@@ -262,6 +262,95 @@ form {
 
 
 
+/* Notificação do sistema */
+.toast-notificacao {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    z-index: 9999;
+
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    width: min(380px, calc(100vw - 32px));
+    padding: 16px;
+
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-left: 4px solid #16a34a;
+    border-radius: 12px;
+
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
+
+    opacity: 0;
+    transform: translateX(25px);
+    pointer-events: none;
+
+    transition:
+        opacity 0.3s ease,
+        transform 0.3s ease;
+}
+
+.toast-notificacao.visivel {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+}
+
+.toast-icone {
+    display: grid;
+    place-items: center;
+
+    flex-shrink: 0;
+    width: 42px;
+    height: 42px;
+
+    border-radius: 50%;
+    background: #dcfce7;
+    color: #15803d;
+
+    font-size: 22px;
+}
+
+.toast-conteudo {
+    flex: 1;
+}
+
+.toast-titulo {
+    margin: 0 0 4px;
+    color: #166534;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.toast-mensagem {
+    margin: 0;
+    color: #57534e;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.toast-fechar {
+    align-self: flex-start;
+    border: none;
+    background: transparent;
+    color: #78716c;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+@media (max-width: 480px) {
+    .toast-notificacao {
+        top: 12px;
+        right: 12px;
+        width: calc(100vw - 24px);
+    }
+}
+
+
+
+
 .card-form{
     width:100%;
     max-width:700px;
@@ -289,125 +378,6 @@ form {
     font-size:.95rem;
 }
 
-/* .tipo-movimentacao{
-    background:#f3f4f6;
-
-    border-radius:12px;
-
-    padding:.3rem;
-
-    display:flex;
-}
-
-.tipo-movimentacao button{
-    flex:1;
-
-    border:none;
-    background:none;
-
-    padding:.9rem;
-
-    border-radius:10px;
-
-    cursor:pointer;
-
-    font-weight:500;
-
-    transition:.3s;
-}
-
-.tipo-movimentacao .ativo{
-    background:linear-gradient(
-    90deg,
-    #3157ff,
-    #654cff
-    );
-
-    color:white;
-}
-
-.grid-2{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:1rem;
-}
-
-.campo{
-    display:flex;
-    flex-direction:column;
-    gap:.5rem;
-}
-
-.campo label{
-    font-size:.9rem;
-    font-weight:500;
-    color:var(--text-secondary);
-}
-
-.campo input,
-.campo select,
-.campo textarea{
-    width:100%;
-
-    border:1px solid #d1d5db;
-
-    border-radius:10px;
-
-    padding:.9rem 1rem;
-
-    font-size:.95rem;
-
-    outline:none;
-
-    transition:.3s;
-}
-
-.campo input:focus,
-.campo select:focus,
-.campo textarea:focus{
-
-    border-color:var(--accent-50);
-
-    box-shadow:
-    0 0 0 4px
-    rgba(49,87,255,.15);
-}
-
-.btn-registrar{
-    width:100%;
-    margin-top: 1.5rem;
-    border:none;
-    padding:1rem;
-    border-radius:12px;
-    background: #374151;
-    color:white;
-    font-size:1rem;
-    font-weight:600;
-    cursor:pointer;
-    transition:.3s;
-}
-
-.btn-registrar:hover{
-    transform:translateY(-2px);
-    background: #3C3489;
-}
-.turn{
-    display: flex;
-    flex-direction: column;
-    color: black;
-}
-.turn > label{
-    color: var(--text-secondary);
-    font-weight: 500;
-}
-.radios{
-    display: flex;
-    gap: 20px;
-}
-.form-check-label{
-    font-size: 1.2rem;
-    color: var(--text-secondary);
-} */
 .atividade-box{
     grid-column: 2;
     margin-top: 30px;
