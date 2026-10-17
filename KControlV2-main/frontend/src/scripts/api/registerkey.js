@@ -1,4 +1,4 @@
-
+import carregarUltimosRegistros from "../modules/ultimosRegistros.js";
 async function verifyResponse(response) {
     if(!response.ok){
         const erro = await response.json()
@@ -193,6 +193,7 @@ async function keyRegister(event) {
 
         // Só continua se a API confirmar o registro.
         await registerUser(register);
+        await carregarUltimosRegistros()
         if (typeof window.atualizarTabelaRegistros === "function") {
     await window.atualizarTabelaRegistros();
 } else {
