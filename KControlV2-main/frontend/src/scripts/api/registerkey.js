@@ -194,6 +194,7 @@ async function keyRegister(event) {
         // Só continua se a API confirmar o registro.
         await registerUser(register);
         await carregarUltimosRegistros()
+        document.dispatchEvent(new Event("registrosAtualizados"));
         if (typeof window.atualizarTabelaRegistros === "function") {
     await window.atualizarTabelaRegistros();
 } else {

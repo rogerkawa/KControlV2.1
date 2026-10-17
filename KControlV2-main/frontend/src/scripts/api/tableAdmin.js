@@ -52,6 +52,7 @@ const registroApi = {
         );
 
         await verifyResponse(response);
+        document.dispatchEvent(new Event("registrosAtualizados"));
         return response.json();
     },
 

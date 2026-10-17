@@ -296,6 +296,40 @@ document.addEventListener("DOMContentLoaded", () => {
     // Guarda o ID do membro selecionado.
     let membroSelecionadoId = null;
 
+    // FECHAR MODAL DE EDIÇÃO
+function fecharModalEditar() {
+    modalEditar.hidden = true;
+    membroSelecionadoId = null;
+}
+
+// Botão X do cabeçalho
+const botaoFechar = modalEditar.querySelector(
+    ".membros-modal-fechar"
+);
+
+botaoFechar.addEventListener("click", fecharModalEditar);
+
+// Botão Cancelar
+const botaoCancelar = modalEditar.querySelector(
+    ".membros-btn-cancelar"
+);
+
+botaoCancelar.addEventListener("click", fecharModalEditar);
+
+// Fechar ao clicar no fundo escuro, fora do cartão
+modalEditar.addEventListener("click", (event) => {
+    if (event.target === modalEditar) {
+        fecharModalEditar();
+    }
+});
+
+// Fechar ao pressionar Esc
+document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && !modalEditar.hidden) {
+        fecharModalEditar();
+    }
+});
+
 
     // ABRIR MODAL DE EDIÇÃO
     listaMembros.addEventListener("click", async (event) => {
