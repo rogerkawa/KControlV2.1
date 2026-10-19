@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KControl</title>
-    <link rel="icon" href="src/assets/images/KControl Logo.png">
+    <link rel="icon" href="../assets/images/kcontrol_icone_branco_transparente.png" id="favicon">
     <link rel="stylesheet" href="../styles/style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
@@ -15,31 +15,27 @@
     <script type="module" src="../scripts/api/membros.js" defer></script>
     <script type="module" src="../scripts/api/avatar.js" defer></script>
     <script type="module" src="../scripts/modules/admin.js" defer></script>
+    <script type="module" src="../scripts/modules/gerenciarSalas.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 </head>
 
 <body>
-    
-<div class="transicao-pagina" id="transicaoPagina">
-    <svg
-        class="transicao-pagina__svg"
-        viewBox="0 0 100 100"
-        preserveAspectRatio="none"
-    >
-        <path
-            id="transicaoPath"
-            d="M 0 100 L 0 100 Q 50 100 100 100 L 100 100 Z"
-        ></path>
-    </svg>
-</div>
+
+    <div class="transicao-pagina" id="transicaoPagina">
+        <svg class="transicao-pagina__svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <path id="transicaoPath" d="M 0 100 L 0 100 Q 50 100 100 100 L 100 100 Z"></path>
+        </svg>
+    </div>
 
     <!-- Sidebar -->
     <nav class="sidebar" id="sidebar" aria-label="Navegação principal">
 
         <div class="sb-header">
-            <img src="../assets/images/logoKcontrol.png" alt="logoKcontrol">
+            <img src="../assets/images/kcontrol_logo_branca_transparente.png" alt="logoKcontrol"
+                class="logo logo-branca">
+            <img src="../assets/images/kcontrol_logo_preta_transparente.png" alt="logoKcontrol" class="logo logo-preta">
             <button class="toggle-btn" id="toggleBtn" aria-label="Recolher menu">
                 <i class="ti ti-chevron-left" aria-hidden="true"></i>
             </button>
@@ -59,19 +55,11 @@
                 <i class="ti ti-check" aria-hidden="true"></i>
                 <span>Administração</span>
             </a>
-            <a class="nav-item" href="#" data-page="Calendário">
-                <i class="ti ti-calendar" aria-hidden="true"></i>
-                <span>Calendário</span>
-            </a>
 
             <span class="sb-label" style="margin-top: 8px">Análise</span>
-            <a class="nav-item" href="#" data-page="Relatórios">
+            <a class="nav-item" href="#" data-page="Gerenciar Salas">
                 <i class="ti ti-chart-bar" aria-hidden="true"></i>
-                <span>Relatórios</span>
-            </a>
-            <a class="nav-item" href="#" data-page="Analytics">
-                <i class="ti ti-trending-up" aria-hidden="true"></i>
-                <span>Analytics</span>
+                <span>Gerenciar Salas</span>
             </a>
 
             <span class="sb-label" style="margin-top: 8px">Time</span>
@@ -79,9 +67,9 @@
                 <i class="ti ti-users" aria-hidden="true"></i>
                 <span>Membros</span>
             </a>
-            <a class="nav-item" href="#" data-page="Mensagens">
-                <i class="ti ti-message" aria-hidden="true"></i>
-                <span>Mensagens</span>
+            <a class="nav-item" href="#" data-page="Sobre">
+                <i class="ti ti-info-circle" aria-hidden="true"></i>
+                <span>Sobre o projeto</span>
             </a>
         </div>
 
@@ -113,7 +101,7 @@
             <button class="mobile-toggle" id="mobileToggle" aria-label="Abrir menu">
                 <i class="ti ti-menu-2" aria-hidden="true"></i>
             </button>
-            <span class="topbar-title" id="topbarTitle">Registro de Chaves</span>
+            <span class="topbar-title" id="topbarTitle">Registro</span>
             <div class="topbar-right">
 
                 <div class="headerConfig">
@@ -168,6 +156,31 @@
         <div class="content">
 
             <section id="registro" class="principal page active">
+
+
+                <div class="registro-boas-vindas">
+                    <div class="boas-vindas-texto">
+                        <span class="boas-vindas-legenda">
+                            <i class="bi bi-sun"></i>
+                            ÁREA DE GERENCIAMENTO
+                        </span>
+
+                        <h1>
+                            Seja bem-vindo(a),
+                            <span id="nomeBoasVindas">...</span>!
+                        </h1>
+
+                        <p>
+                            Organize as retiradas, acompanhe as salas e gerencie
+                            tudo em um só lugar.
+                        </p>
+                    </div>
+
+                    <div class="boas-vindas-logo">
+                    <img src="../assets/images/kcontrol_icone_branco_transparente.png" alt="Ícone" class="logo">
+                    </div>
+                </div>
+
                 <div class="card-form">
                     <div class="card-header">
                         <h2>Registrar Retirada ou Devolução</h2>
@@ -181,31 +194,12 @@
                                 <label>Setor</label>
                                 <select name="setor" id="setor">
                                     <option value="" disabled selected>Selecione o setor</option>
-                                    <!-- <option value="TI">Técnico em Informática</option>
-                                    <option value="RH">Registros Humanos</option>
-                                    <option value="Financeiro">Gestão Financeira</option>
-                                    <option value="Produção">Produção</option> -->
                                 </select>
                             </div>
                             <div class="campo">
                                 <label>Sala / Local</label>
                                 <select name="sala" id="sala">
                                     <option value="" disabled selected>Selecione a sala</option>
-                                    <!-- <option value="" disabled>Setor A</option>
-                                    <option value="A1">Sala A1</option>
-                                    <option value="A2">Sala A2</option>
-                                    <option value="A3">Sala A3</option>
-                                    <option value="A4">Sala A4</option>
-                                    <option value="" disabled>Setor B</option>
-                                    <option value="B1">Sala B1</option>
-                                    <option value="B2">Sala B2</option>
-                                    <option value="B3">Sala B3</option>
-                                    <option value="B4">Sala B4</option>
-                                    <option value="" disabled>Setor C</option>
-                                    <option value="C1">Sala C1</option>
-                                    <option value="C2">Sala C2</option>
-                                    <option value="C3">Sala C3</option>
-                                    <option value="C4">Sala C4</option> -->
                                 </select>
                             </div>
                         </div>
@@ -251,19 +245,6 @@
                             <i class="bi bi-key"></i>
                             Registrar
                         </button>
-                        <!-- Toast Bem Vindo -->
-                        <!-- <div class="toast-container position-fixed bottom-0 end-0 p-3">
-                            <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-                                <div class="toast-header">
-                                    <i class="bi-key-fill"></i>
-                                    <strong class="me-auto">LogiTech</strong>
-                                    <small>Now</small>
-                                    <button type="button" class="btn-close" data-bs-dismiss="toast"
-                                        aria-label="Close"></button>
-                                </div>
-                                <div class="toast-body">Dados enviado com sucesso</div>
-                            </div>
-                        </div> -->
                     </form>
 
                 </div>
@@ -384,7 +365,8 @@
                     <button class="clear btn btn-outline-danger">Limpar Registros</button>
                 </main>
                 <footer>
-                    Desenvolvido por <a href="https://github.com/rogerkawa" target="_blank">RogerDev </a>-
+                    Desenvolvido por <a href="https://github.com/rogerkawa" target="_blank">RogerDev </a> & <a
+                        href="https://github.com/caiovictordev" target="_blank">CaioDev </a>-
                     &copy;Todos os direitos reservados
                 </footer>
                 <!-- Modal editar -->
@@ -453,7 +435,8 @@
                 <div class="config">
                     <div class="profile">
                         <label for="avatarInput" class="avatarConfig">
-                            <img id="avatarConfig" class="user-avatar" src="../assets/images/defaultAvatar.png" alt="Foto do usuário">
+                            <img id="avatarConfig" class="user-avatar" src="../assets/images/defaultAvatar.png"
+                                alt="Foto do usuário">
 
                             <span class="avatar-edit">
                                 ✎
@@ -558,11 +541,13 @@
                                     Todos
                                 </button>
 
-                                <button type="button" class="membros-filtro" data-filtro="admin" aria-pressed="false" disabled>
+                                <button type="button" class="membros-filtro" data-filtro="admin" aria-pressed="false"
+                                    disabled>
                                     Administradores
                                 </button>
 
-                                <button type="button" class="membros-filtro" data-filtro="user" aria-pressed="false" disabled>
+                                <button type="button" class="membros-filtro" data-filtro="user" aria-pressed="false"
+                                    disabled>
                                     Usuários
                                 </button>
 
@@ -587,7 +572,7 @@
 
                                 <tbody id="listaMembros">
 
-                                    
+
                                     <tr>
                                         <td>
                                             <div class="membro-identidade">
@@ -810,6 +795,434 @@
                 </div>
 
             </section>
+
+
+            <section class="page" id="Gerenciar Salas">
+
+                <div class="gs-container">
+
+                    <header class="gs-header">
+                        <div>
+                            <span class="gs-eyebrow">ADMINISTRAÇÃO</span>
+                            <h1>Gerenciar salas</h1>
+                            <p>Cadastre salas e controle sua disponibilidade e manutenção.</p>
+                        </div>
+
+                        <button class="gs-btn gs-btn-secondary" id="btnAtualizar" type="button">
+                            <i class="bi bi-arrow-clockwise"></i>
+                            Atualizar
+                        </button>
+                    </header>
+
+                    <section class="gs-stats" aria-label="Resumo das salas">
+
+                        <article class="gs-stat-card">
+                            <div>
+                                <span>Total de salas</span>
+                                <strong id="totalSalasGerenciar">0</strong>
+                            </div>
+                            <i class="bi bi-door-open"></i>
+                        </article>
+
+                        <article class="gs-stat-card">
+                            <div>
+                                <span>Disponíveis</span>
+                                <strong id="totalDisponiveis">0</strong>
+                            </div>
+                            <i class="bi bi-check-circle"></i>
+                        </article>
+
+                        <article class="gs-stat-card">
+                            <div>
+                                <span>Em manutenção</span>
+                                <strong id="totalManutencao">0</strong>
+                            </div>
+                            <i class="bi bi-tools"></i>
+                        </article>
+
+                        <article class="gs-stat-card">
+                            <div>
+                                <span>Chaves retiradas</span>
+                                <strong id="totalRetiradas">0</strong>
+                            </div>
+                            <i class="bi bi-key"></i>
+                        </article>
+
+                    </section>
+
+                    <section class="gs-panel">
+
+                        <div class="gs-section-heading">
+                            <div>
+                                <h2>Adicionar sala</h2>
+                                <p>Cadastre uma nova sala no sistema.</p>
+                            </div>
+
+                            <i class="bi bi-plus-circle"></i>
+                        </div>
+
+                        <form id="formSala" class="gs-form">
+
+                            <div class="gs-field">
+                                <label for="nomeSala">Nome ou identificação</label>
+                                <input type="text" id="nomeSala" name="nome" placeholder="Ex.: SALA E1" maxlength="100"
+                                    required>
+                            </div>
+
+                            <button class="gs-btn gs-btn-primary" type="submit" id="btnCadastrar">
+                                <i class="bi bi-plus-lg"></i>
+                                Adicionar sala
+                            </button>
+
+                        </form>
+
+                    </section>
+
+                    <section class="gs-panel">
+
+                        <div class="gs-section-heading gs-table-heading">
+                            <div>
+                                <h2>Salas cadastradas</h2>
+                                <p>Consulte o status e gerencie cada sala.</p>
+                            </div>
+
+                            <div class="gs-filter">
+                                <label for="filtroStatus">Filtrar por status</label>
+                                <select id="filtroStatus">
+                                    <option value="todas">Todas as salas</option>
+                                    <option value="disponivel">Disponíveis</option>
+                                    <option value="retirada">Chave retirada</option>
+                                    <option value="manutencao">Em manutenção</option>
+                                    <option value="inativa">Inativas</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div id="mensagem" class="gs-message" role="status" hidden></div>
+
+                        <div class="gs-table-wrapper">
+                            <table class="gs-table">
+                                <thead>
+                                    <tr>
+                                        <th>Identificação</th>
+                                        <th>Status</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody id="listaSalas">
+                                    <tr>
+                                        <td colspan="3" class="gs-empty">
+                                            Carregando salas...
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <p class="gs-note">
+                            <i class="bi bi-info-circle"></i>
+                            Salas removidas são desativadas para preservar o histórico de retiradas.
+                        </p>
+
+                    </section>
+
+                </div>
+
+            </section>
+
+            <!-- Sobre o projeto -->
+            <section class="page" id="Sobre">
+
+                <div class="sobre-container">
+
+                    <!-- Apresentação -->
+                    <header class="sobre-hero">
+                        <span class="sobre-eyebrow">
+                            <i class="ti ti-code"></i>
+                            CONHEÇA O KCONTROLV2
+                        </span>
+
+                        <h1>Mais organização.<br>
+                            <span>Mais controle.</span>
+                        </h1>
+
+                        <p>
+                            Uma solução desenvolvida para tornar o gerenciamento
+                            de chaves e salas mais organizado, prático e eficiente.
+                        </p>
+
+                        <a href="#sobre-tutorial" class="sobre-cta">
+                            Conhecer o sistema
+                            <i class="ti ti-arrow-down-right"></i>
+                        </a>
+
+                        <div class="sobre-hero-decoration" aria-hidden="true">
+                            <i class="ti ti-key"></i>
+                        </div>
+                    </header>
+
+                    <!-- História -->
+                    <section class="sobre-historia">
+                        <div class="sobre-section-heading">
+                            <span class="sobre-eyebrow">01 / NOSSA HISTÓRIA</span>
+                            <h2>De uma atividade acadêmica a um projeto em evolução.</h2>
+                        </div>
+
+                        <div class="sobre-historia-texto">
+                            <p>
+                                O KControlV2 surgiu inicialmente como uma atividade
+                                acadêmica durante o curso Técnico em Desenvolvimento
+                                de Sistemas do SENAI.
+                            </p>
+
+                            <p>
+                                Com o avanço do curso, o projeto foi aprofundado e
+                                aprimorado, incorporando novas funcionalidades e
+                                conhecimentos adquiridos ao longo da formação.
+                            </p>
+
+                            <p>
+                                Seu objetivo é facilitar o controle da retirada e
+                                da devolução de chaves, permitindo acompanhar a
+                                disponibilidade das salas e consultar os registros
+                                de movimentação em um só lugar.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Desenvolvedores -->
+
+                    <section class="sobre-equipe">
+                        <div class="sobre-section-heading">
+                            <span class="sobre-eyebrow">02 / QUEM ESTÁ POR TRÁS</span>
+                            <h2>Desenvolvido por estudantes.</h2>
+                            <p>
+                                Dois alunos, uma experiência de aprendizado e
+                                desenvolvimento construída na prática.
+                            </p>
+                        </div>
+
+                        <div class="sobre-equipe-grid">
+
+                            <!-- Roger Kawã -->
+                            <article class="sobre-dev-card">
+                                <div class="sobre-dev-info">
+                                    <div class="sobre-dev-icon">
+                                        <i class="ti ti-code"></i>
+                                    </div>
+
+                                    <span class="sobre-dev-label">DESENVOLVEDOR</span>
+                                    <h3>Roger Kawã</h3>
+
+                                    <p>
+                                        Participação no desenvolvimento e na evolução
+                                        do KControlV2 durante a formação técnica.
+                                    </p>
+
+                                    <a href="https://github.com/rogerkawa" target="_blank" rel="noopener noreferrer"
+                                        class="sobre-dev-link">
+                                        GitHub
+                                        <i class="ti ti-arrow-up-right"></i>
+                                    </a>
+                                </div>
+
+                                <div class="sobre-dev-foto">
+                                    <img src="../assets/images/roger.png" alt="Foto de Roger Kawã">
+
+                                    <div class="sobre-dev-foto-overlay"></div>
+
+                                    <div class="sobre-dev-foto-nome">
+                                        <span>01 / DESENVOLVEDOR</span>
+                                        <h3>Roger Kawã</h3>
+                                    </div>
+                                </div>
+                            </article>
+
+                            <!-- Caio Victor -->
+                            <article class="sobre-dev-card">
+                                <div class="sobre-dev-info">
+                                    <div class="sobre-dev-icon">
+                                        <i class="ti ti-terminal-2"></i>
+                                    </div>
+
+                                    <span class="sobre-dev-label">DESENVOLVEDOR</span>
+                                    <h3>Caio Victor</h3>
+
+                                    <p>
+                                        Participação no desenvolvimento e na evolução
+                                        do KControlV2 durante a formação técnica.
+                                    </p>
+
+                                    <a href="https://github.com/caiovictordev" target="_blank" rel="noopener noreferrer"
+                                        class="sobre-dev-link">
+                                        GitHub
+                                        <i class="ti ti-arrow-up-right"></i>
+                                    </a>
+                                </div>
+
+                                <div class="sobre-dev-foto">
+                                    <img src="../assets/images/caio.jpeg" alt="Foto de Caio Victor">
+
+                                    <div class="sobre-dev-foto-overlay"></div>
+
+                                    <div class="sobre-dev-foto-nome">
+                                        <span>02 / DESENVOLVEDOR</span>
+                                        <h3>Caio Victor</h3>
+                                    </div>
+                                </div>
+                            </article>
+
+                        </div>
+
+                        <p class="sobre-equipe-nota">
+                            Projeto acadêmico desenvolvido por alunos do curso
+                            Técnico em Desenvolvimento de Sistemas do SENAI.
+                        </p>
+                    </section>
+
+
+                    <!-- Tutorial -->
+                    <section class="sobre-tutorial" id="sobre-tutorial">
+
+                        <div class="sobre-section-heading">
+                            <span class="sobre-eyebrow">03 / GUIA DE UTILIZAÇÃO</span>
+                            <h2>Como utilizar o KControlV2?</h2>
+                            <p>
+                                Conheça as principais áreas do sistema e saiba
+                                para que serve cada funcionalidade.
+                            </p>
+                        </div>
+
+                        <div class="sobre-tutorial-list">
+
+                            <!-- Login -->
+                            <article class="sobre-tutorial-card">
+                                <div class="sobre-tutorial-imagem">
+                                    <div class="sobre-print-placeholder">
+
+                                        <img class="imgSobre" src="../assets/images/login.png" alt="Tela de Login">
+                                    </div>
+                                    <span class="sobre-tutorial-numero">01</span>
+                                </div>
+
+                                <div class="sobre-tutorial-conteudo">
+                                    <span class="sobre-tutorial-categoria">ACESSO</span>
+                                    <h3>Entre no sistema</h3>
+                                    <p>
+                                        Acesse o KControlV2 com suas credenciais.
+                                        Após a autenticação, você poderá utilizar
+                                        as funcionalidades liberadas para seu perfil.
+                                    </p>
+                                </div>
+                            </article>
+
+                            <!-- Registro -->
+                            <article class="sobre-tutorial-card">
+                                <div class="sobre-tutorial-imagem">
+                                    <div class="sobre-print-placeholder">
+                                        <i class="ti ti-key"></i>
+                                        <span>Captura da tela de registro</span>
+                                        <small>Imagem ilustrativa a ser substituída</small>
+                                    </div>
+                                    <span class="sobre-tutorial-numero">02</span>
+                                </div>
+
+                                <div class="sobre-tutorial-conteudo">
+                                    <span class="sobre-tutorial-categoria">MOVIMENTAÇÃO</span>
+                                    <h3>Registre as chaves</h3>
+                                    <p>
+                                        Selecione o setor e a sala, informe o
+                                        responsável, o turno, a data e o horário
+                                        solicitado. Preencha os campos corretamente
+                                        para registrar a movimentação.
+                                    </p>
+                                </div>
+                            </article>
+
+                            <!-- Gerenciar salas -->
+                            <article class="sobre-tutorial-card">
+                                <div class="sobre-tutorial-imagem">
+                                    <div class="sobre-print-placeholder">
+                                        <img src="../assets/images/gerenciarSala.png" alt="Gerenciar Salas"
+                                            class="imgSobre">
+                                    </div>
+                                    <span class="sobre-tutorial-numero">03</span>
+                                </div>
+
+                                <div class="sobre-tutorial-conteudo">
+                                    <span class="sobre-tutorial-categoria">ORGANIZAÇÃO</span>
+                                    <h3>Gerencie as salas</h3>
+                                    <p>
+                                        Consulte as salas cadastradas, acompanhe
+                                        sua disponibilidade e utilize as opções
+                                        administrativas para cadastrar salas ou
+                                        atualizar seus status.
+                                    </p>
+                                </div>
+                            </article>
+
+                            <!-- Gerenciar usuários -->
+                            <article class="sobre-tutorial-card">
+                                <div class="sobre-tutorial-imagem">
+                                    <div class="sobre-print-placeholder">
+                                        <img src="../assets/images/gerenciarMembros.png" alt="Gerenciamento de Membros"
+                                            class="imgSobre">
+                                    </div>
+                                    <span class="sobre-tutorial-numero">04</span>
+                                </div>
+
+                                <div class="sobre-tutorial-conteudo">
+                                    <span class="sobre-tutorial-categoria">USUÁRIOS</span>
+                                    <h3>Gerencie os membros</h3>
+                                    <p>
+                                        Na área de membros, os administradores podem
+                                        consultar os usuários cadastrados e utilizar
+                                        as ações disponíveis para administrar seus
+                                        dados e permissões.
+                                    </p>
+                                </div>
+                            </article>
+
+                            <!-- Configurações -->
+                            <article class="sobre-tutorial-card">
+                                <div class="sobre-tutorial-imagem">
+                                    <div class="sobre-print-placeholder">
+                                        <img src="../assets/images/config.png" alt="Configurações" class="imgSobre">
+                                    </div>
+                                    <span class="sobre-tutorial-numero">05</span>
+                                </div>
+
+                                <div class="sobre-tutorial-conteudo">
+                                    <span class="sobre-tutorial-categoria">PERSONALIZAÇÃO</span>
+                                    <h3>Personalize sua experiência</h3>
+                                    <p>
+                                        Acesse as configurações para consultar os
+                                        dados do seu perfil, atualizar sua foto,
+                                        quando disponível, e alternar entre os
+                                        temas claro e escuro.
+                                    </p>
+                                </div>
+                            </article>
+
+                        </div>
+                    </section>
+
+                    <!-- Encerramento -->
+                    <footer class="sobre-footer">
+                        <i class="ti ti-school"></i>
+                        <p>
+                            KControlV2 — um projeto acadêmico em constante evolução,
+                            desenvolvido no curso Técnico em Desenvolvimento de
+                            Sistemas do SENAI.
+                        </p>
+                    </footer>
+
+                </div>
+
+            </section>
+
+
 
 
 

@@ -1,4 +1,5 @@
 import app from "../api/api.js";
+import { atualizarBoasVindas } from "../app.js";
 
 export default async function carregarUsuario() {
   try {
@@ -19,6 +20,7 @@ export default async function carregarUsuario() {
     userName.forEach((usuario)=>{
        if (userName) {
       usuario.textContent = user.nome;
+      atualizarBoasVindas()
     } 
     
   })

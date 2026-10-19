@@ -13,22 +13,35 @@ async function verifyResponse(response) {
 
 const url_base = 'http://localhost:3333'
 
+
 async function carregarSalas() {
-    const response = await fetch(`${url_base}/salas`)
+    const response = await fetch(`${url_base}/salas`);
 
-    await verifyResponse(response)
+    await verifyResponse(response);
 
-    const salas = await response.json()
+    const salas = await response.json();
 
-    salas.forEach(sala => {
-        const option = document.createElement('option')
-
-        option.value = sala.id_sala
-        option.textContent = sala.nome
-
-        selectSalas.appendChild(option)
+    // Limpa as opções antigas, mantendo a primeira opção do select
+    selectSalas.querySelectorAll('option:not(:first-child)').forEach(option => {
+        option.remove();
     });
-} 
+
+    const salasPermitidas = salas.filter((sala) => {
+        return sala.status !== "inativa" &&
+               sala.status !== "manutencao" &&
+               sala.status !== "retirada";
+    });
+
+    salasPermitidas.forEach(sala => {
+        const option = document.createElement('option');
+
+        option.value = sala.id_sala;
+        option.textContent = sala.nome;
+
+        selectSalas.appendChild(option);
+    });
+}
+ 
 
 async function carregarSetores() {
     const response = await fetch(`${url_base}/setores`)
@@ -49,3 +62,13 @@ async function carregarSetores() {
 
 carregarSalas()
 carregarSetores()
+
+document.addEventListener("salasAtualizadas", () => {
+    carregarSalas();
+});
+
+window.addEventListener("storage", (evento) => {
+    if (evento.key === "salasAtualizadas") {
+        carregarSalas();
+    }
+});

@@ -31,8 +31,25 @@
       flex-shrink: 0;
     }
     .sb-header img{
-      width: 80%;
+      width: 60%;
     }
+    
+    html[data-theme="dark"] .logo-branca {
+    display: block;
+}
+
+  html[data-theme="dark"] .logo-preta {
+    display: none;
+}
+
+  /* Tema claro: mostra a logo preta */
+  html[data-theme="light"] .logo-branca {
+      display: none;
+  }
+
+  html[data-theme="light"] .logo-preta {
+      display: block;
+  }
 
     .sidebar.collapsed .logo-name {
       opacity: 0;

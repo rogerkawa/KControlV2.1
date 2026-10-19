@@ -1,8 +1,5 @@
 export default function toggleTema(){
 const btnTema = document.querySelectorAll('.btnToggleTema')
-const avatarInput = document.querySelector("#avatarInput");
-const avatar = document.querySelector("#avatarConfig");
-
 btnTema.forEach((button)=>{
     button.addEventListener('click',()=>{
     const html = document.documentElement
@@ -17,30 +14,4 @@ btnTema.forEach((button)=>{
 })
 })
 
-
-/* const avatarSalvo = localStorage.getItem("avatar");
-
-if (avatarSalvo) {
-    avatar.src = avatarSalvo;
-         document.querySelectorAll(".user-avatar").forEach(avatar => {
-            avatar.src = avatarSalvo;
-        }); 
-}
-
-
-avatarInput.addEventListener("change", () => {
-    const arquivo = avatarInput.files[0];
-
-    if (!arquivo) return;
-
-    const reader = new FileReader();
-
-    reader.onload = () => {
-        avatar.src = reader.result;
-
-        localStorage.setItem("avatar", reader.result);
-    };
-
-    reader.readAsDataURL(arquivo);
-}); */
 }
