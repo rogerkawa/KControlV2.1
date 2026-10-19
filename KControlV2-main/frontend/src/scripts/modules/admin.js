@@ -1,116 +1,113 @@
 import registroApi from "../api/tableAdmin.js";
 
 export default function registro() {
-    const tabela = document.querySelector("#table");
-    const botaoLimpar = document.querySelector(".clear");
+  const tabela = document.querySelector("#table");
+  const botaoLimpar = document.querySelector(".clear");
 
-    const modalEditar = document.getElementById("modalEditar");
-    const editarNome = document.getElementById("editarNome");
-    const editarSala = document.getElementById("editarSala");
-    const editarEntrega = document.getElementById("editarEntrega");
+  const modalEditar = document.getElementById("modalEditar");
+  const editarNome = document.getElementById("editarNome");
+  const editarSala = document.getElementById("editarSala");
+  const editarEntrega = document.getElementById("editarEntrega");
 
-    const salvarEdicao = document.getElementById("salvarEdicao");
-    const fecharEditar = document.getElementById("fecharEditar");
-    const cancelarEditar = document.getElementById("cancelarEditar");
+  const salvarEdicao = document.getElementById("salvarEdicao");
+  const fecharEditar = document.getElementById("fecharEditar");
+  const cancelarEditar = document.getElementById("cancelarEditar");
 
-    // Impede que o código seja inicializado em páginas sem a tabela.
-    if (!tabela) {
-        return;
+  // Impede que o código seja inicializado em páginas sem a tabela.
+  if (!tabela) {
+    return;
+  }
+
+  let registros = [];
+  let idAtual = null;
+
+  // Escapa textos antes de inseri-los no HTML.
+  function escaparHTML(valor) {
+    return String(valor ?? "").replace(/[&<>"']/g, (caractere) => {
+      const caracteres = {
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;",
+      };
+
+      return caracteres[caractere];
+    });
+  }
+
+  function formatarData(data) {
+    if (!data) {
+      return "--/--/----";
     }
 
-    let registros = [];
-    let idAtual = null;
+    const texto = String(data).slice(0, 10);
 
-    // Escapa textos antes de inseri-los no HTML.
-    function escaparHTML(valor) {
-        return String(valor ?? "").replace(/[&<>"']/g, caractere => {
-            const caracteres = {
-                "&": "&amp;",
-                "<": "&lt;",
-                ">": "&gt;",
-                '"': "&quot;",
-                "'": "&#39;"
-            };
-
-            return caracteres[caractere];
-        });
+    // Converte YYYY-MM-DD para DD/MM/YYYY.
+    if (/^\d{4}-\d{2}-\d{2}$/.test(texto)) {
+      const [ano, mes, dia] = texto.split("-");
+      return `${dia}/${mes}/${ano}`;
     }
 
-    function formatarData(data) {
-        if (!data) {
-            return "--/--/----";
-        }
+    return texto;
+  }
 
-        const texto = String(data).slice(0, 10);
-
-        // Converte YYYY-MM-DD para DD/MM/YYYY.
-        if (/^\d{4}-\d{2}-\d{2}$/.test(texto)) {
-            const [ano, mes, dia] = texto.split("-");
-            return `${dia}/${mes}/${ano}`;
-        }
-
-        return texto;
+  function formatarHora(hora) {
+    if (!hora) {
+      return "--:--";
     }
 
-    function formatarHora(hora) {
-        if (!hora) {
-            return "--:--";
-        }
+    return String(hora).slice(0, 5);
+  }
 
-        return String(hora).slice(0, 5);
-    }
+  function obterTurno(turno) {
+    const turnos = {
+      M: "Manhã",
+      T: "Tarde",
+      N: "Noite",
+    };
 
-    function obterTurno(turno) {
-        const turnos = {
-            M: "Manhã",
-            T: "Tarde",
-            N: "Noite"
-        };
+    return turnos[turno] || turno || "--";
+  }
 
-        return turnos[turno] || turno || "--";
-    }
-
-    // Busca os registros na API e atualiza a tabela.
-    async function carregarRegistros() {
-        try {
-            tabela.innerHTML = `
+  // Busca os registros na API e atualiza a tabela.
+  async function carregarRegistros() {
+    try {
+      tabela.innerHTML = `
                 <tr>
                     <td colspan="10">Carregando registros...</td>
                 </tr>
             `;
 
-            const resposta = await registroApi.getKeys();
+      const resposta = await registroApi.getKeys();
 
-            // O controller retorna { getKeys: [...] }.
-            if (!Array.isArray(resposta.getKeys)) {
-                throw new Error(
-                    "A API não retornou uma lista válida de registros."
-                );
-            }
+      // O controller retorna { getKeys: [...] }.
+      if (!Array.isArray(resposta.getKeys)) {
+        throw new Error("A API não retornou uma lista válida de registros.");
+      }
 
-            registros = resposta.getKeys;
+      registros = resposta.getKeys;
 
-            renderizarTabela();
+      renderizarTabela();
+    } catch (erro) {
+      console.error("Erro ao carregar registros:", erro);
 
-        } catch (erro) {
-            console.error("Erro ao carregar registros:", erro);
-
-            tabela.innerHTML = `
+      tabela.innerHTML = `
                 <tr>
                     <td colspan="10">
                         Não foi possível carregar os registros.
                     </td>
                 </tr>
             `;
-        }
     }
+  }
 
-    // Monta a tabela usando os dados retornados pelo banco.
-    function renderizarTabela() {
-        tabela.innerHTML = "";
+  // Monta a tabela usando os dados retornados pelo banco.
+  function renderizarTabela() {
+    tabela.innerHTML = "";
 
-        if (registros.length === 0) {
-            tabela.innerHTML = `
+    if (registros.length === 0) {
+      tabela.innerHTML = `
                 <tr>
                     <td colspan="10">
                         Nenhum registro encontrado.
@@ -118,13 +115,13 @@ export default function registro() {
                 </tr>
             `;
 
-            return;
-        }
+      return;
+    }
 
-        registros.forEach(item => {
-            const linha = document.createElement("tr");
+    registros.forEach((item) => {
+      const linha = document.createElement("tr");
 
-            linha.innerHTML = `
+      linha.innerHTML = `
                 <td>${escaparHTML(item.id_registro)}</td>
                 <td>${escaparHTML(item.setor)}</td>
                 <td>${escaparHTML(item.sala)}</td>
@@ -142,221 +139,263 @@ export default function registro() {
                     >Editar</button>
                 </td>
 
-                <td>
-                    <button
-                        type="button"
-                        class="btn btn-danger remover"
-                        data-id="${escaparHTML(item.id_registro)}"
-                    >Remover</button>
-                </td>
+                
+                  <td>
+                      <button
+                          type="button"
+                          class="btn btn-danger remover"
+                          data-id="${escaparHTML(item.id_registro)}"
+                          ${String(item.status).toLowerCase() !== "devolvida" ? "disabled" : ""}
+                          title="${String(item.status).toLowerCase() === "devolvida"
+                              ? "Remover registro"
+                              : "A sala precisa ser devolvida antes da remoção"}"
+                      >
+                          Remover
+                      </button>
+                  </td>
+
             `;
 
-            tabela.appendChild(linha);
-        });
+      tabela.appendChild(linha);
+    });
+  }
+
+  // Abre o modal de edição.
+  tabela.addEventListener("click", (event) => {
+    const botaoEditar = event.target.closest(".editar");
+    const botaoRemover = event.target.closest(".remover");
+
+    if (botaoEditar) {
+      abrirEdicao(botaoEditar.dataset.id);
     }
 
-    // Abre o modal de edição.
-    tabela.addEventListener("click", event => {
-        const botaoEditar = event.target.closest(".editar");
-        const botaoRemover = event.target.closest(".remover");
+    if (botaoRemover) {
+      excluirRegistro(botaoRemover.dataset.id);
+    }
+  });
 
-        if (botaoEditar) {
-            abrirEdicao(botaoEditar.dataset.id);
-        }
+  
+async function abrirEdicao(id) {
+  const item = registros.find(
+    (registro) => String(registro.id_registro) === String(id),
+  );
 
-        if (botaoRemover) {
-            excluirRegistro(botaoRemover.dataset.id);
-        }
+  if (!item) {
+    alert("Registro não encontrado.");
+    return;
+  }
+
+  idAtual = item.id_registro;
+
+  editarNome.value = item.responsavel || "";
+
+  editarEntrega.value =
+    formatarHora(item.hora_entrega) === "--:--"
+      ? ""
+      : formatarHora(item.hora_entrega);
+
+  try {
+    // Busca todas as salas cadastradas no banco.
+    const salas = await registroApi.getSalas();
+
+    if (!Array.isArray(salas)) {
+      throw new Error("A API não retornou uma lista válida de salas.");
+    }
+
+    // Mostra as salas disponíveis e mantém a sala atual na lista.
+    const salasParaExibir = salas.filter((sala) => {
+      const status = String(sala.status ?? "")
+        .trim()
+        .toLowerCase();
+
+      const salaAtual =
+        String(sala.id_sala) === String(item.id_sala);
+
+      return status === "disponivel" || salaAtual;
     });
 
-    function abrirEdicao(id) {
-        const item = registros.find(
-            registro => String(registro.id_registro) === String(id)
+    editarSala.innerHTML = "";
+
+    salasParaExibir.forEach((sala) => {
+      const opcao = document.createElement("option");
+
+      opcao.value = String(sala.id_sala);
+      opcao.textContent = sala.nome || `Sala ${sala.id_sala}`;
+
+      editarSala.appendChild(opcao);
+    });
+
+    // Seleciona automaticamente a sala do registro editado.
+    editarSala.value = String(item.id_sala);
+
+    if (modalEditar) {
+      modalEditar.classList.remove("escondido");
+    }
+  } catch (erro) {
+    console.error("Erro ao carregar salas para edição:", erro);
+
+    alert(
+      "Não foi possível carregar as salas. Verifique se o backend está funcionando.",
+    );
+  }
+}
+
+
+  // Exclui um registro pelo ID do banco.
+  async function excluirRegistro(id) {
+    const item = registros.find(
+      (registro) => String(registro.id_registro) === String(id),
+    );
+
+    if (!item || item.status !== "devolvida") {
+      alert("Não é possível remover. Registre a devolução primeiro.");
+      return;
+    }
+
+    const confirmar = window.confirm(
+      "Tem certeza de que deseja excluir este registro?",
+    );
+
+    if (!confirmar) {
+      return;
+    }
+
+    try {
+      await registroApi.deleteKey(id);
+
+      await carregarRegistros();
+
+      alert("Registro excluído com sucesso!");
+    } catch (erro) {
+      console.error("Erro ao excluir registro:", erro);
+
+      alert(erro.message || "Não foi possível excluir o registro.");
+    }
+  }
+
+  function fecharModal() {
+    if (modalEditar) {
+      modalEditar.classList.add("escondido");
+    }
+
+    idAtual = null;
+  }
+  
+  // Salva as alterações na API.
+  if (salvarEdicao) {
+    salvarEdicao.addEventListener("click", async (event) => {
+      event.preventDefault();
+
+      if (idAtual === null) {
+        alert("Selecione um registro para editar.");
+        return;
+      }
+
+      const responsavel = editarNome.value.trim();
+      const id_sala = Number(editarSala.value);
+      const hora_entrega = editarEntrega.value || null;
+
+      if (!responsavel) {
+        alert("Informe o nome do responsável.");
+        return;
+      }
+
+      if (!Number.isInteger(id_sala) || id_sala <= 0) {
+        alert("Selecione uma sala válida.");
+        return;
+      }
+
+      try {
+        salvarEdicao.disabled = true;
+
+        await registroApi.updateKey(idAtual, {
+          responsavel,
+          id_sala,
+          hora_entrega,
+        });
+
+        fecharModal();
+
+        await carregarRegistros();
+
+        alert("Registro atualizado com sucesso!");
+      } catch (erro) {
+        console.error("Erro ao atualizar registro:", erro);
+        alert(erro.message || "Não foi possível atualizar o registro.");
+      } finally {
+        salvarEdicao.disabled = false;
+      }
+    });
+  }
+
+
+  if (fecharEditar) {
+    fecharEditar.addEventListener("click", fecharModal);
+  }
+
+  if (cancelarEditar) {
+    cancelarEditar.addEventListener("click", fecharModal);
+  }
+
+  // Limpa todos os registros individualmente.
+  if (botaoLimpar) {
+    botaoLimpar.addEventListener("click", async (event) => {
+      event.preventDefault();
+
+      if (registros.length === 0) {
+        alert("Não existem registros para excluir.");
+        return;
+      }
+
+      const confirmar = window.confirm(
+        "ATENÇÃO: isso excluirá todos os registros carregados. " +
+          "Essa ação não poderá ser desfeita. Deseja continuar?",
+      );
+
+      if (!confirmar) {
+        return;
+      }
+
+      try {
+        botaoLimpar.disabled = true;
+
+        const registrosDisponiveis = registros.filter(
+          (item) => item.status === "devolvida",
         );
 
-        if (!item) {
-            alert("Registro não encontrado.");
-            return;
+        if (registrosDisponiveis.length === 0) {
+          alert("Não existem registros devolvidos para excluir.");
+          return;
         }
 
-        idAtual = item.id_registro;
-
-        editarNome.value = item.responsavel || "";
-        editarEntrega.value = formatarHora(item.hora_entrega) === "--:--"
-            ? ""
-            : formatarHora(item.hora_entrega);
-
-        
-        editarSala.innerHTML = "";
-
-        const salasDisponiveis = new Map();
-
-        registros.forEach(registro => {
-            if (registro.id_sala != null) {
-                salasDisponiveis.set(
-                    String(registro.id_sala),
-                    registro.sala || `Sala ${registro.id_sala}`
-                );
-            }
-        });
-
-        salasDisponiveis.forEach((nomeSala, idSala) => {
-            const opcao = document.createElement("option");
-
-            opcao.value = idSala;
-            opcao.textContent = nomeSala;
-
-            editarSala.appendChild(opcao);
-        });
-
-        editarSala.value = String(item.id_sala);
-
-        if (modalEditar) {
-            modalEditar.classList.remove("escondido");
+        for (const item of registrosDisponiveis) {
+          await registroApi.deleteKey(item.id_registro);
         }
-    }
 
-    // Salva as alterações na API.
-    if (salvarEdicao) {
-        salvarEdicao.addEventListener("click", async event => {
-            event.preventDefault();
+        await carregarRegistros();
 
-            if (idAtual === null) {
-                alert("Selecione um registro para editar.");
-                return;
-            }
+        alert("Registros excluídos com sucesso!");
+      } catch (erro) {
+        console.error("Erro ao limpar registros:", erro);
 
-            const responsavel = editarNome.value.trim();
-            const id_sala = Number(editarSala.value);
-            const hora_entrega = editarEntrega.value || null;
-
-            if (!responsavel) {
-                alert("Informe o nome do responsável.");
-                return;
-            }
-
-            if (!Number.isInteger(id_sala) || id_sala <= 0) {
-                alert("Selecione uma sala válida.");
-                return;
-            }
-
-            try {
-                salvarEdicao.disabled = true;
-
-                await registroApi.updateKey(idAtual, {
-                    responsavel,
-                    id_sala,
-                    hora_entrega
-                });
-
-                fecharModal();
-
-                await carregarRegistros();
-
-                alert("Registro atualizado com sucesso!");
-
-            } catch (erro) {
-                console.error("Erro ao atualizar registro:", erro);
-                alert(erro.message || "Não foi possível atualizar o registro.");
-
-            } finally {
-                salvarEdicao.disabled = false;
-            }
-        });
-    }
-
-    // Exclui um registro pelo ID do banco.
-    async function excluirRegistro(id) {
-        const confirmar = window.confirm(
-            "Tem certeza de que deseja excluir este registro?"
+        alert(
+          "Não foi possível excluir todos os registros. " +
+            "Recarregue a tabela e verifique quais foram removidos.",
         );
 
-        if (!confirmar) {
-            return;
-        }
+        await carregarRegistros();
+      } finally {
+        botaoLimpar.disabled = false;
+      }
+    });
+  }
 
-        try {
-            await registroApi.deleteKey(id);
+  // Carrega os registros quando a função é inicializada.
+  carregarRegistros();
+  window.atualizarTabelaRegistros = carregarRegistros;
 
-            await carregarRegistros();
-
-            alert("Registro excluído com sucesso!");
-
-        } catch (erro) {
-            console.error("Erro ao excluir registro:", erro);
-
-            alert(erro.message || "Não foi possível excluir o registro.");
-        }
-    }
-
-    function fecharModal() {
-        if (modalEditar) {
-            modalEditar.classList.add("escondido");
-        }
-
-        idAtual = null;
-    }
-
-    if (fecharEditar) {
-        fecharEditar.addEventListener("click", fecharModal);
-    }
-
-    if (cancelarEditar) {
-        cancelarEditar.addEventListener("click", fecharModal);
-    }
-
-    // Limpa todos os registros individualmente.
-    if (botaoLimpar) {
-        botaoLimpar.addEventListener("click", async event => {
-            event.preventDefault();
-
-            if (registros.length === 0) {
-                alert("Não existem registros para excluir.");
-                return;
-            }
-
-            const confirmar = window.confirm(
-                "ATENÇÃO: isso excluirá todos os registros carregados. " +
-                "Essa ação não poderá ser desfeita. Deseja continuar?"
-            );
-
-            if (!confirmar) {
-                return;
-            }
-
-            try {
-                botaoLimpar.disabled = true;
-
-                for (const item of registros) {
-                    await registroApi.deleteKey(item.id_registro);
-                }
-
-                await carregarRegistros();
-
-                alert("Registros excluídos com sucesso!");
-
-            } catch (erro) {
-                console.error("Erro ao limpar registros:", erro);
-
-                alert(
-                    "Não foi possível excluir todos os registros. " +
-                    "Recarregue a tabela e verifique quais foram removidos."
-                );
-
-                await carregarRegistros();
-
-            } finally {
-                botaoLimpar.disabled = false;
-            }
-        });
-    }
-
-    // Carrega os registros quando a função é inicializada.
-    carregarRegistros();
-    window.atualizarTabelaRegistros = carregarRegistros;
-    
-    return {
-    carregarRegistros
-};
+  return {
+    carregarRegistros,
+  };
 }
 const tabelaRegistros = registro();

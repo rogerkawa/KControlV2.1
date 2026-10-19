@@ -27,6 +27,17 @@ function httpAuth() {
 
 const registroApi = {
     // Listar registros
+    
+    async getSalas() {
+    const response = await fetch(`${url_base}/salas`, {
+        method: "GET",
+        headers: httpAuth(),
+    });
+
+    await verifyResponse(response);
+    return response.json();
+    },
+
     async getKeys() {
         const response = await fetch(
             `${url_base}/get/registro`,

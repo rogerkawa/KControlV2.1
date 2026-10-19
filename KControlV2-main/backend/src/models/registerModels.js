@@ -101,9 +101,22 @@ async function deleteKey(id_registro) {
     return dados;
 }
 
+async function getKeyById(id_registro) {
+    const sql = `
+        SELECT id_registro, status
+        FROM registros
+        WHERE id_registro = ?
+    `;
+
+    const [dados] = await conect.query(sql, [id_registro]);
+    return dados[0] || null;
+}
+
+
 export default {
     getKey,
     registerKey,
     updateKey,
-    deleteKey
+    deleteKey,
+    getKeyById
 };

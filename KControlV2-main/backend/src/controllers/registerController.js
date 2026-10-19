@@ -140,6 +140,22 @@ class registerKey {
                 });
             }
 
+            
+            const registro = await registerModels.getKeyById(id);
+
+            if (!registro) {
+                return res.status(404).json({
+                    message: "Registro não encontrado."
+                });
+            }
+
+            if (String(registro.status).toLowerCase() !== "devolvida") {
+                return res.status(409).json({
+                    message: "Não é possível remover um registro com retirada em aberto."
+                });
+            }
+
+
             const resultado = await registerModels.deleteKey(id);
 
             if (!resultado.affectedRows) {
