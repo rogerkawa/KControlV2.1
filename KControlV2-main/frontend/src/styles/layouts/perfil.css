@@ -10,12 +10,6 @@ section.page[id="Meu perfil"] *::after {
     box-sizing: border-box;
 }
 
-section.page[id="Meu perfil"] {
-    display: block;
-    width: 100%;
-    max-width: 100%;
-    min-width: 0;
-}
 
 section.page[id="Meu perfil"] .perfil-container {
     width: 100%;
