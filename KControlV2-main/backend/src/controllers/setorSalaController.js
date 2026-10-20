@@ -167,6 +167,167 @@ class setorSalaController {
       });
     }
   }
+
+  
+static async createSetor(req, res) {
+  try {
+    const nome = String(req.body.nome ?? "").trim();
+
+    if (!nome) {
+      return res.status(400).json({
+        message: "Informe o nome do setor.",
+      });
+    }
+
+    if (nome.length > 100) {
+      return res.status(400).json({
+        message: "O nome deve ter no máximo 100 caracteres.",
+      });
+    }
+
+    const setores = await setorSalaModel.getSetor();
+
+    const jaExiste = setores.some(
+      (setor) => setor.nome.toLowerCase() === nome.toLowerCase(),
+    );
+
+    if (jaExiste) {
+      return res.status(409).json({
+        message: "Já existe um setor com esse nome.",
+      });
+    }
+
+    await setorSalaModel.createSetor(nome);
+
+    return res.status(201).json({
+      message: "Setor cadastrado com sucesso.",
+    });
+  } catch (error) {
+    console.error(error);
+
+    return res.status(500).json({
+      message: "Erro interno ao cadastrar setor.",
+    });
+  }
+}
+
+static async updateSetor(req, res) {
+  try {
+    const id = Number(req.params.id);
+    const nome = String(req.body.nome ?? "").trim();
+
+    if (!Number.isInteger(id) || id <= 0) {
+      return res.status(400).json({
+        message: "ID do setor inválido.",
+      });
+    }
+
+    if (!nome || nome.length > 100) {
+      return res.status(400).json({
+        message: "Informe um nome válido de até 100 caracteres.",
+      });
+    }
+
+    const setor = await setorSalaModel.findSetorById(id);
+
+    if (!setor) {
+      return res.status(404).json({
+        message: "Setor não encontrado.",
+      });
+    }
+
+    if (setor.status === "inativo") {
+      return res.status(409).json({
+        message: "Não é possível editar um setor inativo.",
+      });
+    }
+
+    const setores = await setorSalaModel.getSetor();
+
+    const duplicado = setores.some(
+      (item) =>
+        item.id_setor !== id &&
+        item.nome.toLowerCase() === nome.toLowerCase(),
+    );
+
+    if (duplicado) {
+      return res.status(409).json({
+        message: "Já existe outro setor com esse nome.",
+      });
+    }
+
+    await setorSalaModel.updateSetor(id, nome);
+
+    return res.status(200).json({
+      message: "Setor atualizado com sucesso.",
+    });
+  } catch (error) {
+    console.error(error);
+
+    return res.status(500).json({
+      message: "Erro interno ao atualizar setor.",
+    });
+  }
+}
+
+static async updateStatusSetor(req, res) {
+  try {
+    const id = Number(req.params.id);
+    const status = String(req.body.status ?? "").trim().toLowerCase();
+
+    if (!Number.isInteger(id) || id <= 0) {
+      return res.status(400).json({
+        message: "ID do setor inválido.",
+      });
+    }
+
+    if (!["ativo", "inativo"].includes(status)) {
+      return res.status(400).json({
+        message: "Status inválido. Use ativo ou inativo.",
+      });
+    }
+
+    const setor = await setorSalaModel.findSetorById(id);
+
+    if (!setor) {
+      return res.status(404).json({
+        message: "Setor não encontrado.",
+      });
+    }
+
+    if (setor.status === status) {
+      return res.status(409).json({
+        message: `O setor já está ${status}.`,
+      });
+    }
+
+    if (
+      status === "inativo" &&
+      await setorSalaModel.hasRetiradaAtivaNoSetor(id)
+    ) {
+      return res.status(409).json({
+        message:
+          "Não é possível desativar este setor enquanto houver chaves retiradas. Registre as devoluções primeiro.",
+      });
+    }
+
+    await setorSalaModel.updateStatusSetor(id, status);
+
+    return res.status(200).json({
+      message:
+        status === "ativo"
+          ? "Setor ativado com sucesso."
+          : "Setor desativado com sucesso.",
+    });
+  } catch (error) {
+    console.error(error);
+
+    return res.status(500).json({
+      message: "Erro interno ao atualizar o setor.",
+    });
+  }
+}
+
 }
 
 export default setorSalaController;

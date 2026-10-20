@@ -43,22 +43,32 @@ async function carregarSalas() {
 }
  
 
+
 async function carregarSetores() {
-    const response = await fetch(`${url_base}/setores`)
+    const response = await fetch(`${url_base}/setores`);
 
-    await verifyResponse(response)
+    await verifyResponse(response);
 
-    const setores = await response.json()
+    const setores = await response.json();
 
-    setores.forEach(setores => {
-        const option = document.createElement('option')
+    selectSetor
+        .querySelectorAll('option:not(:first-child)')
+        .forEach(option => option.remove());
 
-        option.value = setores.id_setor
-        option.textContent = setores.nome
+    const setoresAtivos = setores.filter(
+        setor => setor.status === "ativo"
+    );
 
-        selectSetor.appendChild(option)
+    setoresAtivos.forEach(setor => {
+        const option = document.createElement("option");
+
+        option.value = setor.id_setor;
+        option.textContent = setor.nome;
+
+        selectSetor.appendChild(option);
     });
-} 
+}
+
 
 carregarSalas()
 carregarSetores()
@@ -71,4 +81,7 @@ window.addEventListener("storage", (evento) => {
     if (evento.key === "salasAtualizadas") {
         carregarSalas();
     }
+});
+document.addEventListener("setoresAtualizados", () => {
+    carregarSetores();
 });

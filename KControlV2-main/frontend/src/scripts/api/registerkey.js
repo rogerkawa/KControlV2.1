@@ -1,15 +1,4 @@
 import carregarUltimosRegistros from "../modules/ultimosRegistros.js";
-carregarSalas()
-
-document.addEventListener("salasAtualizadas", () => {
-    carregarSalas();
-});
-
-window.addEventListener("storage", (evento) => {
-    if (evento.key === "salasAtualizadas") {
-        carregarSalas();
-    }
-});
 
 async function verifyResponse(response) {
     if(!response.ok){

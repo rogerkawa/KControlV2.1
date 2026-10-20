@@ -32,4 +32,27 @@ setorSalaRoutes.delete(
   setorSalaController.removeSala,
 );
 
+/* Gerenciamento de Setores */
+setorSalaRoutes.post(
+  "/setores",
+  authMiddleware,
+  adminMiddleware,
+  setorSalaController.createSetor,
+);
+
+setorSalaRoutes.put(
+  "/setores/:id",
+  authMiddleware,
+  adminMiddleware,
+  setorSalaController.updateSetor,
+);
+
+setorSalaRoutes.patch(
+  "/setores/:id/status",
+  authMiddleware,
+  adminMiddleware,
+  setorSalaController.updateStatusSetor,
+);
+
+
 export default setorSalaRoutes;

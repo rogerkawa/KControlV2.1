@@ -315,17 +315,12 @@
     position: absolute;
     top: calc(100% + 10px);
     right: 0;
-
     width: 250px;
-
     padding: 8px;
-
     background: var(--bg-primary);
     border: 1px solid var(--border-color);
     border-radius: 12px;
-
     box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
-
     opacity: 0;
     visibility: hidden;
     transform: translateY(-8px) scale(0.98);
@@ -340,6 +335,7 @@
     opacity: 1;
     visibility: visible;
     transform: translateY(0) scale(1);
+    z-index: 999;
 }
 
 /* Header do menu */

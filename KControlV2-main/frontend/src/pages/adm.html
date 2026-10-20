@@ -16,6 +16,7 @@
     <script type="module" src="../scripts/api/avatar.js" defer></script>
     <script type="module" src="../scripts/modules/admin.js" defer></script>
     <script type="module" src="../scripts/modules/gerenciarSalas.js" defer></script>
+    <script type="module" src="../scripts/modules/gerenciarSetores.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -60,6 +61,10 @@
             <a class="nav-item" href="#" data-page="Gerenciar Salas">
                 <i class="ti ti-chart-bar" aria-hidden="true"></i>
                 <span>Gerenciar Salas</span>
+            </a>
+            <a class="nav-item" href="#" data-page="Gerenciar Setores">
+                <i class="ti ti-building-community"></i>
+                <span>Gerenciar Setores</span>
             </a>
 
             <span class="sb-label" style="margin-top: 8px">Time</span>
@@ -177,7 +182,7 @@
                     </div>
 
                     <div class="boas-vindas-logo">
-                    <img src="../assets/images/kcontrol_icone_branco_transparente.png" alt="Ícone" class="logo">
+                        <img src="../assets/images/kcontrol_icone_branco_transparente.png" alt="Ícone" class="logo">
                     </div>
                 </div>
 
@@ -1223,12 +1228,178 @@
             </section>
 
 
+            <!-- Gerenciamento de Setores -->
+            <section class="page" id="Gerenciar Setores">
 
+                <div class="setores-container">
 
+                    <header class="setores-header">
+                        <div>
+                            <span class="setores-eyebrow">
+                                <i class="ti ti-building-community"></i>
+                                ADMINISTRAÇÃO
+                            </span>
+
+                            <h1>Gerenciar setores</h1>
+
+                            <p>
+                                Organize os setores da instituição e gerencie
+                                sua disponibilidade no sistema.
+                            </p>
+                        </div>
+
+                        <button class="setores-btn setores-btn-secondary" id="btnAtualizarSetores" type="button">
+                            <i class="ti ti-refresh"></i>
+                            Atualizar
+                        </button>
+                    </header>
+
+                    <!-- Indicadores -->
+                    <div class="setores-stats">
+
+                        <article class="setores-stat-card">
+                            <div>
+                                <span>Total de setores</span>
+                                <strong id="totalSetores">0</strong>
+                            </div>
+                            <i class="ti ti-building-community"></i>
+                        </article>
+
+                        <article class="setores-stat-card">
+                            <div>
+                                <span>Setores ativos</span>
+                                <strong id="setoresAtivos">0</strong>
+                            </div>
+                            <i class="ti ti-circle-check"></i>
+                        </article>
+
+                        <article class="setores-stat-card">
+                            <div>
+                                <span>Setores inativos</span>
+                                <strong id="setoresInativos">0</strong>
+                            </div>
+                            <i class="ti ti-circle-x"></i>
+                        </article>
+
+                    </div>
+
+                    <!-- Cadastro -->
+                    <section class="setores-panel">
+
+                        <div class="setores-section-heading">
+                            <div>
+                                <h2 id="tituloFormSetor">Adicionar setor</h2>
+                                <p>
+                                    Cadastre um novo setor ou atualize
+                                    os dados de um setor existente.
+                                </p>
+                            </div>
+
+                            <i class="ti ti-plus"></i>
+                        </div>
+
+                        <form id="formSetor" class="setores-form">
+
+                            <input type="hidden" id="idSetor">
+
+                            <div class="setores-field">
+                                <label for="nomeSetor">Nome do setor</label>
+
+                                <input type="text" id="nomeSetor" name="nome"
+                                    placeholder="Ex.: Desenvolvimento de Sistemas" maxlength="100" required>
+                            </div>
+
+                            <div class="setores-form-actions">
+
+                                <button class="setores-btn setores-btn-secondary" type="button"
+                                    id="btnCancelarEdicaoSetor" hidden>
+                                    Cancelar edição
+                                </button>
+
+                                <button class="setores-btn setores-btn-primary" type="submit" id="btnSalvarSetor">
+                                    <i class="ti ti-plus"></i>
+                                    Cadastrar setor
+                                </button>
+
+                            </div>
+
+                        </form>
+
+                    </section>
+
+                    <!-- Listagem -->
+                    <section class="setores-panel">
+
+                        <div class="setores-section-heading setores-lista-heading">
+                            <div>
+                                <h2>Setores cadastrados</h2>
+                                <p>
+                                    Consulte, edite ou altere a situação
+                                    dos setores cadastrados.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="setores-toolbar">
+
+                            <div class="setores-search">
+                                <i class="ti ti-search"></i>
+
+                                <input type="search" id="buscarSetor" placeholder="Buscar setor pelo nome..."
+                                    aria-label="Buscar setor pelo nome">
+                            </div>
+
+                            <div class="setores-filter">
+                                <label for="filtroSetor">Situação</label>
+
+                                <select id="filtroSetor">
+                                    <option value="todos">Todos os setores</option>
+                                    <option value="ativo">Ativos</option>
+                                    <option value="inativo">Inativos</option>
+                                </select>
+                            </div>
+
+                        </div>
+
+                        <div id="mensagemSetores" class="setores-message" role="status" hidden>
+                        </div>
+
+                        <div class="setores-table-wrapper">
+
+                            <table class="setores-table">
+                                <thead>
+                                    <tr>
+                                        <th>Identificação</th>
+                                        <th>Situação</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody id="listaSetores">
+                                    <tr>
+                                        <td colspan="3" class="setores-empty">
+                                            Os setores serão carregados aqui.
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                        <p class="setores-note">
+                            <i class="ti ti-info-circle"></i>
+                            Setores inativos não devem aparecer em novos
+                            registros de retirada. O histórico existente
+                            deve ser preservado.
+                        </p>
+
+                    </section>
+
+                </div>
+
+            </section>
 
         </div>
-
-
 
     </div>
     </div>

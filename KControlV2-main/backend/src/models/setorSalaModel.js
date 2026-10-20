@@ -3,7 +3,11 @@ import conect from "../config/database.js";
 
 async function getSetor() {
   try {
-    const sql = `SELECT * FROM setores`;
+    const sql = `
+    SELECT id_setor, nome, status
+    FROM setores
+    ORDER BY nome
+    `;
     const [dados] = await conect.query(sql);
     return dados;
   } catch (error) {
@@ -11,6 +15,63 @@ async function getSetor() {
     throw error;
   }
 }
+
+async function createSetor(nome) {
+  const sql = `
+    INSERT INTO setores (nome, status)
+    VALUES (?, 'ativo')
+  `;
+
+  const [resultado] = await conect.query(sql, [nome]);
+  return resultado;
+}
+
+async function findSetorById(id) {
+  const sql = `
+    SELECT id_setor, nome, status
+    FROM setores
+    WHERE id_setor = ?
+  `;
+
+  const [dados] = await conect.query(sql, [id]);
+  return dados[0] || null;
+}
+
+async function updateSetor(id, nome) {
+  const sql = `
+    UPDATE setores
+    SET nome = ?
+    WHERE id_setor = ?
+  `;
+
+  const [resultado] = await conect.query(sql, [nome, id]);
+  return resultado;
+}
+
+async function updateStatusSetor(id, status) {
+  const sql = `
+    UPDATE setores
+    SET status = ?
+    WHERE id_setor = ?
+  `;
+
+  const [resultado] = await conect.query(sql, [status, id]);
+  return resultado;
+}
+
+async function hasRetiradaAtivaNoSetor(id) {
+  const sql = `
+    SELECT COUNT(*) AS total
+    FROM registros r
+    INNER JOIN sala s ON s.id_sala = r.id_sala
+    WHERE r.id_setor = ?
+      AND r.status = 'retirada'
+  `;
+
+  const [dados] = await conect.query(sql, [id]);
+  return Number(dados[0].total) > 0;
+}
+
 
 async function getSala() {
   try {
@@ -86,10 +147,17 @@ async function hasRetiradaAtiva(id) {
 }
 
 export default {
-  getSetor,
+  /* Salas */
   getSala,
   createSala,
   findSalaById,
   updateStatusSala,
   hasRetiradaAtiva,
+  /* Setor */
+  getSetor,
+  createSetor,
+  findSetorById,
+  updateSetor,
+  updateStatusSetor,
+  hasRetiradaAtivaNoSetor,
 };

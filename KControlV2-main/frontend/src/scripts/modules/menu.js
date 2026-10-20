@@ -70,6 +70,16 @@ document.addEventListener("click", (event) => {
         profileButton.setAttribute("aria-expanded", "false");
     }
 });
+function logout() {
+    localStorage.removeItem('token');
+    window.location.href = '../index.html';
+}
+
+const botaoSair = document.querySelector('.logout');
+
+if (botaoSair) {
+    botaoSair.addEventListener('click', logout);
+}
 
   mobileToggle.addEventListener("click", openMobile);
   overlay.addEventListener("click", closeMobile);
