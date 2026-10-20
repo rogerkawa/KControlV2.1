@@ -36,8 +36,42 @@ async function registerKey(
     data_retirada,
     hora_retirada
 ) {
-    const sql = `
-        INSERT INTO registros (
+    //1.Verificar se a sala existe e se tá disponivel
+    const [salas] = await conect.query(
+        `SELECT id_sala, status
+        FROM sala
+        WHERE id_sala = ?`,
+        [id_sala]
+    )
+
+    if (salas.length === 0) {
+        const error = new Error("Sala não encontrada.");
+        error.code = "SALA_NAO_ENCONTRADA";
+        throw error;
+    }
+    
+    // 2. Impede outra retirada da mesma sala no mesmo dia e turno
+    const [registros] = await conect.query(
+        `SELECT id_registro
+        FROM registros
+        WHERE id_sala = ?
+        AND data_retirada = ?
+        AND turno = ?
+        LIMIT 1`,
+        [id_sala, data_retirada, turno]
+    )
+
+    if (registros.length > 0) {
+        const error = new Error(
+            "Esta sala já teve uma retirada registrada neste dia e turno."
+        );
+        error.code = "TURNO_DUPLICADO";
+        throw error;
+    }
+
+    //3. Registra a retirada
+    const [resultado] = await conect.query(
+           `INSERT INTO registros (
             id_usuario,
             id_setor,
             id_sala,
@@ -46,20 +80,26 @@ async function registerKey(
             data_retirada,
             hora_retirada
         )
-        VALUES (?, ?, ?, ?, ?, ?, ?)
-    `;
+        VALUES (?, ?, ?, ?, ?, ?, ?)`,
+        [
+            id_usuario,
+            id_setor,
+            id_sala,
+            responsavel,
+            turno,
+            data_retirada,
+            hora_retirada
+        ]
+    ) 
+    //4. Marcar a sala como indisponível
+    await conect.query(
+       `UPDATE sala
+        SET status = 'retirada'
+        WHERE id_sala = ?`,
+        [id_sala]
+    )
 
-    const [dados] = await conect.query(sql, [
-        id_usuario,
-        id_setor,
-        id_sala,
-        responsavel,
-        turno,
-        data_retirada,
-        hora_retirada
-    ]);
-
-    return dados;
+    return resultado;
 }
 
 async function updateKey(
@@ -68,27 +108,57 @@ async function updateKey(
     id_sala,
     hora_entrega
 ) {
-    const sql = `
-        UPDATE registros
-        SET
-            responsavel = ?,
-            id_sala = ?,
-            hora_entrega = ?,
-            status = ?
-        WHERE id_registro = ?
-    `;
+    try {
+        // 1. Verifica se o registro existe e está em aberto
+        const [registros] = await conect.query(
+            `SELECT id_sala, status
+             FROM registros
+             WHERE id_registro = ?`,
+            [id_registro]
+        );
 
-    const status = hora_entrega ? "devolvida" : "retirada";
+        if (registros.length === 0) {
+            const error = new Error("Registro não encontrado.");
+            error.code = "REGISTRO_NAO_ENCONTRADO";
+            throw error;
+        }
 
-    const [dados] = await conect.query(sql, [
-        responsavel,
-        id_sala,
-        hora_entrega || null,
-        status,
-        id_registro
-    ]);
+        if (registros[0].status === "devolvida") {
+            const error = new Error("Esta chave já foi devolvida.");
+            error.code = "CHAVE_JA_DEVOLVIDA";
+            throw error;
+        }
 
-    return dados;
+        // 2. Atualiza o registro
+        const sql = `
+            UPDATE registros
+            SET
+                responsavel = ?,
+                hora_entrega = ?,
+                status = 'devolvida'
+            WHERE id_registro = ?
+        `;
+
+        const [dados] = await conect.query(sql, [
+            responsavel,
+            hora_entrega,
+            id_registro
+        ]);
+
+        // 3. Libera a sala
+        await conect.query(
+            `UPDATE sala
+             SET status = 'disponivel'
+             WHERE id_sala = ?`,
+            [registros[0].id_sala]
+        );
+
+        return dados;
+
+    } catch (error) {
+        console.error("Erro ao atualizar registro:", error);
+        throw error;
+    }
 }
 
 async function deleteKey(id_registro) {
