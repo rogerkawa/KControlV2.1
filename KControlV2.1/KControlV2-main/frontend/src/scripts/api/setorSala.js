@@ -68,16 +68,7 @@ async function renderizarSalasEmUso(registros, turnoSelecionado) {
         String(dataAtual.getMonth() + 1).padStart(2, '0'),
         String(dataAtual.getDate()).padStart(2, '0')
     ].join('-');
-
-    console.log('Turno selecionado:', turnoSelecionado);
-
-    console.table(registros.map(registro => ({
-        sala: registro.sala,
-        turno: registro.turno,
-        status: registro.status,
-        data: String(registro.data_retirada).slice(0, 10)
-    })));
-
+    
     const salasAtivas = registros.filter(registro =>
         registro.turno === turnoSelecionado &&
         registro.status === 'retirada'

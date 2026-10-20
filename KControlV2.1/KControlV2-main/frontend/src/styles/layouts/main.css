@@ -487,14 +487,14 @@ form {
   border: 1px solid var(--border);
 }
 
-.sala-uso-card strong {
+.sala-uso-card h4 {
   display: block;
   font-size: .95rem;
   color: var(--text-primary);
   margin-bottom: .35rem;
 }
 
-.sala-uso-card span {
+.sala-uso-card p {
   display: block;
   font-size: .75rem;
   color: var(--text-primary);
