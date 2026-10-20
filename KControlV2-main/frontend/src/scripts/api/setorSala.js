@@ -142,8 +142,7 @@ async function carregarSalas() {
 
     const salasPermitidas = salas.filter((sala) => {
         return sala.status !== "inativa" &&
-               sala.status !== "manutencao" &&
-               sala.status !== "retirada";
+               sala.status !== "manutencao"
     });
 
     salasPermitidas.forEach(sala => {
@@ -191,4 +190,21 @@ carregarSalasEmUso()
 
 filtroTurno.addEventListener('change', () => {
     carregarSalasEmUso();
+});
+
+document.addEventListener("salasAtualizadas", async () => {
+    await carregarSalas();
+    await carregarStatusSalas();
+});
+
+window.addEventListener("storage", (evento) => {
+    if (evento.key === "salasAtualizadas") {
+        carregarSalas();
+        carregarStatusSalas();
+    }
+});
+
+document.addEventListener("registrosAtualizados", async () => {
+    await carregarSalasEmUso();
+    await carregarStatusSalas();
 });

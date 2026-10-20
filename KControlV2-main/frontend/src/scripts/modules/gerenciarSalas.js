@@ -171,6 +171,18 @@ function renderizarSalas() {
         ),
       );
     }
+    
+    if (sala.status === "inativa") {
+        acoes.appendChild(
+            criarBotaoAcao(
+                "Ativar",
+                "bi-arrow-counterclockwise",
+                "ativar",
+                sala.id_sala
+            )
+        );
+    }
+
 
     if (sala.status !== "inativa") {
       acoes.appendChild(
@@ -296,6 +308,20 @@ listaSalas.addEventListener("click", async (evento) => {
       await salasApi.updateStatusSala(id, "disponivel");
       mostrarMensagem(`${sala.nome} foi liberada.`);
     }
+
+    
+    if (acao === "ativar") {
+        const confirmar = window.confirm(
+            `Deseja reativar "${sala.nome}"?`
+        );
+
+        if (!confirmar) return;
+
+        await salasApi.updateStatusSala(id, "disponivel");
+
+        mostrarMensagem(`${sala.nome} foi reativada com sucesso.`);
+    }
+
 
     if (acao === "remover") {
       const confirmar = window.confirm(

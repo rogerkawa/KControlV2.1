@@ -102,7 +102,8 @@ class registerKey {
 
             if (
                 error.code === "CHAVE_RETIRADA" ||
-                error.code === "TURNO_DUPLICADO"
+                error.code === "TURNO_DUPLICADO" ||
+                error.code === "SALA_INDISPONIVEL"
             ) {
                 return res.status(409).json({
                     message: error.message

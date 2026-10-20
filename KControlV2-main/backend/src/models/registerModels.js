@@ -57,9 +57,21 @@ async function registerKey(
         WHERE id_sala = ?
         AND data_retirada = ?
         AND turno = ?
+        AND status <> 'devolvida'
         LIMIT 1`,
         [id_sala, data_retirada, turno]
     )
+
+    
+    if (["inativa", "manutencao"].includes(salas[0].status)) {
+        const error = new Error(
+            "Esta sala está inativa ou em manutenção e não pode ser registrada."
+        );
+
+        error.code = "SALA_INDISPONIVEL";
+        throw error;
+    }
+
 
     if (registros.length > 0) {
         const error = new Error(
@@ -105,7 +117,6 @@ async function registerKey(
 async function updateKey(
     id_registro,
     responsavel,
-    id_sala,
     hora_entrega
 ) {
     try {

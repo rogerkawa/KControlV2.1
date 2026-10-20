@@ -88,11 +88,17 @@ class setorSalaController {
 
       const sala = await setorSalaModel.findSalaById(id);
 
-      if (!sala || sala.status === "inativa") {
-        return res.status(404).json({
-          message: "Sala não encontrada ou inativa.",
+      if (!sala) {
+    return res.status(404).json({
+        message: "Sala não encontrada."
+    });
+    }
+
+    if (sala.status === "inativa" && status !== "disponivel") {
+        return res.status(409).json({
+            message: "Uma sala inativa só pode ser reativada como disponível."
         });
-      }
+    }
 
       
       const temRetiradaAtiva = await setorSalaModel.hasRetiradaAtiva(id);

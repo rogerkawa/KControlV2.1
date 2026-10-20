@@ -104,7 +104,7 @@ if (!form) {
   
 let temporizadorToast;
 
-function mostrarToast(titulo, mensagem) {
+function mostrarToast(titulo, mensagem, tipo = "sucesso") {
     let toast = document.getElementById("toastNotificacao");
 
     if (!toast) {
@@ -145,6 +145,9 @@ function mostrarToast(titulo, mensagem) {
 
     toast.querySelector(".toast-titulo").textContent = titulo;
     toast.querySelector(".toast-mensagem").textContent = mensagem;
+    toast.classList.remove("sucesso", "erro");
+    toast.classList.add(tipo);
+    
 
     clearTimeout(temporizadorToast);
 
@@ -213,11 +216,13 @@ async function keyRegister(event) {
 
     } catch (error) {
         console.error("Erro ao registrar:", error);
-
+        
         mostrarToast(
             "Não foi possível registrar",
-            error.message || "Ocorreu um erro ao registrar a retirada."
+            error.message || "Ocorreu um erro ao registrar a retirada.",
+            "erro"
         );
+
     }
 }
 

@@ -326,6 +326,24 @@ form {
     cursor: pointer;
 }
 
+.toast-notificacao.sucesso {
+    border-left-color: #16a34a;
+}
+
+.toast-notificacao.erro {
+    border-left-color: #dc2626;
+}
+
+.toast-notificacao.erro .toast-icone {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.toast-notificacao.erro .toast-titulo {
+    color: #b91c1c;
+}
+
+
 @media (max-width: 480px) {
     .toast-notificacao {
         top: 12px;
