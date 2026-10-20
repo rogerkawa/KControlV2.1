@@ -6,3 +6,6 @@
 @import url('layouts/login.css');
 @import url('layouts/config.css');
 @import url('layouts/membros.css');
+@import url('layouts/gerenciarSalas.css');
+@import url('layouts/gerenciarSetores.css');
+@import url('layouts/sobre.css');

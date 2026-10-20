@@ -175,6 +175,8 @@ export default function registro() {
   });
 
   
+
+
 async function abrirEdicao(id) {
   const item = registros.find(
     (registro) => String(registro.id_registro) === String(id),
@@ -189,29 +191,47 @@ async function abrirEdicao(id) {
 
   editarNome.value = item.responsavel || "";
 
-  editarEntrega.value =
-    formatarHora(item.hora_entrega) === "--:--"
-      ? ""
-      : formatarHora(item.hora_entrega);
+  const horaEntrega = formatarHora(item.hora_entrega);
+  editarEntrega.value = horaEntrega === "--:--" ? "" : horaEntrega;
 
   try {
-    // Busca todas as salas cadastradas no banco.
     const salas = await registroApi.getSalas();
 
     if (!Array.isArray(salas)) {
       throw new Error("A API não retornou uma lista válida de salas.");
     }
 
-    // Mostra as salas disponíveis e mantém a sala atual na lista.
     const salasParaExibir = salas.filter((sala) => {
-      const status = String(sala.status ?? "")
+      const idSala = String(sala.id_sala);
+      const idSalaAtual = String(item.id_sala);
+
+      // Mantém a sala atual selecionada durante a edição.
+      if (idSala === idSalaAtual) {
+        return true;
+      }
+
+      // A sala precisa estar disponível na tabela de salas.
+      const statusSala = String(sala.status ?? "")
         .trim()
         .toLowerCase();
 
-      const salaAtual =
-        String(sala.id_sala) === String(item.id_sala);
+      if (statusSala !== "disponivel") {
+        return false;
+      }
 
-      return status === "disponivel" || salaAtual;
+      // Oculta salas que possuem alguma retirada ativa.
+      const salaOcupada = registros.some((registro) => {
+        const mesmaSala =
+          String(registro.id_sala) === idSala;
+
+        const statusRegistro = String(registro.status ?? "")
+          .trim()
+          .toLowerCase();
+
+        return mesmaSala && statusRegistro === "retirada";
+      });
+
+      return !salaOcupada;
     });
 
     editarSala.innerHTML = "";
@@ -225,7 +245,6 @@ async function abrirEdicao(id) {
       editarSala.appendChild(opcao);
     });
 
-    // Seleciona automaticamente a sala do registro editado.
     editarSala.value = String(item.id_sala);
 
     if (modalEditar) {
@@ -239,6 +258,8 @@ async function abrirEdicao(id) {
     );
   }
 }
+
+
 
 
   // Exclui um registro pelo ID do banco.

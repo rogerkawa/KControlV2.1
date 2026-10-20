@@ -127,39 +127,62 @@ async function verifyResponse(response) {
 
 const url_base = 'http://localhost:3333'
 
+
 async function carregarSalas() {
-    const response = await fetch(`${url_base}/salas`)
+    const response = await fetch(`${url_base}/salas`);
 
-    await verifyResponse(response)
+    await verifyResponse(response);
 
-    const salas = await response.json()
+    const salas = await response.json();
 
-    salas.forEach(sala => {
-        const option = document.createElement('option')
-
-        option.value = sala.id_sala
-        option.textContent = sala.nome
-
-        selectSalas.appendChild(option)
+    // Limpa as opções antigas, mantendo a primeira opção do select
+    selectSalas.querySelectorAll('option:not(:first-child)').forEach(option => {
+        option.remove();
     });
-} 
+
+    const salasPermitidas = salas.filter((sala) => {
+        return sala.status !== "inativa" &&
+               sala.status !== "manutencao" &&
+               sala.status !== "retirada";
+    });
+
+    salasPermitidas.forEach(sala => {
+        const option = document.createElement('option');
+
+        option.value = sala.id_sala;
+        option.textContent = sala.nome;
+
+        selectSalas.appendChild(option);
+    });
+}
+ 
+
 
 async function carregarSetores() {
-    const response = await fetch(`${url_base}/setores`)
+    const response = await fetch(`${url_base}/setores`);
 
-    await verifyResponse(response)
+    await verifyResponse(response);
 
-    const setores = await response.json()
+    const setores = await response.json();
 
-    setores.forEach(setores => {
-        const option = document.createElement('option')
+    selectSetor
+        .querySelectorAll('option:not(:first-child)')
+        .forEach(option => option.remove());
 
-        option.value = setores.id_setor
-        option.textContent = setores.nome
+    const setoresAtivos = setores.filter(
+        setor => setor.status === "ativo"
+    );
 
-        selectSetor.appendChild(option)
+    setoresAtivos.forEach(setor => {
+        const option = document.createElement("option");
+
+        option.value = setor.id_setor;
+        option.textContent = setor.nome;
+
+        selectSetor.appendChild(option);
     });
-} 
+}
+
 
 carregarSalas()
 carregarSetores()
