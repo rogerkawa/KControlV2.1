@@ -16,6 +16,34 @@ class registerKey {
         }
     }
 
+    //Cato aqui: Criando dois métodos  para o select
+    static async getSetores(req, res) {
+        try {
+            const setores = await registerModels.getSetores();
+            return res.status(200).json({ setores });
+        } catch (error) {
+            console.error("Erro ao buscar setores:", error);
+
+            return res.status(500).json({
+                message: "Erro ao buscar setores."
+            });
+        }
+    }
+
+
+    static async getSalas(req, res) {
+        try {
+            const salas = await registerModels.getSalas();
+            return res.status(200).json({ salas });
+        } catch (error) {
+            console.error("Erro ao buscar salas:", error);
+
+            return res.status(500).json({
+                message: "Erro ao buscar salas."
+            });
+        }
+    }
+
     static async registerKey(req, res) {
         try {
             const {
@@ -66,6 +94,21 @@ class registerKey {
         } catch (error) {
             console.error("Erro ao registrar retirada:", error);
 
+            if (error.code === "SALA_NAO_ENCONTRADA") {
+                return res.status(404).json({
+                    message: error.message
+                });
+            }
+
+            if (
+                error.code === "CHAVE_RETIRADA" ||
+                error.code === "TURNO_DUPLICADO"
+            ) {
+                return res.status(409).json({
+                    message: error.message
+                });
+            }
+
             return res.status(500).json({
                 message: "Erro ao registrar a retirada."
             });
@@ -75,7 +118,7 @@ class registerKey {
     static async updateKey(req, res) {
         try {
             const id = Number(req.params.id);
-            const { responsavel, id_sala, hora_entrega } = req.body;
+            const { responsavel, hora_entrega } = req.body;
 
             if (!Number.isInteger(id) || id <= 0) {
                 return res.status(400).json({
@@ -85,9 +128,7 @@ class registerKey {
 
             if (
                 typeof responsavel !== "string" ||
-                !responsavel.trim() ||
-                !Number.isInteger(Number(id_sala)) ||
-                Number(id_sala) <= 0
+                !responsavel.trim()
             ) {
                 return res.status(400).json({
                     message: "Informe um responsável e uma sala válidos."
@@ -108,7 +149,6 @@ class registerKey {
             const resultado = await registerModels.updateKey(
                 id,
                 responsavel.trim(),
-                Number(id_sala),
                 hora_entrega || null
             );
 

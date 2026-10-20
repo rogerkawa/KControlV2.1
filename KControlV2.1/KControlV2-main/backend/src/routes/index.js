@@ -1,9 +1,9 @@
 import express from 'express'
-import userRoutes from './userRoutes'
 import setorSalaRoutes from './setorSalaRoutes'
 import registerRoutes from './registerRoutes'
 import membrosRoutes from './membrosRoutes'
 import avatarRoutes from './avatarRoutes'
+import userRoutes from  './userRoutes'
 
 const routes = (app)=>{
     let message = 'Servidor rodando!'
