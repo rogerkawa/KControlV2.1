@@ -32,7 +32,7 @@ function httpHeader(){
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    carregarRegistros();
+    carregarUltimosRegistros();
 });
 
 

@@ -216,6 +216,31 @@ class registerKey {
             });
         }
     }
+    static async getMyKeys(req, res) {
+    try {
+        // Compatível com os dois formatos de ID usados no projeto.
+        const id_usuario = Number(
+            req.user?.id_usuario ?? req.user?.id
+        );
+
+        if (!Number.isInteger(id_usuario) || id_usuario <= 0) {
+            return res.status(401).json({
+                message: "Usuário não autenticado."
+            });
+        }
+
+        const registros =
+            await registerModels.getKeysByUserId(id_usuario);
+
+        return res.status(200).json({ registros });
+    } catch (error) {
+        console.error("Erro ao buscar histórico pessoal:", error);
+
+        return res.status(500).json({
+            message: "Erro ao buscar seu histórico de retiradas."
+        });
+    }
+}
 }
 
 export default registerKey;

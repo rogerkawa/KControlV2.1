@@ -1,0 +1,540 @@
+/* ========================================
+   MEU PERFIL — KControlV2.1
+======================================== */
+
+/* Estrutura e limites de largura */
+section.page[id="Meu perfil"],
+section.page[id="Meu perfil"] *,
+section.page[id="Meu perfil"] *::before,
+section.page[id="Meu perfil"] *::after {
+    box-sizing: border-box;
+}
+
+section.page[id="Meu perfil"] {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+}
+
+section.page[id="Meu perfil"] .perfil-container {
+    width: 100%;
+    max-width: 1500px;
+    min-width: 0;
+    margin: 0 auto;
+    padding: 32px;
+    color: var(--text-primary);
+}
+
+section.page[id="Meu perfil"] .perfil-container button,
+section.page[id="Meu perfil"] .perfil-container select {
+    font-family: inherit;
+}
+
+/* Cabeçalho */
+.perfil-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    min-width: 0;
+    margin-bottom: 36px;
+}
+
+.perfil-header > div {
+    min-width: 0;
+}
+
+.perfil-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--accent);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.perfil-eyebrow::before {
+    content: "";
+    width: 22px;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--accent);
+}
+
+.perfil-header h1 {
+    margin: 0;
+    color: var(--text-primary);
+    font-size: clamp(1.6rem, 2.5vw, 2rem);
+    font-weight: 700;
+    letter-spacing: -0.035em;
+    line-height: 1.25;
+}
+
+.perfil-header p {
+    margin: 8px 0 0;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.7;
+}
+
+/* Botão atualizar */
+#atualizarMeuHistorico {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    min-width: 130px;
+    min-height: 44px;
+    padding: 0 18px;
+    border: 1px solid var(--border-hover);
+    border-radius: var(--radius-md);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.2;
+    white-space: nowrap;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+    transition: background var(--tr), color var(--tr), border-color var(--tr), transform var(--tr);
+}
+
+#atualizarMeuHistorico i {
+    font-size: 1.1rem;
+}
+
+#atualizarMeuHistorico:hover {
+    border-color: var(--accent);
+    background: var(--accent-50);
+    color: var(--accent);
+}
+
+#atualizarMeuHistorico:active {
+    transform: scale(0.98);
+}
+
+#atualizarMeuHistorico:focus-visible,
+.perfil-filtro select:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 3px;
+}
+
+#atualizarMeuHistorico:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Cards de resumo */
+.perfil-stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
+    width: 100%;
+    min-width: 0;
+    margin-bottom: 38px;
+}
+
+.perfil-stat {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    min-width: 0;
+    min-height: 132px;
+    padding: 26px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    background: var(--bg-primary);
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.025);
+    transition: border-color var(--tr), box-shadow var(--tr);
+}
+
+.perfil-stat > span {
+    padding-right: 30px;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+.perfil-stat > strong {
+    color: var(--text-primary);
+    font-size: 2rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.04em;
+    line-height: 1;
+}
+
+.perfil-stat > i {
+    position: absolute;
+    top: 25px;
+    right: 24px;
+    color: var(--accent);
+    font-size: 1.35rem;
+}
+
+.perfil-stat:hover {
+    border-color: var(--border-hover);
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.045);
+}
+
+/* Histórico */
+.perfil-historico {
+    width: 100%;
+    min-width: 0;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    background: var(--bg-primary);
+}
+
+.perfil-historico-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 24px;
+    min-width: 0;
+    padding: 26px 28px;
+    border-bottom: 1px solid var(--border);
+}
+
+.perfil-historico-header > div:first-child {
+    min-width: 0;
+}
+
+.perfil-historico-header h2 {
+    margin: 0 0 9px;
+    color: var(--text-primary);
+    font-size: 1.15rem;
+    font-weight: 700;
+    line-height: 1.4;
+}
+
+.perfil-historico-header p {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+/* Filtro de status */
+.perfil-filtro {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+}
+
+.perfil-filtro label {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.perfil-filtro select {
+    width: auto;
+    min-width: 190px;
+    min-height: 44px;
+    padding: 0 42px 0 14px;
+    border: 1px solid var(--border-hover);
+    border-radius: var(--radius-md);
+    outline: none;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: border-color var(--tr), box-shadow var(--tr), background var(--tr);
+}
+
+.perfil-filtro select:hover {
+    border-color: var(--accent);
+}
+
+.perfil-filtro select:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-50);
+}
+
+.perfil-filtro select option {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+/* Tabela: a rolagem horizontal fica somente neste contêiner */
+.perfil-tabela-wrapper {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 0;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+}
+
+.perfil-tabela {
+    width: 100%;
+    min-width: 760px;
+    table-layout: auto;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.perfil-tabela th,
+.perfil-tabela td {
+    padding: 19px 22px;
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+    vertical-align: middle;
+}
+
+.perfil-tabela th {
+    background: var(--bg-secondary);
+    color: var(--text-secondary);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.045em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.perfil-tabela td {
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.perfil-tabela tbody tr {
+    transition: background var(--tr);
+}
+
+.perfil-tabela tbody tr:hover {
+    background: var(--bg-secondary);
+}
+
+.perfil-tabela tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.perfil-tabela .perfil-sala {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.perfil-tabela th:last-child,
+.perfil-tabela td:last-child {
+    min-width: 140px;
+    white-space: nowrap;
+}
+
+/* Etiquetas de status */
+.perfil-tabela td.perfil-status-celula {
+    text-align: left;
+}
+
+.perfil-tabela .perfil-status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-width: 90px;
+    min-height: 32px;
+    padding: 8px 12px;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    line-height: 1.2;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
+.perfil-tabela .perfil-status::before {
+    flex: 0 0 7px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: currentColor;
+    content: "";
+}
+
+.perfil-tabela .perfil-status.pendente {
+    border-color: #FDE68A;
+    background: #FEF3C7;
+    color: #92400E;
+}
+
+.perfil-tabela .perfil-status.devolvida {
+    border-color: #A7F3D0;
+    background: #D1FAE5;
+    color: #065F46;
+}
+
+/* Mensagens e estado vazio */
+.perfil-mensagem {
+    margin: 0;
+    padding: 20px 28px;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    text-align: center;
+}
+
+.perfil-mensagem[hidden] {
+    display: none;
+}
+
+.perfil-vazio {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    min-height: 260px;
+    padding: 40px 24px;
+    text-align: center;
+}
+
+.perfil-vazio i {
+    margin-bottom: 4px;
+    color: var(--text-tertiary);
+    font-size: 2.8rem;
+}
+
+.perfil-vazio h3 {
+    margin: 0;
+    color: var(--text-primary);
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+.perfil-vazio p {
+    max-width: 420px;
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+/* Tema escuro */
+[data-theme="dark"] .perfil-stat,
+[data-theme="dark"] #atualizarMeuHistorico {
+    box-shadow: none;
+}
+
+[data-theme="dark"] .perfil-tabela .perfil-status.pendente {
+    border-color: #854D0E;
+    background: #422006;
+    color: #FCD34D;
+}
+
+[data-theme="dark"] .perfil-tabela .perfil-status.devolvida {
+    border-color: #047857;
+    background: #064E3B;
+    color: #6EE7B7;
+}
+
+/* Tablet */
+@media (max-width: 800px) {
+    section.page[id="Meu perfil"] .perfil-container {
+        padding: 26px;
+    }
+
+    .perfil-stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+    }
+
+    .perfil-stat:last-child {
+        grid-column: 1 / -1;
+    }
+
+    .perfil-header {
+        align-items: flex-start;
+    }
+
+    .perfil-historico-header {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .perfil-filtro {
+        width: 100%;
+    }
+
+    .perfil-filtro select {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .perfil-stat {
+        padding: 22px;
+    }
+}
+
+/* Celular */
+@media (max-width: 560px) {
+    section.page[id="Meu perfil"] .perfil-container {
+        padding: 20px 16px;
+    }
+
+    .perfil-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 20px;
+        margin-bottom: 28px;
+    }
+
+    #atualizarMeuHistorico {
+        width: 100%;
+        min-height: 46px;
+    }
+
+    .perfil-stats {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 14px;
+        margin-bottom: 28px;
+    }
+
+    .perfil-stat,
+    .perfil-stat:last-child {
+        grid-column: auto;
+        min-height: 110px;
+        padding: 22px;
+    }
+
+    .perfil-historico-header {
+        gap: 20px;
+        padding: 22px 20px;
+    }
+
+    .perfil-filtro {
+        align-items: stretch;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .perfil-filtro select {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .perfil-tabela th,
+    .perfil-tabela td {
+        padding: 16px;
+    }
+}

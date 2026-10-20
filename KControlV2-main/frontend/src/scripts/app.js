@@ -4,6 +4,7 @@ import carregarUltimosRegistros from "./modules/ultimosRegistros.js";
 import carregarDashboard from "./modules/dashboard.js";
 import carregarUsuario from "./modules/carregarUser.js";
 import toggleTema from "./modules/config.js";
+import iniciarMeuPerfil from "./modules/meuPerfil.js";
 
 
 export function atualizarFavicon() {
@@ -39,5 +40,6 @@ trocarTela()
 carregarUltimosRegistros()
 carregarDashboard()
 carregarUsuario()
+iniciarMeuPerfil()
 toggleTema()
 atualizarFavicon()

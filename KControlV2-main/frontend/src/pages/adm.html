@@ -55,6 +55,10 @@
                 <i class="ti ti-check" aria-hidden="true"></i>
                 <span>Administração</span>
             </a>
+            <a class="nav-item" data-page="Meu perfil">
+                <i class="ti ti-user"></i>
+                <span>Meu perfil</span>
+            </a>
 
             <span class="sb-label" style="margin-top: 8px">Análise</span>
             <a class="nav-item" href="#" data-page="Gerenciar Salas">
@@ -129,7 +133,7 @@
 
                         <div class="profile-menu-divider"></div>
 
-                        <button class="profile-option">
+                        <button class="profile-option" data-page="Meu perfil">
                             <i class="ti ti-user"></i>
                             <span>Meu perfil</span>
                         </button>
@@ -1397,6 +1401,107 @@
                 </div>
 
             </section>
+
+
+            <!-- Meu perfil: histórico pessoal de retiradas -->
+            <section class="page" id="Meu perfil">
+
+                <div class="perfil-container">
+
+                    <header class="perfil-header">
+                        <div>
+                            <span class="perfil-eyebrow">
+                                <i class="ti ti-history"></i>
+                                ÁREA PESSOAL
+                            </span>
+
+                            <h1>Meu histórico</h1>
+
+                            <p>
+                                Acompanhe todas as retiradas de chaves
+                                realizadas por você.
+                            </p>
+                        </div>
+
+                        <button type="button" id="atualizarMeuHistorico" class="perfil-btn-atualizar">
+                            <i class="ti ti-refresh"></i>
+                            Atualizar
+                        </button>
+                    </header>
+
+                    <div class="perfil-stats">
+
+                        <article class="perfil-stat">
+                            <span>Total de retiradas</span>
+                            <strong id="perfilTotal">0</strong>
+                            <i class="ti ti-key"></i>
+                        </article>
+
+                        <article class="perfil-stat">
+                            <span>Pendentes</span>
+                            <strong id="perfilPendentes">0</strong>
+                            <i class="ti ti-clock"></i>
+                        </article>
+
+                        <article class="perfil-stat">
+                            <span>Devolvidas</span>
+                            <strong id="perfilDevolvidas">0</strong>
+                            <i class="ti ti-circle-check"></i>
+                        </article>
+
+                    </div>
+
+                    <div class="perfil-historico">
+
+                        <div class="perfil-historico-header">
+                            <div>
+                                <h2>Minhas retiradas</h2>
+                                <p>Consulte a situação de cada movimentação.</p>
+                            </div>
+
+                            <div class="perfil-filtro">
+                                <label for="filtroMeuHistorico">Status</label>
+
+                                <select id="filtroMeuHistorico">
+                                    <option value="todos">Todos os registros</option>
+                                    <option value="retirada">Pendentes</option>
+                                    <option value="devolvida">Devolvidas</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="perfil-tabela-wrapper">
+                            <table class="perfil-tabela">
+                                <thead>
+                                    <tr>
+                                        <th>Setor</th>
+                                        <th>Sala</th>
+                                        <th>Data</th>
+                                        <th>Retirada</th>
+                                        <th>Devolução</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody id="listaMeuHistorico">
+                                    <tr>
+                                        <td colspan="6">
+                                            Carregando seu histórico...
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <p id="mensagemMeuHistorico" class="perfil-mensagem" role="status" hidden>
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </section>
+
 
         </div>
 

@@ -3,9 +3,9 @@
 @import url('layouts/main.css');
 @import url('layouts/admin.css');
 @import url('layouts/dashboard.css');
-@import url('layouts/login.css');
 @import url('layouts/config.css');
 @import url('layouts/membros.css');
 @import url('layouts/gerenciarSalas.css');
 @import url('layouts/gerenciarSetores.css');
 @import url('layouts/sobre.css');
+@import url('layouts/perfil.css');

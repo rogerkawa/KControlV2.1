@@ -5,8 +5,9 @@ import adminMiddleware from "../middlewares/adminMiddlwares.js";
 
 const registerRoutes = express.Router()
 
-    registerRoutes.get('/get/registro',authMiddleware,adminMiddleware, registerKey.getKeys)
-    registerRoutes.post('/registro',authMiddleware, registerKey.registerKey)
+    registerRoutes.get('/get/registro',authMiddleware,adminMiddleware, registerKey.getKeys);
+    registerRoutes.get("/meus-registros", authMiddleware, registerKey.getMyKeys);
+    registerRoutes.post('/registro',authMiddleware, registerKey.registerKey);
     registerRoutes.put("/registro/update/:id", authMiddleware, adminMiddleware, registerKey.updateKey);
     registerRoutes.delete("/registro/delete/:id", authMiddleware, adminMiddleware, registerKey.deleteKey);
 
