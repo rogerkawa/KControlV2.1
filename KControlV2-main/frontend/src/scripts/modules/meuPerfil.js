@@ -1,5 +1,5 @@
 
-const URL_BASE = "http://localhost:3333";
+const URL_BASE = "https://kcontrolv2-1.onrender.com";
 
 const elementos = {
     total: document.getElementById("perfilTotal"),

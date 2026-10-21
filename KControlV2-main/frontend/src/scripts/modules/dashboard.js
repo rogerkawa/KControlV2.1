@@ -1,5 +1,5 @@
 
-const API_URL = "http://localhost:3333/get/registro";
+const API_URL = "https://kcontrolv2-1.onrender.com/get/registro";
 
 let graficoSetores = null;
 let graficoDiasSemana = null;

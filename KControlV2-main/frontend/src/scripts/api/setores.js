@@ -8,7 +8,7 @@ async function verifyResponse(response) {
     return response;
 }
 
-const url_base = 'http://localhost:3333/setores';
+const url_base = 'https://kcontrolv2-1.onrender.com/setores';
 
 function obterToken() {
     return localStorage.getItem('token');
