@@ -5,7 +5,7 @@ import adminMiddleware from "../middlewares/adminMiddlwares";
 
 const userRoutes = express.Router()
 
-    userRoutes.get('/users', UserController.listUsers)
+    userRoutes.get('/users',authMiddleware, adminMiddleware, UserController.listUsers)
     userRoutes.post('/users/registro', UserController.registerUser)
     userRoutes.post('/users/login', UserController.loginUser)
     userRoutes.get('/users/login/auth', authMiddleware,  UserController.userAuthenticator)

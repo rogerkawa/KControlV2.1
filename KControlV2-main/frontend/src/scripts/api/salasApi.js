@@ -1,13 +1,23 @@
 
+
 async function verifyResponse(response) {
     if (!response.ok) {
-        const erro = await response.json();
+        let mensagem = `Erro HTTP: ${response.status}`;
 
-        throw new Error(erro.message || `Erro HTTP: ${response.status}`);
+        try {
+            const erro = await response.json();
+            mensagem = erro.message || mensagem;
+        } catch(error) {
+            console.error(error);
+            throw error;
+        }
+
+        throw new Error(mensagem);
     }
 
     return response;
 }
+
 
 const url_base = 'https://kcontrolv2-1.onrender.com/salas';
 
@@ -41,22 +51,18 @@ const salasApi = {
         }
     },
 
-    async registerSala(sala) {
-        try {
+    
+        async registerSala(nome) {
             const response = await fetch(`${url_base}`, {
-                method: 'POST',
+                method: "POST",
                 headers: httpAuth(),
-                body: JSON.stringify(sala)
+                body: JSON.stringify({ nome: nome.trim() })
             });
 
             await verifyResponse(response);
             return response.json();
+        },
 
-        } catch (error) {
-            console.error(error);
-            throw error;
-        }
-    },
 
     async updateStatusSala(id, status) {
         try {

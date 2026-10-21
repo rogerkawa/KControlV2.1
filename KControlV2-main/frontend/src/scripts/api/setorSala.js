@@ -205,6 +205,7 @@ window.addEventListener("storage", (evento) => {
 });
 
 document.addEventListener("registrosAtualizados", async () => {
+    await carregarSalas();
     await carregarSalasEmUso();
     await carregarStatusSalas();
 });

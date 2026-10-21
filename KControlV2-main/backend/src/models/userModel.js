@@ -4,8 +4,10 @@ async function listUsers() {
     try {
 
         const sql = `
-    SELECT * FROM usuarios
-    `
+    SELECT id_usuario, nome, email, role
+    FROM usuarios
+    ORDER BY nome ASC
+`;
 
     const [dados] = await conect.query(sql)
     return dados

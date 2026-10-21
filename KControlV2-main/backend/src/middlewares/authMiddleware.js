@@ -8,6 +8,15 @@ function authMiddleware(req,res,next){
 
     const authorization = req.headers.authorization
 
+    if (
+        typeof authorization !== "string" ||
+        !authorization.startsWith("Bearer ")
+    ) {
+        return res.status(401).json({
+            message: "Autenticação necessária."
+        });
+    }
+
     if(!authorization){
         let message = 'Token inválido'
         return res.status(400).json(message)

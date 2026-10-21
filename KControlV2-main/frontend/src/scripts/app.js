@@ -35,11 +35,86 @@ document.addEventListener("DOMContentLoaded", atualizarBoasVindas);
 
 
 
-navbar()
-trocarTela()
-carregarUltimosRegistros()
-carregarDashboard()
-carregarUsuario()
-iniciarMeuPerfil()
-toggleTema()
-atualizarFavicon()
+
+async function iniciarAplicacao() {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+        window.location.replace("../index.html");
+        return;
+    }
+
+    try {
+        const resposta = await fetch(
+            "https://kcontrolv2-1.onrender.com/users/login/auth",
+            {
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${token}`
+                },
+                cache: "no-store"
+            }
+        );
+
+        if (!resposta.ok) {
+            localStorage.removeItem("token");
+            window.location.replace("../index.html");
+            return;
+        }
+
+        const dados = await resposta.json();
+        const usuario = dados.user;
+
+        if (!usuario) {
+            localStorage.removeItem("token");
+            window.location.replace("../index.html");
+            return;
+        }
+
+        // Os usuários comuns não devem acessar páginas administrativas.
+        const paginasAdmin = [
+            "dashboard",
+            "admin",
+            "Membros",
+            "Gerenciar Salas",
+            "Gerenciar Setores"
+        ];
+
+        if (usuario.role !== "admin") {
+            document.querySelectorAll("[data-page]").forEach((link) => {
+                if (paginasAdmin.includes(link.dataset.page)) {
+                    link.hidden = true;
+                }
+            });
+
+            document.querySelectorAll(".page").forEach((pagina) => {
+                if (paginasAdmin.includes(pagina.id)) {
+                    pagina.classList.remove("active");
+                }
+            });
+
+            const registro = document.getElementById("registro");
+
+            if (registro) {
+                registro.classList.add("active");
+            }
+        }
+
+        navbar();
+        trocarTela();
+        carregarUltimosRegistros();
+        carregarDashboard();
+        carregarUsuario();
+        iniciarMeuPerfil();
+        toggleTema();
+        atualizarFavicon();
+        atualizarBoasVindas();
+
+    } catch (erro) {
+        console.error("Erro ao validar a sessão:", erro);
+        localStorage.removeItem("token");
+        window.location.replace("../index.html");
+    }
+}
+
+document.addEventListener("DOMContentLoaded", iniciarAplicacao);

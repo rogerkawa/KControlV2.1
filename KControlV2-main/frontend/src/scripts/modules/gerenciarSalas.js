@@ -245,6 +245,9 @@ formSala.addEventListener("submit", async (evento) => {
   try {
     await salasApi.registerSala(nome);
 
+    document.dispatchEvent(new Event("salasAtualizadas"));
+    mostrarMensagem(`Sala "${nome}" cadastrada com sucesso.`);
+
     formSala.reset();
     await carregarSalas();
 

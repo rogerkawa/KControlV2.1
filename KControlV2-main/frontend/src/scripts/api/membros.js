@@ -39,6 +39,10 @@ async function verifyResponse(response) {
     return response;
 }
 
+let membrosCarregados = [];
+let filtroMembrosAtual = "todos";
+let buscaMembrosAtual = "";
+
 
 // LISTAR MEMBROS NA API
 async function listMembers() {
@@ -88,6 +92,8 @@ async function carregarMembros() {
             `;
             return;
         }
+        membrosCarregados = membros;
+        renderizarMembrosFiltrados();
 
         listaMembros.innerHTML = membros
             .map(membro => criarLinhaMembro(membro))
@@ -107,6 +113,70 @@ async function carregarMembros() {
         `;
     }
 }
+
+
+
+function renderizarMembrosFiltrados() {
+    const lista = document.querySelector("#listaMembros");
+
+    if (!lista) return;
+
+    const busca = buscaMembrosAtual
+        .trim()
+        .toLocaleLowerCase("pt-BR");
+
+    const filtrados = membrosCarregados.filter((membro) => {
+        const nome = String(membro.nome ?? "").toLocaleLowerCase("pt-BR");
+        const email = String(membro.email ?? "").toLocaleLowerCase("pt-BR");
+        const role = String(membro.role ?? "user").toLowerCase();
+
+        const correspondeBusca =
+            nome.includes(busca) || email.includes(busca);
+
+        const correspondeCargo =
+            filtroMembrosAtual === "todos" ||
+            role === filtroMembrosAtual;
+
+        return correspondeBusca && correspondeCargo;
+    });
+
+    if (!filtrados.length) {
+        lista.innerHTML = `
+            <tr>
+                <td colspan="5">Nenhum membro encontrado.</td>
+            </tr>
+        `;
+        return;
+    }
+
+    lista.innerHTML = filtrados
+        .map(criarLinhaMembro)
+        .join("");
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    const busca = document.querySelector("#buscarMembro");
+
+    busca?.addEventListener("input", () => {
+        buscaMembrosAtual = busca.value;
+        renderizarMembrosFiltrados();
+    });
+
+    document.querySelectorAll(".membros-filtro").forEach((botao) => {
+        botao.addEventListener("click", () => {
+            filtroMembrosAtual = botao.dataset.filtro;
+
+            document.querySelectorAll(".membros-filtro").forEach((item) => {
+                item.classList.toggle("active", item === botao);
+            });
+
+            renderizarMembrosFiltrados();
+        });
+    });
+
+    carregarMembros();
+});
+
 
 
 

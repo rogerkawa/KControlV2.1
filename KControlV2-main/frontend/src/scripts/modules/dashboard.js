@@ -222,16 +222,27 @@ function renderizarGraficoDiasSemana(registros) {
 
         if (!data) return;
 
-        // Evita problemas de fuso horário quando a data vem como YYYY-MM-DD.
-        const dataTexto = String(data);
-        const dataLocal = /^\d{4}-\d{2}-\d{2}$/.test(dataTexto)
-            ? new Date(`${dataTexto}T12:00:00`)
-            : new Date(dataTexto);
+        // Evita que a data seja interpretada no fuso horário errado.
+const dataTexto = String(data);
+const partesData = dataTexto.match(/^(\d{4})-(\d{2})-(\d{2})/);
 
-        if (Number.isNaN(dataLocal.getTime())) return;
+let dataLocal;
 
-        const dia = nomesDias[dataLocal.getDay()];
-        dias[dia]++;
+if (partesData) {
+    const ano = Number(partesData[1]);
+    const mes = Number(partesData[2]) - 1;
+    const dia = Number(partesData[3]);
+
+    dataLocal = new Date(ano, mes, dia);
+} else {
+    dataLocal = new Date(dataTexto);
+}
+
+if (Number.isNaN(dataLocal.getTime())) return;
+
+// Conta a retirada no dia correto da semana.
+const diaSemana = nomesDias[dataLocal.getDay()];
+dias[diaSemana]++;
     });
 
     if (graficoDiasSemana) {
