@@ -1,13 +1,31 @@
-.mainAdmin{
-    width: 80vw;
-    margin: 50px auto;
+
+.mainAdmin {
+    width: 100%;
+    max-width: 1200px;
+    min-width: 0;
+    margin: 30px auto;
+    padding: 0 20px;
     display: flex;
     flex: 1;
     justify-content: center;
-    align-items: center;
+    gap: 1rem;
+    align-items: stretch;
     flex-direction: column;
+    box-sizing: border-box;
 }
-table{
+
+/* Área de rolagem exclusiva da tabela */
+.admin-table-wrapper {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 8px;
+}
+
+table {
     width: 100%;
     table-layout: fixed;
     border-collapse: collapse;
@@ -15,37 +33,52 @@ table{
     color: var(--text-primary);
 }
 
-td , th{
+.admin-table-wrapper table {
+    width: 100%;
+    min-width: 900px;
+    table-layout: auto;
+}
+
+td,
+th {
     word-wrap: break-word;
     text-align: center;
     padding: 10px;
     border: 1px solid var(--border);
 }
-.title{
+
+.title {
     display: flex;
-    align-items: start;
+    align-items: flex-start;
     gap: 20px;
     color: var(--text-primary);
 }
-.title div h1{
+
+.title div h1 {
     font-size: 1.8rem;
 }
-.title div span{
+
+.title div span {
     font-size: 0.9rem;
 }
-.bi-list-columns-reverse{
+
+.bi-list-columns-reverse {
     color: var(--text-primary);
     font-size: 1.7rem;
 }
-thead tr{
+
+thead tr {
     text-align: center;
 }
-thead tr th{
+
+thead tr th {
     font-size: 0.7rem;
 }
-.clear{
+
+.clear {
     display: inline-flex;
     align-items: center;
+    align-self: flex-start;
     margin-top: 1.2rem;
     gap: .5rem;
     padding: .65rem 1rem;
@@ -59,65 +92,72 @@ thead tr th{
     transition: .2s ease;
 }
 
-.clear:hover{
+.clear:hover {
     background: #ef4444;
     color: #fff;
 }
 
-.clear:active{
+.clear:active {
     transform: scale(.98);
 }
 
 .editar,
-.remover{
+.remover {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: .5rem;
-
     padding: .55rem .9rem;
-
     border-radius: 8px;
     border: 1px solid transparent;
-
     font-size: .875rem;
     font-weight: 500;
-
     cursor: pointer;
     transition: .2s ease;
 }
 
-/* Editar */
-.editar{
+/* Botão Editar */
+.editar {
     background: #2563eb;
     color: #fff;
     border: 1px solid #2563eb;
 }
 
-.editar:hover{
+.editar:hover {
     background: #1d4ed8;
 }
 
-/* Remover */
-.remover{
+/* Botão Remover */
+.remover {
     background: transparent;
     color: #dc2626;
     border: 1px solid #dc2626;
 }
+
 .btn.remover:disabled {
     opacity: 0.4;
     cursor: not-allowed;
 }
 
-
-.remover:hover{
+.remover:hover {
     background: #dc2626;
     color: #fff;
 }
-#admin{
+
+#admin {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
     padding: 20px;
+    box-sizing: border-box;
 }
 
-.modalEditar{
+/* ========================================
+   MODAL DE EDIÇÃO
+   Mantido conforme o CSS original
+======================================== */
+
+.modalEditar {
     position: fixed;
     top: 0;
     left: 0;
@@ -126,16 +166,16 @@ thead tr th{
     display: flex;
     justify-content: center;
     align-items: center;
-    background: rgba(15,23,42,0.65);
+    background: rgba(15, 23, 42, 0.65);
     z-index: 99999;
     backdrop-filter: blur(4px);
 }
 
-.escondido{
+.escondido {
     display: none !important;
 }
 
-.conteudoEditar{
+.conteudoEditar {
     width: 420px;
     background: var(--bg-primary);
     color: var(--text-primary);
@@ -145,17 +185,16 @@ thead tr th{
     flex-direction: column;
     gap: 18px;
     animation: aparecerEditar .3s ease;
-    box-shadow:
-        0 20px 40px rgba(0,0,0,0.2);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
 }
 
-.topoEditar{
+.topoEditar {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.editarIcone{
+.editarIcone {
     width: 65px;
     height: 65px;
     border-radius: 50%;
@@ -165,12 +204,12 @@ thead tr th{
     align-items: center;
 }
 
-.editarIcone i{
+.editarIcone i {
     font-size: 1.8rem;
     color: #2563eb;
 }
 
-#fecharEditar{
+#fecharEditar {
     border: none;
     background: transparent;
     font-size: 1.1rem;
@@ -179,32 +218,32 @@ thead tr th{
     transition: .3s;
 }
 
-#fecharEditar:hover{
+#fecharEditar:hover {
     transform: rotate(90deg);
     color: #111827;
 }
 
-.conteudoEditar h2{
+.conteudoEditar h2 {
     margin: 0;
     color: var(--text-primary);
 }
 
-.conteudoEditar span{
+.conteudoEditar span {
     color: #64748b;
 }
 
-.grupoInput{
+.grupoInput {
     display: flex;
     flex-direction: column;
     gap: 8px;
 }
 
-.grupoInput label{
+.grupoInput label {
     font-weight: 600;
     color: var(--text-secondary);
 }
 
-.grupoInput input{
+.grupoInput input {
     height: 50px;
     background: var(--bg-primary);
     color: var(--text-primary);
@@ -215,20 +254,19 @@ thead tr th{
     transition: .3s;
 }
 
-.grupoInput input:focus{
+.grupoInput input:focus {
     border-color: #2563eb;
-    box-shadow:
-        0 0 0 4px rgba(37,99,235,0.15);
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
 }
 
-.acoesEditar{
+.acoesEditar {
     display: flex;
     justify-content: flex-end;
     gap: 12px;
     margin-top: 10px;
 }
 
-#cancelarEditar{
+#cancelarEditar {
     border: none;
     background: #e5e7eb;
     color: #111827;
@@ -238,11 +276,11 @@ thead tr th{
     transition: .3s;
 }
 
-#cancelarEditar:hover{
+#cancelarEditar:hover {
     background: #d1d5db;
 }
 
-#salvarEdicao{
+#salvarEdicao {
     border: none;
     background: #2563eb;
     color: white;
@@ -252,105 +290,138 @@ thead tr th{
     transition: .3s;
 }
 
-#salvarEdicao:hover{
+#salvarEdicao:hover {
     background: #1d4ed8;
 }
 
-.form-select{
+.form-select {
     background: var(--bg-primary);
     color: var(--text-primary);
     padding: 1rem;
     border-radius: 12px;
 }
-.form-select:focus{
+
+.form-select:focus {
     border-color: #2563eb;
-    box-shadow:
-        0 0 0 4px rgba(37,99,235,0.15);
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
 }
-.aviso{
+
+.aviso {
     margin-top: 15px;
     color: var(--text-secondary);
 }
 
-footer{
+footer {
     color: var(--text-tertiary);
     text-align: center;
 }
-a{
+
+a {
     text-decoration: none;
     color: #3b82f6;
     transition: 0.5s;
 }
-a:hover{
+
+a:hover {
     text-decoration: underline;
 }
 
-@keyframes aparecerEditar{
-    from{
+@keyframes aparecerEditar {
+    from {
         opacity: 0;
         transform: translateY(20px) scale(.95);
     }
 
-    to{
+    to {
         opacity: 1;
         transform: translateY(0) scale(1);
     }
 }
-@media (max-width: 1100px){
-    table{
-        display: block;
-        overflow-x: auto;
-        white-space: nowrap;
+
+/* ========================================
+   RESPONSIVIDADE
+======================================== */
+
+@media (max-width: 1100px) {
+    .admin-table-wrapper table {
+        min-width: 900px;
     }
-
 }
-@media (max-width: 768px){
 
-    header{
+@media (max-width: 768px) {
+    header {
         flex-direction: column;
         align-items: flex-start;
         gap: 15px;
         padding: 20px;
     }
 
-    .header{
+    .header {
         width: 100%;
         justify-content: space-between;
         flex-wrap: wrap;
     }
 
-    .bi-key{
+    .bi-key {
         margin-left: 0;
         font-size: 2rem;
         padding: 0.7rem;
     }
 
-    main{
+    main {
         width: 95vw;
     }
 
-    .title{
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
+    #admin {
+        width: 100%;
+        padding: 12px;
     }
 
-    .title div h1{
+    .mainAdmin {
+        width: 100%;
+        min-width: 0;
+        margin: 15px auto;
+        padding: 0;
+    }
+
+    .title {
+        flex-direction: row;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 16px;
+    }
+
+    .title div h1 {
         font-size: 1.4rem;
     }
 
-    .title div span{
+    .title div span {
         font-size: 0.8rem;
     }
 
-    td, th{
-        font-size: 0.9rem;
+    .bi-list-columns-reverse {
+        font-size: 1.5rem;
+        flex-shrink: 0;
+    }
+
+    .admin-table-wrapper {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .admin-table-wrapper table {
+        min-width: 900px;
+    }
+
+    td,
+    th {
+        font-size: 0.85rem;
         padding: 8px;
     }
 
-    #admin{
-        width: 100%;
-        padding: 15px;
+    .editar,
+    .remover {
+        font-size: 0.8rem;
+        padding: .5rem .65rem;
     }
-
 }

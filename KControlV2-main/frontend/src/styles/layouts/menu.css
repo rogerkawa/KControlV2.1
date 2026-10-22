@@ -549,6 +549,9 @@
       .mobile-toggle {
         display: flex;
       }
+      .sb-footer{
+        padding-bottom: 0.7rem;
+      }
 }
 
 @media (max-width: 768px) {
