@@ -472,7 +472,9 @@ form {
   padding-bottom: .6rem;
   scroll-snap-type: x mandatory;
 }
-
+.mensagem-vazia{
+    color: var(--text-primary);
+}
 .salas-em-uso__lista::-webkit-scrollbar {
   height: .4rem;
 }
