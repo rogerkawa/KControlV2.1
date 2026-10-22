@@ -5,6 +5,7 @@ import carregarDashboard from "./modules/dashboard.js";
 import carregarUsuario from "./modules/carregarUser.js";
 import toggleTema from "./modules/config.js";
 import iniciarMeuPerfil from "./modules/meuPerfil.js";
+import { carregarAvatarSalvo } from "./api/avatar.js";
 
 
 export function atualizarFavicon() {
@@ -70,6 +71,8 @@ async function iniciarAplicacao() {
             window.location.replace("../index.html");
             return;
         }
+
+        await carregarAvatarSalvo();
 
         // Os usuários comuns não devem acessar páginas administrativas.
         const paginasAdmin = [

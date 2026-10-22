@@ -2,7 +2,7 @@ import conect from "../config/database.js";
 
 async function findAll() {
     const sql = `
-        SELECT id_usuario, nome, email, role
+        SELECT id_usuario, nome, email, role, avatar_url
         FROM usuarios
         ORDER BY nome ASC
     `
@@ -14,7 +14,7 @@ async function findAll() {
 
 async function findById(id_usuario) {
     const sql =
-        `SELECT id_usuario, nome, email, role
+        `SELECT id_usuario, nome, email, role, avatar_url
          FROM usuarios
          WHERE id_usuario = ?`
 

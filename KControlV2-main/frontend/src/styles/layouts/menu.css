@@ -229,6 +229,42 @@
       font-size: 11px;
       color: var(--text-secondary);
     }
+    
+.sb-footer .user-row {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+.sb-footer .user-row .avatar {
+    flex-shrink: 0;
+}
+
+.sb-footer .user-row .user-info {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.sb-footer .user-row .user-name {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.sb-footer .user-row .user-role {
+    display: block;
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
 
     /* ── Main content ── */
     .main {

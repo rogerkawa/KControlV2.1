@@ -424,4 +424,18 @@ a:hover {
         font-size: 0.8rem;
         padding: .5rem .65rem;
     }
+    @media (max-width: 768px) {
+    #admin table {
+        min-width: 600px;
+        table-layout: auto;
+    }
+
+    #admin table th,
+    #admin table td {
+        white-space: nowrap;
+        word-break: normal;
+        overflow-wrap: normal;
+        padding: 12px 14px;
+    }
+}
 }

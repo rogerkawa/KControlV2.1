@@ -275,19 +275,40 @@
 
 .membros-table-wrapper {
     width: 100%;
+    max-width: 100%;
+    min-width: 0;
     overflow-x: auto;
-    border-top: 1px solid var(--border);
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
 }
 
 .membros-table {
     width: 100%;
+    min-width: 850px;
+    table-layout: auto;
     border-collapse: collapse;
-    text-align: left;
+}
+
+/* Evita que o conteúdo das colunas seja comprimido */
+.membros-table th,
+.membros-table td {
     white-space: nowrap;
 }
 
 .membros-table thead {
     background: var(--bg-secondary);
+}
+/* Mais espaço para a identificação do membro */
+.membros-table th:first-child,
+.membros-table td:first-child {
+    min-width: 220px;
+}
+
+/* Mais espaço para o e-mail */
+.membros-table th:nth-child(2),
+.membros-table td:nth-child(2) {
+    min-width: 230px;
 }
 
 .membros-table th {
@@ -319,44 +340,62 @@
     border-bottom: 0;
 }
 
-/* Identidade do membro */
-
+/* Mantém o nome e o avatar organizados */
 .membro-identidade {
     display: flex;
     align-items: center;
     gap: 12px;
-    min-width: 190px;
+    min-width: 0;
 }
 
 .membro-avatar {
-    display: grid;
-    place-items: center;
-    flex-shrink: 0;
     width: 42px;
     height: 42px;
-    color: var(--accent-800);
-    background: var(--accent-50);
-    border: 1px solid var(--border);
-    border-radius: 50%;
-    font-size: 12px;
-    font-weight: 750;
-}
-.membro-avatar {
-    width: 44px;
-    height: 44px;
-    min-width: 44px;
-    border-radius: 50%;
-    overflow: hidden;
+    min-width: 42px;
+    flex-shrink: 0;
+
     display: flex;
     align-items: center;
     justify-content: center;
+
+    position: relative;
+    overflow: hidden;
+    border-radius: 50%;
+
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
+
+    color: var(--text-primary);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.4px;
 }
 
+
 .membro-avatar-img {
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
     border-radius: inherit;
+}
+
+.membro-avatar-img[hidden],
+.membro-avatar-iniciais[hidden] {
+    display: none;
+}
+
+.membro-avatar-iniciais {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    text-transform: uppercase;
+    user-select: none;
 }
 
 .membro-avatar-alt {
@@ -374,6 +413,10 @@
     color: var(--text-primary);
     font-size: 13px;
     font-weight: 650;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 200px;
 }
 
 .membro-dados span {
@@ -383,6 +426,7 @@
 
 .membro-email {
     color: var(--text-secondary);
+    white-space: nowrap;
 }
 
 .membro-id {
@@ -796,6 +840,36 @@
     .membros-filtros {
         align-self: flex-start;
         max-width: 100%;
+    }
+}
+@media (max-width: 768px) {
+    .membros-container {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+    }
+
+    .membros-panel {
+        width: 100%;
+        min-width: 0;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .membros-table-wrapper {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: auto;
+        overscroll-behavior-x: contain;
+    }
+
+    .membros-table {
+        min-width: 850px;
+    }
+
+    .membros-table th,
+    .membros-table td {
+        padding: 14px 16px;
     }
 }
 

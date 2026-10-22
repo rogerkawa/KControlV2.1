@@ -310,19 +310,25 @@
                         <strong id="totalPendentes">0</strong>
                         <p>Aguardando devolução</p>
                     </div>
+                    
                     <div class="dashboard-box">
                         <h3>Lista de pendentes</h3>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Sala</th>
-                                    <th>Responsável</th>
-                                    <th>Retirada</th>
-                                </tr>
-                            </thead>
-                            <tbody id="listaPendentes"></tbody>
-                        </table>
+
+                        <div class="dashboard-table-wrapper">
+                            <table class="dashboard-table-pendentes">
+                                <thead>
+                                    <tr>
+                                        <th>Sala</th>
+                                        <th>Responsável</th>
+                                        <th>Retirada</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody id="listaPendentes"></tbody>
+                            </table>
+                        </div>
                     </div>
+
                 </div>
                 <div class="dashboard-charts">
                     <div class="dashboard-box retirada">
@@ -573,7 +579,15 @@
                                     <tr>
                                         <td>
                                             <div class="membro-identidade">
-                                                <div class="membro-avatar">MC</div>
+                                                <div class="membro-avatar">
+                                                    <img
+                                                        class="membro-avatar-img"
+                                                        src=""
+                                                        alt=""
+                                                        hidden
+                                                    >
+                                                    <span class="membro-avatar-iniciais">MC</span>
+                                                </div>
 
                                                 <div class="membro-dados">
                                                     <strong>Membro</strong>

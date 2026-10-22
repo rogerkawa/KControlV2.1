@@ -93,6 +93,7 @@ async function carregarMembros() {
             return;
         }
         membrosCarregados = membros;
+        console.log(membrosCarregados);
         renderizarMembrosFiltrados();
 
         listaMembros.innerHTML = membros
@@ -182,38 +183,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // CRIAR LINHA DA TABELA
 
+
 function criarLinhaMembro(membro) {
     const id = membro.id_usuario ?? membro.id;
     const nome = membro.nome ?? "Nome não informado";
     const email = membro.email ?? "E-mail não informado";
     const role = String(membro.role ?? "user").toLowerCase();
 
-    console.log("Usuário recebido:", membro);
-    console.log("ID do usuário:", id);
-
-    // Gera as iniciais do avatar
-    const iniciais = nome
-        .trim()
-        .split(/\s+/)
-        .filter(Boolean)
-        .slice(0, 2)
-        .map(palavra => palavra[0])
-        .join("")
-        .toUpperCase() || "?";
-
-    // Define o texto e o estilo do cargo
-    const ehAdmin = ["admin", "administrador"].includes(role);
-    const textoRole = ehAdmin ? "Administrador" : "Usuário";
-    const classeRole = ehAdmin ? "admin" : "user";
-    const iconeRole = ehAdmin ? "ti-shield-check" : "ti-user";
-
-    // Formata a identificação
-    const identificacao = id != null
-        ? `#${String(id).padStart(3, "0")}`
-        : "—";
-
-    // Evita inserir texto da API como HTML
-    const escaparHTML = (valor) => String(valor).replace(
+    const escaparHTML = (valor) => String(valor ?? "").replace(
         /[&<>"']/g,
         caractere => ({
             "&": "&amp;",
@@ -224,12 +201,56 @@ function criarLinhaMembro(membro) {
         })[caractere]
     );
 
+    // Gera as iniciais do membro.
+    const partesNome = nome.trim().split(/\s+/).filter(Boolean);
+
+    const iniciais = partesNome.length > 1
+        ? `${partesNome[0][0]}${partesNome[partesNome.length - 1][0]}`
+        : (partesNome[0] || "?").slice(0, 2);
+
+    // Prepara a URL da foto.
+    let avatarUrl = "";
+
+    if (membro.avatar_url) {
+        try {
+            avatarUrl = new URL(
+                membro.avatar_url,
+                url_base
+            ).href;
+        } catch (erro) {
+            console.error("URL de avatar inválida:", membro.avatar_url);
+        }
+    }
+
+    // Cargo.
+    const ehAdmin = ["admin", "administrador"].includes(role);
+    const textoRole = ehAdmin ? "Administrador" : "Usuário";
+    const classeRole = ehAdmin ? "admin" : "user";
+    const iconeRole = ehAdmin ? "ti-shield-check" : "ti-user";
+
+    // Identificação.
+    const identificacao = id != null
+        ? `#${String(id).padStart(3, "0")}`
+        : "—";
+
     return `
         <tr>
             <td>
                 <div class="membro-identidade">
                     <div class="membro-avatar">
-                        ${escaparHTML(iniciais)}
+
+                        <img
+                            class="membro-avatar-img"
+                            src="${escaparHTML(avatarUrl)}"
+                            alt="Foto de ${escaparHTML(nome)}"
+                            ${avatarUrl ? "" : "hidden"}
+                        >
+
+                        <span
+                            class="membro-avatar-iniciais"
+                            ${avatarUrl ? "" : ""}
+                        >${escaparHTML(iniciais.toUpperCase())}</span>
+
                     </div>
 
                     <div class="membro-dados">
@@ -284,6 +305,39 @@ function criarLinhaMembro(membro) {
         </tr>
     `;
 }
+
+
+document.addEventListener("load", (event) => {
+    const imagem = event.target;
+
+    if (!imagem.matches?.(".membro-avatar-img")) return;
+
+    imagem.hidden = false;
+
+    const iniciais = imagem.parentElement.querySelector(
+        ".membro-avatar-iniciais"
+    );
+
+    if (iniciais) {
+        iniciais.hidden = true;
+    }
+}, true);
+
+document.addEventListener("error", (event) => {
+    const imagem = event.target;
+
+    if (!imagem.matches?.(".membro-avatar-img")) return;
+
+    imagem.hidden = true;
+
+    const iniciais = imagem.parentElement.querySelector(
+        ".membro-avatar-iniciais"
+    );
+
+    if (iniciais) {
+        iniciais.hidden = false;
+    }
+}, true);
 
 
 

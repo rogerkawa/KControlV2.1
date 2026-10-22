@@ -1,3 +1,4 @@
+
 async function verifyResponse(response) {
     if (!response.ok) {
         const texto = await response.text();
@@ -23,25 +24,10 @@ async function verifyResponse(response) {
     return response;
 }
 
-const url_base = 'https://kcontrolv2-1.onrender.com'
+const url_base = "https://kcontrolv2-1.onrender.com";
 
-function obterToken(){
-    return localStorage.getItem('token')
-}
-
-function httpAuth(){
-    const token = obterToken()
-
-    return {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-    }
-}
-
-function httpHeader(){
-    return {
-        'Content-Type': 'application/json',
-    }
+function obterToken() {
+    return localStorage.getItem("token");
 }
 
 function httpAuthArquivo() {
@@ -56,13 +42,59 @@ function httpAuthArquivo() {
     };
 }
 
+function atualizarAvatares(avatarUrl) {
+    if (!avatarUrl) return;
 
+    const imagens = document.querySelectorAll(".user-avatar");
+    const urlCompleta = new URL(avatarUrl, url_base);
 
+    // Evita reutilizar uma imagem antiga do cache.
+    urlCompleta.searchParams.set("v", Date.now());
+
+    imagens.forEach((imagem) => {
+        imagem.onerror = () => {
+            console.error(
+                "Não foi possível carregar o avatar:",
+                imagem.src
+            );
+        };
+
+        imagem.src = urlCompleta.href;
+    });
+
+    console.log("Avatares atualizados:", imagens.length);
+}
+
+export async function carregarAvatarSalvo() {
+    try {
+        const response = await fetch(`${url_base}/avatar`, {
+            method: "GET",
+            headers: httpAuthArquivo(),
+            cache: "no-store"
+        });
+
+        await verifyResponse(response);
+
+        const dados = await response.json();
+        const avatarUrl = dados.usuario?.avatar_url;
+
+        if (avatarUrl) {
+            atualizarAvatares(avatarUrl);
+        } else {
+            console.warn(
+                "A API não retornou usuario.avatar_url:",
+                dados
+            );
+        }
+    } catch (erro) {
+        console.error("Erro ao carregar avatar salvo:", erro);
+    }
+}
 
 const avatarInput = document.querySelector("#avatarInput");
 
-avatarInput.addEventListener("change", async () => {
-    const arquivo = avatarInput.files[0];
+avatarInput?.addEventListener("change", async () => {
+    const arquivo = avatarInput.files?.[0];
 
     if (!arquivo) return;
 
@@ -73,77 +105,32 @@ avatarInput.addEventListener("change", async () => {
     }
 
     const formData = new FormData();
-
     formData.append("avatar", arquivo);
 
     try {
-        const response = await fetch(
-            `${url_base}/avatar/update`,
-            {
-                method: "PUT",
-                headers: httpAuthArquivo(),
-                body: formData
-            }
-        );
-
-        await verifyResponse(response)
-
-        const dados = await response.json();
-        console.log("Resposta da API:", dados);
-        console.log("URL do avatar:", dados.avatar_url);
-
-        if (!dados.avatar_url) {
-                throw new Error(
-                    "A API não retornou o caminho do avatar."
-                );
-            }
-
-        atualizarAvatares(dados.avatar_url);
-
-        alert("Foto de perfil atualizada!");
-    } catch (erro) {
-        console.error(erro);
-        alert(erro.message);
-    } finally {
-        avatarInput.value = "";
-    }
-});
-
-function atualizarAvatares(avatarUrl) {
-    const imagens = document.querySelectorAll(".user-avatar");
-
-    if (!avatarUrl) return;
-
-    const urlCompleta = new URL(avatarUrl, url_base);
-
-    // Evita o cache da imagem anterior.
-    urlCompleta.searchParams.set("v", Date.now());
-
-    imagens.forEach((imagem) => {
-        imagem.src = urlCompleta.href;
-    });
-
-    console.log("Avatares atualizados:", imagens.length);
-}
-
-async function carregarAvatarSalvo() {
-    try {
-        const response = await fetch(`${url_base}/avatar`, {
-            method: "GET",
-            headers: httpAuthArquivo()
+        const response = await fetch(`${url_base}/avatar/update`, {
+            method: "PUT",
+            headers: httpAuthArquivo(),
+            body: formData
         });
 
         await verifyResponse(response);
 
         const dados = await response.json();
-        const avatarUrl = dados.usuario?.avatar_url;
 
-        if (avatarUrl) {
-            atualizarAvatares(avatarUrl);
+        if (!dados.avatar_url) {
+            throw new Error(
+                "A API não retornou o caminho do avatar."
+            );
         }
-    } catch (erro) {
-        console.error("Erro ao carregar avatar salvo:", erro);
-    }
-}
 
-carregarAvatarSalvo()
+        atualizarAvatares(dados.avatar_url);
+
+        alert("Foto de perfil atualizada!");
+    } catch (erro) {
+        console.error("Erro ao atualizar avatar:", erro);
+        alert(erro.message);
+    } finally {
+        avatarInput.value = "";
+    }
+});
