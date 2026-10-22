@@ -1,22 +1,23 @@
+
 import multer from "multer";
-import path from "node:path";
-import crypto from "node:crypto";
-import fs from "node:fs";
+import { CloudinaryStorage } from "multer-storage-cloudinary";
+import { v2 as cloudinary } from "cloudinary";
 
-const uploadDir = path.resolve("uploads/avatars");
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+});
 
-fs.mkdirSync(uploadDir, { recursive: true });
-
-const storage = multer.diskStorage({
-    destination: (req, file, callback) => {
-        callback(null, uploadDir);
-    },
-
-    filename: (req, file, callback) => {
-        const extensao = path.extname(file.originalname).toLowerCase();
-        const nomeArquivo = `${crypto.randomUUID()}${extensao}`;
-
-        callback(null, nomeArquivo);
+const storage = new CloudinaryStorage({
+    cloudinary,
+    params: {
+        folder: "kcontrol/avatars",
+        resource_type: "image",
+        allowed_formats: ["jpg", "jpeg", "png", "webp"],
+        public_id: (req, file) => {
+            return `avatar-${req.user.id}-${Date.now()}`;
+        }
     }
 });
 
@@ -28,7 +29,9 @@ const fileFilter = (req, file, callback) => {
     ];
 
     if (!tiposPermitidos.includes(file.mimetype)) {
-        return callback(new Error("Formato de imagem não permitido."));
+        return callback(
+            new Error("Formato de imagem não permitido.")
+        );
     }
 
     callback(null, true);

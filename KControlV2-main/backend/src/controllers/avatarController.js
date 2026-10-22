@@ -1,13 +1,8 @@
+
 import avatarModels from "../models/avatarModels.js";
 
 async function atualizarAvatar(req, res) {
     try {
-        if (!req.file) {
-            return res.status(400).json({
-                message: "Envie uma imagem."
-            });
-        }
-
         const id_usuario = req.user?.id;
 
         if (!id_usuario) {
@@ -16,8 +11,25 @@ async function atualizarAvatar(req, res) {
             });
         }
 
-        const avatar_url =
-            `/uploads/avatars/${req.file.filename}`;
+        if (!req.file) {
+            return res.status(400).json({
+                message: "Envie uma imagem."
+            });
+        }
+
+        // O Cloudinary fornece a URL permanente da imagem.
+        const avatar_url = req.file.path;
+
+        if (!avatar_url || !avatar_url.startsWith("https://")) {
+            console.error(
+                "URL inválida retornada pelo Cloudinary:",
+                avatar_url
+            );
+
+            return res.status(500).json({
+                message: "Não foi possível obter a URL da imagem."
+            });
+        }
 
         await avatarModels.atualizarAvatar(
             id_usuario,
@@ -39,9 +51,7 @@ async function atualizarAvatar(req, res) {
 
 async function buscarPerfil(req, res) {
     try {
-        const id_usuario = req.user.id;
-
-        console.log(id_usuario)
+        const id_usuario = req.user?.id;
 
         if (!id_usuario) {
             return res.status(401).json({

@@ -570,11 +570,10 @@
     display: flex;
     gap: 1rem;
 }
-
-/* =========================================
-   CORREÇÃO DEFINITIVA DO LAYOUT DA TABELA
-   ========================================= */
-
+.acoes{
+    display: flex;
+    gap: 1rem;
+}
 #Gerenciar\ Salas .gs-table-wrapper {
     display: block;
     width: 100%;
