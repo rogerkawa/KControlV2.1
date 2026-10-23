@@ -80,26 +80,9 @@ async function registerKey(
         error.code = "TURNO_DUPLICADO";
         throw error;
     }
-     // 3. Impedir outra retirada em aberto da mesma sala
-    const [retiradas] = await conect.query(
-        `SELECT id_registro
-        FROM registros
-        WHERE id_sala = ?
-        AND status = 'retirada'
-        LIMIT 1`,
-        [id_sala]
-    );
 
-    if (retiradas.length > 0) {
-        const error = new Error(
-            "Esta sala já possui uma retirada em aberto."
-        );
 
-        error.code = "CHAVE_RETIRADA";
-        throw error;
-    }
-
-    //4. Registra a retirada
+    //3. Registra a retirada
     const [resultado] = await conect.query(
            `INSERT INTO registros (
             id_usuario,
@@ -121,7 +104,7 @@ async function registerKey(
             hora_retirada
         ]
     ) 
-    //5. Marcar a sala como indisponível
+    //4. Marcar a sala como indisponível
     await conect.query(
        `UPDATE sala
         SET status = 'retirada'
