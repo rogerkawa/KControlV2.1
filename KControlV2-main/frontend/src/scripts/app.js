@@ -1,7 +1,6 @@
 import trocarTela from "./modules/alternarTela.js";
 import navbar from "./modules/menu.js";
 import carregarUltimosRegistros from "./modules/ultimosRegistros.js";
-import carregarDashboard from "./modules/dashboard.js";
 import carregarUsuario from "./modules/carregarUser.js";
 import toggleTema from "./modules/config.js";
 import iniciarMeuPerfil from "./modules/meuPerfil.js";
@@ -106,7 +105,6 @@ async function iniciarAplicacao() {
         navbar();
         trocarTela();
         carregarUltimosRegistros();
-        carregarDashboard();
         carregarUsuario();
         iniciarMeuPerfil();
         toggleTema();

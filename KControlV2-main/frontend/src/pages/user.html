@@ -1,13 +1,25 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-br" data-theme="dark">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>KControl</title>
+    <link rel="icon" href="../assets/images/kcontrol_icone_branco_transparente.png" id="favicon">
+    <link rel="stylesheet" href="../styles/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
+    <script type="module" src="../scripts/app.js" defer></script>
+    <script type="module" src="../scripts/api/setorSala.js" defer></script>
+    <script type="module" src="../scripts/api/registerkey.js" defer></script>
+    <script type="module" src="../scripts/api/avatar.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
+
 <body>
-    
-<div class="transicao-pagina" id="transicaoPagina">
+
+    <div class="transicao-pagina" id="transicaoPagina">
     <svg
         class="transicao-pagina__svg"
         viewBox="0 0 100 100"
@@ -19,7 +31,1488 @@
         ></path>
     </svg>
 </div>
+    <!-- Sidebar -->
+    <nav class="sidebar" id="sidebar" aria-label="Navegação principal">
+        <div class="sb-header">
+            <img src="../assets/images/kcontrol_logo_branca_transparente.png" alt="logoKcontrol"
+                class="logo logo-branca">
+            <img src="../assets/images/kcontrol_logo_preta_transparente.png" alt="logoKcontrol" class="logo logo-preta">
+            <button class="toggle-btn" id="toggleBtn" aria-label="Recolher menu">
+                <i class="ti ti-chevron-left" aria-hidden="true"></i>
+            </button>
+        </div>
 
-    <h1>Users</h1>
+        <div class="sb-nav">
+            <span class="sb-label">Principal</span>
+            <a class="nav-item active" href="#" data-page="registro">
+                <i class="ti ti-clipboard-list"></i>
+                <span>Registro</span>
+            </a>
+            <a style="display: none;" class="nav-item" href="#" data-page="dashboard">
+                <i class="ti ti-layout-dashboard" aria-hidden="true"></i>
+                <span>Dashboard</span>
+            </a>
+            <a style="display: none;" class="nav-item" href="#" data-page="admin">
+                <i class="ti ti-check" aria-hidden="true"></i>
+                <span>Administração</span>
+            </a>
+            <a class="nav-item" data-page="Meu perfil">
+                <i class="ti ti-user"></i>
+                <span>Meu perfil</span>
+            </a>
+
+            <span class="sb-label" style="display: none;">Análise</span>
+            <a style="display: none;" class="nav-item" href="#" data-page="Gerenciar Salas">
+                <i class="ti ti-chart-bar" aria-hidden="true"></i>
+                <span>Gerenciar Salas</span>
+            </a>
+            <a style="display: none;" class="nav-item" href="#" data-page="Gerenciar Setores">
+                <i class="ti ti-building-community"></i>
+                <span>Gerenciar Setores</span>
+            </a>
+
+            <span class="sb-label" style="margin-top: 8px">Time</span>
+            <a style="display: none;" class="nav-item" href="#" data-page="Membros">
+                <i class="ti ti-users" aria-hidden="true"></i>
+                <span>Membros</span>
+            </a>
+            <a class="nav-item" href="#" data-page="Sobre">
+                <i class="ti ti-info-circle" aria-hidden="true"></i>
+                <span>Sobre o projeto</span>
+            </a>
+        </div>
+
+        <div class="sb-footer">
+            <a class="nav-item" href="#" data-page="Configurações">
+                <i class="ti ti-settings" aria-hidden="true"></i>
+                <span>Configurações</span>
+            </a>
+            <div class="user-row">
+                <div class="avatar">
+                    <img class="user-avatar" src="../assets/images/defaultAvatar.png" alt="">
+
+                </div>
+                <div class="user-info">
+                    <div class="user-name">Usuário</div>
+                    <div class="user-role">Cargo</div>
+                </div>
+            </div>
+        </div>
+
+    </nav>
+
+    <!-- Mobile overlay -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Main -->
+    <div class="main">
+        <header class="topbar">
+            <button class="mobile-toggle" id="mobileToggle" aria-label="Abrir menu">
+                <i class="ti ti-menu-2" aria-hidden="true"></i>
+            </button>
+            <span class="topbar-title" id="topbarTitle">Registro</span>
+            <div class="topbar-right">
+
+                <div class="headerConfig">
+
+                    <button class="icon-btn" id="profileButton" aria-label="Abrir configurações do perfil"
+                        aria-expanded="false">
+
+                        <i class="ti ti-user" aria-hidden="true"></i>
+                    </button>
+
+                    <div class="profile-menu" id="profileMenu">
+
+                        <div class="profile-menu-header">
+                            <img src="../assets/images/defaultAvatar.png" class="user-avatar" alt="">
+
+                            <div>
+                                <strong id="user-name" class="user-name"></strong>
+                                <span id="user-role" class="user-role">Administrador</span>
+                            </div>
+                        </div>
+
+                        <div class="profile-menu-divider"></div>
+
+                        <button class="profile-option" data-page="Meu perfil">
+                            <i class="ti ti-user"></i>
+                            <span>Meu perfil</span>
+                        </button>
+
+                        <button class="profile-option" data-page="Configurações">
+                            <i class="ti ti-settings"></i>
+                            <span>Configurações</span>
+                        </button>
+
+                        <button class="profile-option btnToggleTema">
+                            <i class="ti ti-moon"></i>
+                            <span>Aparência</span>
+                        </button>
+
+                        <div class="profile-menu-divider"></div>
+
+                        <button class="profile-option logout">
+                            <i class="ti ti-logout"></i>
+                            <span>Sair</span>
+                        </button>
+
+                    </div>
+
+                </div>
+            </div>
+        </header>
+
+        <div class="content">
+
+            <section id="registro" class="principal page active">
+
+
+                <div class="registro-boas-vindas">
+                    <div class="boas-vindas-texto">
+                        <span class="boas-vindas-legenda">
+                            <i class="bi bi-sun"></i>
+                            ÁREA DE GERENCIAMENTO
+                        </span>
+
+                        <h1>
+                            Seja bem-vindo(a),
+                            <span id="nomeBoasVindas">...</span>!
+                        </h1>
+
+                        <p>
+                            Organize as retiradas, acompanhe as salas e gerencie
+                            tudo em um só lugar.
+                        </p>
+                    </div>
+
+                    <div class="boas-vindas-logo">
+                        <img src="../assets/images/kcontrol_icone_branco_transparente.png" alt="Ícone" class="logo">
+                    </div>
+                </div>
+
+                <div class="card-form">
+                    <div class="card-header">
+                        <h2>Registrar Retirada ou Devolução</h2>
+                        <p>
+                            Preencha os dados abaixo para registrar a movimentação da chave.
+                        </p>
+                    </div>
+                    <form id="chavesRegistro">
+                        <div class="grid-2">
+                            <div class="campo">
+                                <label>Setor</label>
+                                <select name="setor" id="setor">
+                                    <option value="" disabled selected>Selecione o setor</option>
+                                </select>
+                            </div>
+                            <div class="campo">
+                                <label>Sala / Local</label>
+                                <select name="sala" id="sala">
+                                    <option value="" disabled selected>Selecione a sala</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="campo">
+                            <label>Responsável</label>
+                            <input type="text" placeholder="Digite o nome do responsável" name="nome" id="nome">
+                        </div>
+                        <div class="turn">
+                            <label for="">Turno</label>
+                            <div class="radios">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="turno" id="radioDefault1"
+                                        value="M">
+                                    <label class="form-check-label" for="radioDefault1">
+                                        Manhã
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="turno" id="radioDefault2"
+                                        value="T" checked>
+                                    <label class="form-check-label" for="radioDefault2">
+                                        Tarde
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="turno" id="radioDefault3"
+                                        value="N">
+                                    <label class="form-check-label" for="radioDefault3">
+                                        Noite
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="campo">
+                            <label>Data</label>
+                            <input type="date" id="data">
+                        </div>
+                        <div class="campo">
+                            <label>Hora da Retirada</label>
+                            <input type="time" name="horasRetirada" id="horasRetirada">
+                        </div>
+                        <button class="btn-registrar" type="submit" id="liveToastBtn">
+                            <i class="bi bi-key"></i>
+                            Registrar
+                        </button>
+                    </form>
+
+                </div>
+                <div class="right">
+                    <div class="atividade-box">
+                        <h3><i class="bi bi-hourglass-split"></i> Últimas Retiradas</h3>
+                        <div id="atividade"></div>
+                    </div>
+                    <div class="status-chaves">
+                        <div class="status-header">
+                            <div>
+                                <span>Status</span>
+                                <h3>Salas disponíveis por turno</h3>
+                            </div>
+
+                            <select id="filtroTurno">
+                                <option value="M">Manhã</option>
+                                <option value="T">Tarde</option>
+                                <option value="N">Noite</option>
+                            </select>
+                        </div>
+                        <div class="status-card">
+                            <span>Disponíveis</span>
+                            <strong id="salasDisponiveis">0</strong>
+                        </div>
+                        <div class="status-card">
+                            <span>Em uso</span>
+                            <strong id="salasEmUso">0</strong>
+                        </div>
+                        <div class="status-card">
+                            <span>Total</span>
+                            <strong id="totalSalas">0</strong>
+                        </div>
+                    </div>
+                    <div class="salas-em-uso">
+                        <div class="salas-em-uso__header">
+                            <h3>Salas em uso</h3>
+                            <span id="qtdSalasEmUso">0 ativas</span>
+                        </div>
+
+                        <div class="salas-em-uso__lista" id="listaSalasEmUso">
+                            <!-- cards via JS -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section dashboard -->
+            <section id="dashboard" class="page dashboard">
+                <h2>Dashboard</h2>
+
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <span>Chaves pendentes</span>
+                        <strong id="totalPendentes">0</strong>
+                        <p>Aguardando devolução</p>
+                    </div>
+                    
+                    <div class="dashboard-box">
+                        <h3>Lista de pendentes</h3>
+
+                        <div class="dashboard-table-wrapper">
+                            <table class="dashboard-table-pendentes">
+                                <thead>
+                                    <tr>
+                                        <th>Sala</th>
+                                        <th>Responsável</th>
+                                        <th>Retirada</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody id="listaPendentes"></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="dashboard-charts">
+                    <div class="dashboard-box retirada">
+                        <h3>Retiradas por setor</h3>
+                        <canvas id="graficoSetores"></canvas>
+                    </div>
+                    <div class="dashboard-box dSemana">
+                        <h3>Retiradas por Dia da Semana</h3>
+                        <canvas id="graficoDiasSemana"></canvas>
+                    </div>
+                </div>
+                <div class="dashboard-box ranking">
+                    <h3>Top 5 Salas Mais Utilizadas</h3>
+
+                    <div id="rankingSalas"></div>
+                </div>
+            </section>
+
+            <!-- Section Tabela de Registros -->
+            <section class="page" id="admin">
+                <main class="mainAdmin">
+                    <section class="title">
+                        <i class="bi bi-list-columns-reverse"></i>
+                        <div>
+                            <h1>Registro de Retiradas</h1>
+                            <span>Visualize o registro de chaves retiradas</span>
+                        </div>
+                    </section>
+                    <!-- Tabela de registros -->
+                    <div class="admin-table-wrapper">
+                        <table class="table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>SETOR</th>
+                                    <th>SALA</th>
+                                    <th>DATA</th>
+                                    <th>RESPONSÁVEL</th>
+                                    <th>TURNO</th>
+                                    <th>HORA DA RETIRADA</th>
+                                    <th>HORA DA ENTREGA</th>
+                                    <th colspan="2">AÇÕES</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="table"></tbody>
+                        </table>
+                    </div>
+
+                    <button class="clear btn btn-outline-danger">
+                        Limpar Registros
+                    </button>
+
+                </main>
+                <footer>
+                    Desenvolvido por <a href="https://github.com/rogerkawa" target="_blank">RogerDev </a> & <a
+                        href="https://github.com/caiovictordev" target="_blank">CaioDev </a>-
+                    &copy;Todos os direitos reservados
+                </footer>
+                <!-- Modal editar -->
+                <div id="modalEditar" class="modalEditar escondido">
+                    <div class="conteudoEditar">
+                        <div class="topoEditar">
+                            <div class="editarIcone">
+                                <i class="bi bi-pencil-square"></i>
+                            </div>
+                            <button id="fecharEditar">
+                                <i class="bi bi-x-lg"></i>
+                            </button>
+
+                        </div>
+                        <h2>Editar Registro</h2>
+                        <span>
+                            Atualize as informações da retirada.
+                        </span>
+
+                        <div class="grupoInput">
+                            <label for="editarNome">Responsável</label>
+                            <input type="text" id="editarNome">
+                        </div>
+
+                        <div class="grupoInput">
+                            <label for="editarSala">Sala</label>
+                            <!-- <input type="text" id="editarSala"> -->
+                            <select class="form-select" name="editarSala" id="editarSala">
+                                <p>Carregando...</p>
+                            </select>
+                        </div>
+
+                        <div class="grupoInput">
+                            <label for="editarEntrega">Horário da Entrega</label>
+                            <input type="time" id="editarEntrega">
+                        </div>
+
+                        <div class="acoesEditar">
+                            <button id="cancelarEditar">
+                                Cancelar
+                            </button>
+                            <button id="salvarEdicao">
+                                Salvar Alterações
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="page" id="Configurações">
+
+                <div class="config">
+                    <div class="profile">
+                        <label for="avatarInput" class="avatarConfig">
+                            <img id="avatarConfig" class="user-avatar" src="../assets/images/defaultAvatar.png"
+                                alt="Foto do usuário">
+
+                            <span class="avatar-edit">
+                                ✎
+                            </span>
+                        </label>
+
+                        <input type="file" id="avatarInput" accept="image/png, image/jpeg" hidden>
+
+                        <div>
+                            <span>Dados</span>
+                            <strong id="user-name" class="user-name">User</strong>
+                            <span class="user-email">@gmail.com</span>
+                            <span id="user-role" class="user-role">Usuário</span>
+                        </div>
+                    </div>
+                    <button id="btnTema" class="btnTema btnToggleTema">Alterar Tema</button>
+                </div>
+            </section>
+
+
+            <!-- Seção de gerenciamento de membros -->
+            <section class="page" id="Membros">
+
+                <div class="membros-container">
+
+                    <!-- Cabeçalho -->
+                    <header class="membros-header">
+                        <div class="membros-heading">
+                            <span class="membros-eyebrow">
+                                <i class="ti ti-users"></i>
+                                GERENCIAMENTO
+                            </span>
+
+                            <h1>Gerenciar membros</h1>
+
+                            <p>
+                                Visualize e gerencie os usuários cadastrados
+                                no sistema.
+                            </p>
+                        </div>
+                    </header>
+
+                    <!-- Indicadores -->
+                    <div class="membros-stats">
+
+                        <article class="membros-stat-card">
+                            <div class="membros-stat-icon">
+                                <i class="ti ti-users"></i>
+                            </div>
+
+                            <div class="membros-stat-info">
+                                <span>Total de membros</span>
+                                <strong id="totalMembros">0</strong>
+                                <small>Usuários cadastrados</small>
+                            </div>
+                        </article>
+
+                        <article class="membros-stat-card">
+                            <div class="membros-stat-icon">
+                                <i class="ti ti-shield-check"></i>
+                            </div>
+
+                            <div class="membros-stat-info">
+                                <span>Administradores</span>
+                                <strong id="totalAdmins">0</strong>
+                                <small>Com acesso administrativo</small>
+                            </div>
+                        </article>
+
+                    </div>
+
+                    <!-- Área de listagem -->
+                    <div class="membros-panel">
+
+                        <div class="membros-panel-header">
+                            <div>
+                                <h2>Usuários cadastrados</h2>
+                                <p>Consulte e gerencie os membros da instituição.</p>
+                            </div>
+
+                            <span class="membros-counter" id="contadorMembros">
+                                0 membros
+                            </span>
+                        </div>
+
+                        <!-- Busca e filtros -->
+                        <div class="membros-toolbar">
+
+                            <div class="membros-search">
+                                <i class="ti ti-search"></i>
+
+                                <input type="search" id="buscarMembro" placeholder="Buscar por nome ou e-mail..."
+                                    aria-label="Buscar membros">
+
+                                <kbd>⌕</kbd>
+                            </div>
+
+                            <div class="membros-filtros" role="group" aria-label="Filtrar membros por cargo">
+
+                                <button type="button" class="membros-filtro active" data-filtro="todos"
+                                    aria-pressed="true">
+                                    Todos
+                                </button>
+
+                                <button type="button" class="membros-filtro" data-filtro="admin" aria-pressed="false"
+                                    >
+                                    Administradores
+                                </button>
+
+                                <button type="button" class="membros-filtro" data-filtro="user" aria-pressed="false"
+                                    >
+                                    Usuários
+                                </button>
+
+                            </div>
+                        </div>
+
+                        <!-- Tabela -->
+                        <div class="membros-table-wrapper">
+
+                            <table class="membros-table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Membro</th>
+                                        <th scope="col">E-mail</th>
+                                        <th scope="col">Cargo</th>
+                                        <th scope="col">Identificação</th>
+                                        <th scope="col" class="membros-col-acoes">
+                                            Ações
+                                        </th>
+                                    </tr>
+                                </thead>
+
+                                <tbody id="listaMembros">
+
+
+                                    <tr>
+                                        <td>
+                                            <div class="membro-identidade">
+                                                <div class="membro-avatar">
+                                                    <img
+                                                        class="membro-avatar-img"
+                                                        src=""
+                                                        alt=""
+                                                        hidden
+                                                    >
+                                                    <span class="membro-avatar-iniciais">MC</span>
+                                                </div>
+
+                                                <div class="membro-dados">
+                                                    <strong>Membro</strong>
+                                                    <span>Membro do sistema</span>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <span class="membro-email">
+                                                membro@instituicao.com
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            <span class="membro-role admin">
+                                                <i class="ti ti-shield-check"></i>
+                                                Administrador
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            <span class="membro-id">#001</span>
+                                        </td>
+
+                                        <td>
+                                            <div class="membro-acoes">
+                                                <button type="button" class="membro-btn-editar"
+                                                    aria-label="Editar Mariana Costa" title="Editar membro">
+                                                    <i class="ti ti-pencil"></i>
+                                                </button>
+
+                                                <button type="button" class="membro-btn-remover"
+                                                    aria-label="Remover Mariana Costa" title="Remover membro">
+                                                    <i class="ti ti-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <div class="membro-identidade">
+                                                <div class="membro-avatar membro-avatar-alt">
+                                                    LO
+                                                </div>
+
+                                                <div class="membro-dados">
+                                                    <strong>Lucas Oliveira</strong>
+                                                    <span>Membro do sistema</span>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <span class="membro-email">
+                                                lucas@instituicao.com
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            <span class="membro-role user">
+                                                <i class="ti ti-user"></i>
+                                                Usuário
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            <span class="membro-id">#002</span>
+                                        </td>
+
+                                        <td>
+                                            <div class="membro-acoes">
+                                                <button type="button" class="membro-btn-editar"
+                                                    aria-label="Editar Lucas Oliveira" title="Editar membro">
+                                                    <i class="ti ti-pencil"></i>
+                                                </button>
+
+                                                <button type="button" class="membro-btn-remover"
+                                                    aria-label="Remover Lucas Oliveira" title="Remover membro">
+                                                    <i class="ti ti-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+
+                            <!-- Estado vazio -->
+                            <div class="membros-vazio" id="membrosVazio" hidden>
+                                <div class="membros-vazio-icon">
+                                    <i class="ti ti-users-minus"></i>
+                                </div>
+
+                                <h3>Nenhum membro encontrado</h3>
+
+                                <p>
+                                    Tente pesquisar por outro nome ou e-mail.
+                                </p>
+                            </div>
+
+                        </div>
+
+                        <!-- Rodapé da tabela -->
+                        <footer class="membros-table-footer">
+                            <span>Gerenciamento de usuários</span>
+
+                            <div class="membros-paginacao">
+                                <button type="button" aria-label="Página anterior" disabled>
+                                    <i class="ti ti-chevron-left"></i>
+                                </button>
+
+                                <span class="membros-pagina-atual">1</span>
+
+                                <button type="button" aria-label="Próxima página" disabled>
+                                    <i class="ti ti-chevron-right"></i>
+                                </button>
+                            </div>
+                        </footer>
+
+                    </div>
+                </div>
+
+                <!-- Modal de edição -->
+                <div class="membros-modal" id="modalEditarMembro" role="dialog" aria-modal="true"
+                    aria-labelledby="tituloEditarMembro" hidden>
+
+                    <div class="membros-modal-card">
+
+                        <div class="membros-modal-header">
+                            <div class="membros-modal-icon">
+                                <i class="ti ti-user-edit"></i>
+                            </div>
+
+                            <button type="button" class="membros-modal-fechar" aria-label="Fechar modal">
+                                <i class="ti ti-x"></i>
+                            </button>
+                        </div>
+
+                        <h2 id="tituloEditarMembro">Editar membro</h2>
+
+                        <p class="membros-modal-descricao">
+                            Atualize os dados e as permissões deste usuário.
+                        </p>
+
+                        <form id="formEditarMembro">
+
+                            <div class="membros-form-campo">
+                                <label for="editarMembroNome">Nome completo</label>
+
+                                <input type="text" id="editarMembroNome" name="nome" placeholder="Nome do membro"
+                                    required>
+                            </div>
+
+                            <div class="membros-form-campo">
+                                <label for="editarMembroEmail">E-mail</label>
+
+                                <input type="email" id="editarMembroEmail" name="email"
+                                    placeholder="usuario@instituicao.com" required>
+                            </div>
+
+                            <div class="membros-form-campo">
+                                <label for="editarMembroRole">Cargo / Permissão</label>
+
+                                <select id="editarMembroRole" name="role" required>
+                                    <option value="user">Usuário</option>
+                                    <option value="admin">Administrador</option>
+                                </select>
+                            </div>
+
+                            <div class="membros-modal-acoes">
+                                <button type="button" class="membros-btn-cancelar">
+                                    Cancelar
+                                </button>
+
+                                <button type="submit" class="membros-btn-salvar">
+                                    <i class="ti ti-check"></i>
+                                    Salvar alterações
+                                </button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Modal de confirmação de remoção -->
+                <div class="membros-modal" id="modalRemoverMembro" role="alertdialog" aria-modal="true"
+                    aria-labelledby="tituloRemoverMembro" hidden>
+
+                    <div class="membros-modal-card membros-modal-confirmacao">
+
+                        <div class="membros-confirmacao-icon">
+                            <i class="ti ti-trash"></i>
+                        </div>
+
+                        <h2 id="tituloRemoverMembro">Remover membro?</h2>
+
+                        <p class="membros-modal-descricao">
+                            Essa ação poderá impedir o usuário de acessar o sistema.
+                            Confirme somente se tiver certeza.
+                        </p>
+
+                        <div class="membros-modal-acoes">
+                            <button type="button" class="membros-btn-cancelar">
+                                Cancelar
+                            </button>
+
+                            <button type="button" class="membros-btn-confirmar-remocao">
+                                <i class="ti ti-trash"></i>
+                                Remover membro
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+
+            </section>
+
+
+            <section class="page" id="Gerenciar Salas">
+
+                <div class="gs-container">
+
+                    <header class="gs-header">
+                        <div>
+                            <span class="gs-eyebrow">ADMINISTRAÇÃO</span>
+                            <h1>Gerenciar salas</h1>
+                            <p>Cadastre salas e controle sua disponibilidade e manutenção.</p>
+                        </div>
+
+                        <button class="gs-btn gs-btn-secondary" id="btnAtualizar" type="button">
+                            <i class="bi bi-arrow-clockwise"></i>
+                            Atualizar
+                        </button>
+                    </header>
+
+                    <section class="gs-stats" aria-label="Resumo das salas">
+
+                        <article class="gs-stat-card">
+                            <div>
+                                <span>Total de salas</span>
+                                <strong id="totalSalasGerenciar">0</strong>
+                            </div>
+                            <i class="bi bi-door-open"></i>
+                        </article>
+
+                        <article class="gs-stat-card">
+                            <div>
+                                <span>Disponíveis</span>
+                                <strong id="totalDisponiveis">0</strong>
+                            </div>
+                            <i class="bi bi-check-circle"></i>
+                        </article>
+
+                        <article class="gs-stat-card">
+                            <div>
+                                <span>Em manutenção</span>
+                                <strong id="totalManutencao">0</strong>
+                            </div>
+                            <i class="bi bi-tools"></i>
+                        </article>
+
+                        <article class="gs-stat-card">
+                            <div>
+                                <span>Chaves retiradas</span>
+                                <strong id="totalRetiradas">0</strong>
+                            </div>
+                            <i class="bi bi-key"></i>
+                        </article>
+
+                    </section>
+
+                    <section class="gs-panel">
+
+                        <div class="gs-section-heading">
+                            <div>
+                                <h2>Adicionar sala</h2>
+                                <p>Cadastre uma nova sala no sistema.</p>
+                            </div>
+
+                            <i class="bi bi-plus-circle"></i>
+                        </div>
+
+                        <form id="formSala" class="gs-form">
+
+                            <div class="gs-field">
+                                <label for="nomeSala">Nome ou identificação</label>
+                                <input type="text" id="nomeSala" name="nome" placeholder="Ex.: SALA E1" maxlength="100"
+                                    required>
+                            </div>
+
+                            <button class="gs-btn gs-btn-primary" type="submit" id="btnCadastrar">
+                                <i class="bi bi-plus-lg"></i>
+                                Adicionar sala
+                            </button>
+
+                        </form>
+
+                    </section>
+
+                    <section class="gs-panel">
+
+                        <div class="gs-section-heading gs-table-heading">
+                            <div>
+                                <h2>Salas cadastradas</h2>
+                                <p>Consulte o status e gerencie cada sala.</p>
+                            </div>
+
+                            <div class="gs-filter">
+                                <label for="filtroStatus">Filtrar por status</label>
+                                <select id="filtroStatus">
+                                    <option value="todas">Todas as salas</option>
+                                    <option value="disponivel">Disponíveis</option>
+                                    <option value="retirada">Chave retirada</option>
+                                    <option value="manutencao">Em manutenção</option>
+                                    <option value="inativa">Inativas</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div id="mensagem" class="gs-message" role="status" hidden></div>
+
+                        <div class="gs-table-wrapper">
+                            <table class="gs-table">
+                                <thead>
+                                    <tr>
+                                        <th>Identificação</th>
+                                        <th>Status</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody id="listaSalas">
+                                    <tr>
+                                        <td colspan="3" class="gs-empty">
+                                            Carregando salas...
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <p class="gs-note">
+                            <i class="bi bi-info-circle"></i>
+                            Salas removidas são desativadas para preservar o histórico de retiradas.
+                        </p>
+
+                    </section>
+
+                </div>
+
+            </section>
+
+            <!-- Sobre o projeto -->
+            <section class="page" id="Sobre">
+
+                <div class="sobre-container">
+
+                    <!-- Apresentação -->
+                    <header class="sobre-hero">
+                        <span class="sobre-eyebrow">
+                            <i class="ti ti-code"></i>
+                            CONHEÇA O KCONTROLV2
+                        </span>
+
+                        <h1>Mais organização.<br>
+                            <span>Mais controle.</span>
+                        </h1>
+
+                        <p>
+                            Uma solução desenvolvida para tornar o gerenciamento
+                            de chaves e salas mais organizado, prático e eficiente.
+                        </p>
+
+                        <a href="#sobre-tutorial" class="sobre-cta">
+                            Conhecer o sistema
+                            <i class="ti ti-arrow-down-right"></i>
+                        </a>
+
+                        <div class="sobre-hero-decoration" aria-hidden="true">
+                            <i class="ti ti-key"></i>
+                        </div>
+                    </header>
+
+                    <!-- História -->
+                    <section class="sobre-historia">
+                        <div class="sobre-section-heading">
+                            <span class="sobre-eyebrow">01 / NOSSA HISTÓRIA</span>
+                            <h2>De uma atividade acadêmica a um projeto em evolução.</h2>
+                        </div>
+
+                        <div class="sobre-historia-texto">
+                            <p>
+                                O KControlV2 surgiu inicialmente como uma atividade
+                                acadêmica durante o curso Técnico em Desenvolvimento
+                                de Sistemas do SENAI.
+                            </p>
+
+                            <p>
+                                Com o avanço do curso, o projeto foi aprofundado e
+                                aprimorado, incorporando novas funcionalidades e
+                                conhecimentos adquiridos ao longo da formação.
+                            </p>
+
+                            <p>
+                                Seu objetivo é facilitar o controle da retirada e
+                                da devolução de chaves, permitindo acompanhar a
+                                disponibilidade das salas e consultar os registros
+                                de movimentação em um só lugar.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Desenvolvedores -->
+
+                    <section class="sobre-equipe">
+                        <div class="sobre-section-heading">
+                            <span class="sobre-eyebrow">02 / QUEM ESTÁ POR TRÁS</span>
+                            <h2>Desenvolvido por estudantes.</h2>
+                            <p>
+                                Dois alunos, uma experiência de aprendizado e
+                                desenvolvimento construída na prática.
+                            </p>
+                        </div>
+
+                        <div class="sobre-equipe-grid">
+
+                            <!-- Roger Kawã -->
+                            <article class="sobre-dev-card">
+                                <div class="sobre-dev-info">
+                                    <div class="sobre-dev-icon">
+                                        <i class="ti ti-code"></i>
+                                    </div>
+
+                                    <span class="sobre-dev-label">DESENVOLVEDOR</span>
+                                    <h3>Roger Kawã</h3>
+
+                                    <p>
+                                        Participação no desenvolvimento e na evolução
+                                        do KControlV2 durante a formação técnica.
+                                    </p>
+
+                                    <a href="https://github.com/rogerkawa" target="_blank" rel="noopener noreferrer"
+                                        class="sobre-dev-link">
+                                        GitHub
+                                        <i class="ti ti-arrow-up-right"></i>
+                                    </a>
+                                </div>
+
+                                <div class="sobre-dev-foto">
+                                    <img src="../assets/images/roger.png" alt="Foto de Roger Kawã">
+
+                                    <div class="sobre-dev-foto-overlay"></div>
+
+                                    <div class="sobre-dev-foto-nome">
+                                        <span>01 / DESENVOLVEDOR</span>
+                                        <h3>Roger Kawã</h3>
+                                    </div>
+                                </div>
+                            </article>
+
+                            <!-- Caio Victor -->
+                            <article class="sobre-dev-card">
+                                <div class="sobre-dev-info">
+                                    <div class="sobre-dev-icon">
+                                        <i class="ti ti-terminal-2"></i>
+                                    </div>
+
+                                    <span class="sobre-dev-label">DESENVOLVEDOR</span>
+                                    <h3>Caio Victor</h3>
+
+                                    <p>
+                                        Participação no desenvolvimento e na evolução
+                                        do KControlV2 durante a formação técnica.
+                                    </p>
+
+                                    <a href="https://github.com/caiovictordev" target="_blank" rel="noopener noreferrer"
+                                        class="sobre-dev-link">
+                                        GitHub
+                                        <i class="ti ti-arrow-up-right"></i>
+                                    </a>
+                                </div>
+
+                                <div class="sobre-dev-foto">
+                                    <img src="../assets/images/caio.jpeg" alt="Foto de Caio Victor">
+
+                                    <div class="sobre-dev-foto-overlay"></div>
+
+                                    <div class="sobre-dev-foto-nome">
+                                        <span>02 / DESENVOLVEDOR</span>
+                                        <h3>Caio Victor</h3>
+                                    </div>
+                                </div>
+                            </article>
+
+                        </div>
+
+                        <p class="sobre-equipe-nota">
+                            Projeto acadêmico desenvolvido por alunos do curso
+                            Técnico em Desenvolvimento de Sistemas do SENAI.
+                        </p>
+                    </section>
+
+
+                    <!-- Tutorial -->
+                    <section class="sobre-tutorial" id="sobre-tutorial">
+
+                        <div class="sobre-section-heading">
+                            <span class="sobre-eyebrow">03 / GUIA DE UTILIZAÇÃO</span>
+                            <h2>Como utilizar o KControlV2?</h2>
+                            <p>
+                                Conheça as principais áreas do sistema e saiba
+                                para que serve cada funcionalidade.
+                            </p>
+                        </div>
+
+                        <div class="sobre-tutorial-list">
+
+                            <!-- Login -->
+                            <article class="sobre-tutorial-card">
+                                <div class="sobre-tutorial-imagem">
+                                    <div class="sobre-print-placeholder">
+
+                                        <img class="imgSobre" src="../assets/images/login.png" alt="Tela de Login">
+                                    </div>
+                                    <span class="sobre-tutorial-numero">01</span>
+                                </div>
+
+                                <div class="sobre-tutorial-conteudo">
+                                    <span class="sobre-tutorial-categoria">ACESSO</span>
+                                    <h3>Entre no sistema</h3>
+                                    <p>
+                                        Acesse o KControlV2 com suas credenciais.
+                                        Após a autenticação, você poderá utilizar
+                                        as funcionalidades liberadas para seu perfil.
+                                    </p>
+                                </div>
+                            </article>
+
+                            <!-- Registro -->
+                            <article class="sobre-tutorial-card">
+                                <div class="sobre-tutorial-imagem">
+                                    <div class="sobre-print-placeholder">
+                                        <i class="ti ti-key"></i>
+                                        <span>Captura da tela de registro</span>
+                                        <small>Imagem ilustrativa a ser substituída</small>
+                                    </div>
+                                    <span class="sobre-tutorial-numero">02</span>
+                                </div>
+
+                                <div class="sobre-tutorial-conteudo">
+                                    <span class="sobre-tutorial-categoria">MOVIMENTAÇÃO</span>
+                                    <h3>Registre as chaves</h3>
+                                    <p>
+                                        Selecione o setor e a sala, informe o
+                                        responsável, o turno, a data e o horário
+                                        solicitado. Preencha os campos corretamente
+                                        para registrar a movimentação.
+                                    </p>
+                                </div>
+                            </article>
+
+                            <!-- Gerenciar salas -->
+                            <article class="sobre-tutorial-card">
+                                <div class="sobre-tutorial-imagem">
+                                    <div class="sobre-print-placeholder">
+                                        <img src="../assets/images/gerenciarSala.png" alt="Gerenciar Salas"
+                                            class="imgSobre">
+                                    </div>
+                                    <span class="sobre-tutorial-numero">03</span>
+                                </div>
+
+                                <div class="sobre-tutorial-conteudo">
+                                    <span class="sobre-tutorial-categoria">ORGANIZAÇÃO</span>
+                                    <h3>Gerencie as salas</h3>
+                                    <p>
+                                        Consulte as salas cadastradas, acompanhe
+                                        sua disponibilidade e utilize as opções
+                                        administrativas para cadastrar salas ou
+                                        atualizar seus status.
+                                    </p>
+                                </div>
+                            </article>
+
+                            <!-- Gerenciar usuários -->
+                            <article class="sobre-tutorial-card">
+                                <div class="sobre-tutorial-imagem">
+                                    <div class="sobre-print-placeholder">
+                                        <img src="../assets/images/gerenciarMembros.png" alt="Gerenciamento de Membros"
+                                            class="imgSobre">
+                                    </div>
+                                    <span class="sobre-tutorial-numero">04</span>
+                                </div>
+
+                                <div class="sobre-tutorial-conteudo">
+                                    <span class="sobre-tutorial-categoria">USUÁRIOS</span>
+                                    <h3>Gerencie os membros</h3>
+                                    <p>
+                                        Na área de membros, os administradores podem
+                                        consultar os usuários cadastrados e utilizar
+                                        as ações disponíveis para administrar seus
+                                        dados e permissões.
+                                    </p>
+                                </div>
+                            </article>
+
+                            <!-- Configurações -->
+                            <article class="sobre-tutorial-card">
+                                <div class="sobre-tutorial-imagem">
+                                    <div class="sobre-print-placeholder">
+                                        <img src="../assets/images/config.png" alt="Configurações" class="imgSobre">
+                                    </div>
+                                    <span class="sobre-tutorial-numero">05</span>
+                                </div>
+
+                                <div class="sobre-tutorial-conteudo">
+                                    <span class="sobre-tutorial-categoria">PERSONALIZAÇÃO</span>
+                                    <h3>Personalize sua experiência</h3>
+                                    <p>
+                                        Acesse as configurações para consultar os
+                                        dados do seu perfil, atualizar sua foto,
+                                        quando disponível, e alternar entre os
+                                        temas claro e escuro.
+                                    </p>
+                                </div>
+                            </article>
+
+                        </div>
+                    </section>
+
+                    <!-- Encerramento -->
+                    <footer class="sobre-footer">
+                        <i class="ti ti-school"></i>
+                        <p>
+                            KControlV2 — um projeto acadêmico em constante evolução,
+                            desenvolvido no curso Técnico em Desenvolvimento de
+                            Sistemas do SENAI.
+                        </p>
+                    </footer>
+
+                </div>
+
+            </section>
+
+
+            <!-- Gerenciamento de Setores -->
+            <section class="page" id="Gerenciar Setores">
+
+                <div class="setores-container">
+
+                    <header class="setores-header">
+                        <div>
+                            <span class="setores-eyebrow">
+                                <i class="ti ti-building-community"></i>
+                                ADMINISTRAÇÃO
+                            </span>
+
+                            <h1>Gerenciar setores</h1>
+
+                            <p>
+                                Organize os setores da instituição e gerencie
+                                sua disponibilidade no sistema.
+                            </p>
+                        </div>
+
+                        <button class="setores-btn setores-btn-secondary" id="btnAtualizarSetores" type="button">
+                            <i class="ti ti-refresh"></i>
+                            Atualizar
+                        </button>
+                    </header>
+
+                    <!-- Indicadores -->
+                    <div class="setores-stats">
+
+                        <article class="setores-stat-card">
+                            <div>
+                                <span>Total de setores</span>
+                                <strong id="totalSetores">0</strong>
+                            </div>
+                            <i class="ti ti-building-community"></i>
+                        </article>
+
+                        <article class="setores-stat-card">
+                            <div>
+                                <span>Setores ativos</span>
+                                <strong id="setoresAtivos">0</strong>
+                            </div>
+                            <i class="ti ti-circle-check"></i>
+                        </article>
+
+                        <article class="setores-stat-card">
+                            <div>
+                                <span>Setores inativos</span>
+                                <strong id="setoresInativos">0</strong>
+                            </div>
+                            <i class="ti ti-circle-x"></i>
+                        </article>
+
+                    </div>
+
+                    <!-- Cadastro -->
+                    <section class="setores-panel">
+
+                        <div class="setores-section-heading">
+                            <div>
+                                <h2 id="tituloFormSetor">Adicionar setor</h2>
+                                <p>
+                                    Cadastre um novo setor ou atualize
+                                    os dados de um setor existente.
+                                </p>
+                            </div>
+
+                            <i class="ti ti-plus"></i>
+                        </div>
+
+                        <form id="formSetor" class="setores-form">
+
+                            <input type="hidden" id="idSetor">
+
+                            <div class="setores-field">
+                                <label for="nomeSetor">Nome do setor</label>
+
+                                <input type="text" id="nomeSetor" name="nome"
+                                    placeholder="Ex.: Desenvolvimento de Sistemas" maxlength="100" required>
+                            </div>
+
+                            <div class="setores-form-actions">
+
+                                <button class="setores-btn setores-btn-secondary" type="button"
+                                    id="btnCancelarEdicaoSetor" hidden>
+                                    Cancelar edição
+                                </button>
+
+                                <button class="setores-btn setores-btn-primary" type="submit" id="btnSalvarSetor">
+                                    <i class="ti ti-plus"></i>
+                                    Cadastrar setor
+                                </button>
+
+                            </div>
+
+                        </form>
+
+                    </section>
+
+                    <!-- Listagem -->
+                    <section class="setores-panel">
+
+                        <div class="setores-section-heading setores-lista-heading">
+                            <div>
+                                <h2>Setores cadastrados</h2>
+                                <p>
+                                    Consulte, edite ou altere a situação
+                                    dos setores cadastrados.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="setores-toolbar">
+
+                            <div class="setores-search">
+                                <i class="ti ti-search"></i>
+
+                                <input type="search" id="buscarSetor" placeholder="Buscar setor pelo nome..."
+                                    aria-label="Buscar setor pelo nome">
+                            </div>
+
+                            <div class="setores-filter">
+                                <label for="filtroSetor">Situação</label>
+
+                                <select id="filtroSetor">
+                                    <option value="todos">Todos os setores</option>
+                                    <option value="ativo">Ativos</option>
+                                    <option value="inativo">Inativos</option>
+                                </select>
+                            </div>
+
+                        </div>
+
+                        <div id="mensagemSetores" class="setores-message" role="status" hidden>
+                        </div>
+
+                        <div class="setores-table-wrapper">
+
+                            <table class="setores-table">
+                                <thead>
+                                    <tr>
+                                        <th>Identificação</th>
+                                        <th>Situação</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody id="listaSetores">
+                                    <tr>
+                                        <td colspan="3" class="setores-empty">
+                                            Os setores serão carregados aqui.
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                        <p class="setores-note">
+                            <i class="ti ti-info-circle"></i>
+                            Setores inativos não devem aparecer em novos
+                            registros de retirada. O histórico existente
+                            deve ser preservado.
+                        </p>
+
+                    </section>
+
+                </div>
+
+            </section>
+
+
+            <!-- Meu perfil: histórico pessoal de retiradas -->
+            <section class="page" id="Meu perfil">
+
+                <div class="perfil-container">
+
+                    <header class="perfil-header">
+                        <div>
+                            <span class="perfil-eyebrow">
+                                <i class="ti ti-history"></i>
+                                ÁREA PESSOAL
+                            </span>
+
+                            <h1>Meu histórico</h1>
+
+                            <p>
+                                Acompanhe todas as retiradas de chaves
+                                realizadas por você.
+                            </p>
+                        </div>
+
+                        <button type="button" id="atualizarMeuHistorico" class="perfil-btn-atualizar">
+                            <i class="ti ti-refresh"></i>
+                            Atualizar
+                        </button>
+                    </header>
+
+                    <div class="perfil-stats">
+
+                        <article class="perfil-stat">
+                            <span>Total de retiradas</span>
+                            <strong id="perfilTotal">0</strong>
+                            <i class="ti ti-key"></i>
+                        </article>
+
+                        <article class="perfil-stat">
+                            <span>Pendentes</span>
+                            <strong id="perfilPendentes">0</strong>
+                            <i class="ti ti-clock"></i>
+                        </article>
+
+                        <article class="perfil-stat">
+                            <span>Devolvidas</span>
+                            <strong id="perfilDevolvidas">0</strong>
+                            <i class="ti ti-circle-check"></i>
+                        </article>
+
+                    </div>
+
+                    <div class="perfil-historico">
+
+                        <div class="perfil-historico-header">
+                            <div>
+                                <h2>Minhas retiradas</h2>
+                                <p>Consulte a situação de cada movimentação.</p>
+                            </div>
+
+                            <div class="perfil-filtro">
+                                <label for="filtroMeuHistorico">Status</label>
+
+                                <select id="filtroMeuHistorico">
+                                    <option value="todos">Todos os registros</option>
+                                    <option value="retirada">Pendentes</option>
+                                    <option value="devolvida">Devolvidas</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="perfil-tabela-wrapper">
+                            <table class="perfil-tabela">
+                                <thead>
+                                    <tr>
+                                        <th>Setor</th>
+                                        <th>Sala</th>
+                                        <th>Data</th>
+                                        <th>Retirada</th>
+                                        <th>Devolução</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody id="listaMeuHistorico">
+                                    <tr>
+                                        <td colspan="6">
+                                            Carregando seu histórico...
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <p id="mensagemMeuHistorico" class="perfil-mensagem" role="status" hidden>
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+        </div>
+
+    </div>
+    </div>
 </body>
+
 </html>

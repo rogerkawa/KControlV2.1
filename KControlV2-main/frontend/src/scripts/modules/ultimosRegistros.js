@@ -1,5 +1,5 @@
 
-const API_URL = "https://kcontrolv2-1.onrender.com/get/registro";
+const API_URL = "https://kcontrolv2-1.onrender.com/meus-registros";
 
 export default async function carregarUltimosRegistros() {
     const atividade = document.getElementById("atividade");

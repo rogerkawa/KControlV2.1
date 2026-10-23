@@ -241,6 +241,19 @@ class registerKey {
         });
     }
 }
+static async getSalasEmUso(req, res) {
+    try {
+        const registros = await registerModels.getSalasEmUso();
+
+        return res.status(200).json({ registros });
+    } catch (error) {
+        console.error("Erro ao buscar salas em uso:", error);
+
+        return res.status(500).json({
+            message: "Erro ao buscar salas em uso."
+        });
+    }
+}
 }
 
 export default registerKey;

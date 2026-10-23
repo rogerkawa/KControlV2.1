@@ -40,7 +40,12 @@ async function carregarSalasEmUso() {
     try {
         const token = localStorage.getItem('token');
 
-        const response = await fetch(`${url_base}/get/registro`, {
+        if (!token) {
+            console.error('Usuário não autenticado.');
+            return;
+        }
+
+        const response = await fetch(`${url_base}/salas-em-uso`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -51,7 +56,11 @@ async function carregarSalasEmUso() {
         await verifyResponse(response);
 
         const dados = await response.json();
-        const registros = dados.getKeys;
+        const registros = dados.registros;
+
+        if (!Array.isArray(registros)) {
+            throw new Error('A API não retornou uma lista válida de registros.');
+        }
 
         renderizarSalasEmUso(registros, filtroTurno.value);
 

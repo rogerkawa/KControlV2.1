@@ -227,6 +227,28 @@ async function getKeysByUserId(id_usuario) {
 
     return dados;
 }
+async function getSalasEmUso() {
+    const sql = `
+        SELECT
+            r.id_registro,
+            r.id_sala,
+            s.nome AS sala,
+            st.nome AS setor,
+            r.responsavel,
+            r.turno,
+            r.data_retirada,
+            r.hora_retirada,
+            r.status
+        FROM registros r
+        LEFT JOIN setores st ON st.id_setor = r.id_setor
+        LEFT JOIN sala s ON s.id_sala = r.id_sala
+        WHERE r.status = 'retirada'
+        ORDER BY r.id_registro DESC
+    `;
+
+    const [dados] = await conect.query(sql);
+    return dados;
+}
 
 export default {
     getKey,
@@ -234,5 +256,6 @@ export default {
     updateKey,
     deleteKey,
     getKeyById,
-    getKeysByUserId
+    getKeysByUserId,
+    getSalasEmUso
 };
