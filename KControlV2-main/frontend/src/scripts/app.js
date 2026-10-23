@@ -1,6 +1,7 @@
 import trocarTela from "./modules/alternarTela.js";
 import navbar from "./modules/menu.js";
 import carregarUltimosRegistros from "./modules/ultimosRegistros.js";
+import carregarDashboard from "./modules/dashboard.js";
 import carregarUsuario from "./modules/carregarUser.js";
 import toggleTema from "./modules/config.js";
 import iniciarMeuPerfil from "./modules/meuPerfil.js";
@@ -102,14 +103,21 @@ async function iniciarAplicacao() {
             }
         }
 
-        navbar();
+         navbar();
         trocarTela();
+
+        // Funcionalidades compartilhadas entre os usuários.
         carregarUltimosRegistros();
         carregarUsuario();
         iniciarMeuPerfil();
         toggleTema();
         atualizarFavicon();
         atualizarBoasVindas();
+
+        // Dashboard é exclusivo do administrador.
+        if (usuario.role === "admin") {
+            carregarDashboard();
+        }
 
     } catch (erro) {
         console.error("Erro ao validar a sessão:", erro);
