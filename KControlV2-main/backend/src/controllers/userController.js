@@ -85,6 +85,8 @@ class UserController {
         token,
       });
     } catch (error) {
+
+      console.error("Erro em loginUser:", error);
       let message = "Erro interno no servidor";
       return res.status(500).json({ message });
     }
@@ -101,6 +103,100 @@ class UserController {
       return res.status(500).json({ message });
     }
   }
+  // Atualiza o perfil do usuário autenticado
+  static async updateProfile(req, res) {
+      try {
+          const { nome } = req.body;
+          const id_usuario = req.user.id;
+
+          if (!nome || nome.trim().length < 2) {
+              return res.status(400).json({
+                  message: 'O nome deve ter pelo menos 2 caracteres.'
+              });
+          }
+
+          await userModel.updateName(id_usuario, nome.trim());
+
+          return res.status(200).json({
+              message: 'Nome atualizado com sucesso.'
+          });
+
+      } catch (error) {
+          console.error('Erro ao atualizar perfil:', error);
+
+          return res.status(500).json({
+              message: 'Erro interno no servidor.'
+          });
+      }
+  }
+  // Atualiza a senha do usuário autenticado
+  static async updatePassword(req, res) {
+      try {
+          const { senhaAtual, novaSenha } = req.body;
+          const id_usuario = req.user.id;
+
+          if (!senhaAtual || !novaSenha) {
+              return res.status(400).json({
+                  message: 'Preencha a senha atual e a nova senha.'
+              });
+          }
+
+          if (novaSenha.length < 8) {
+              return res.status(400).json({
+                  message: 'A nova senha deve ter pelo menos 8 caracteres.'
+              });
+          }
+
+          const user = await userModel.findEmail(req.user.email);
+
+          if (!user) {
+              return res.status(404).json({
+                  message: 'Usuário não encontrado.'
+              });
+          }
+
+          const senhaCorreta = await bcrypt.compare(
+              senhaAtual,
+              user.senha
+          );
+
+          if (!senhaCorreta) {
+              return res.status(400).json({
+                  message: 'A senha atual está incorreta.'
+              });
+          }
+
+          const mesmaSenha = await bcrypt.compare(
+              novaSenha,
+              user.senha
+          );
+
+          if (mesmaSenha) {
+              return res.status(400).json({
+                  message: 'A nova senha deve ser diferente da atual.'
+              });
+          }
+
+          const hash = await bcrypt.hash(novaSenha, 10);
+
+          await userModel.updatePassword(id_usuario, hash);
+
+          return res.status(200).json({
+              message: 'Senha atualizada com sucesso.'
+          });
+
+      } catch (error) {
+          console.error('Erro ao atualizar senha:', error);
+
+          return res.status(500).json({
+              message: 'Erro interno ao atualizar a senha.'
+          });
+      }
+  }
+
+
 }
+
+
 
 export default UserController;

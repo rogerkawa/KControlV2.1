@@ -57,4 +57,45 @@ async function findEmail(email) {
     }
 }
 
-export default {listUsers, registerUsers, findEmail}
+
+async function updateName(id_usuario, nome) {
+    try {
+        const sql = `
+            UPDATE usuarios
+            SET nome = ?
+            WHERE id_usuario = ?
+        `;
+
+        const [dados] = await conect.query(sql, [nome, id_usuario]);
+
+        return dados;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
+
+
+async function updatePassword(id_usuario, senha) {
+    try {
+        const sql = `
+            UPDATE usuarios
+            SET senha = ?
+            WHERE id_usuario = ?
+        `;
+
+        const [dados] = await conect.query(sql, [
+            senha,
+            id_usuario
+        ]);
+
+        return dados;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
+
+
+
+export default {listUsers, registerUsers, findEmail, updateName, updatePassword}

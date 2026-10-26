@@ -8,7 +8,7 @@ async function verifyResponse(response) {
     return response
 }
 
-const url_base = 'https://kcontrolv2-1.onrender.com/users'
+const url_base = 'https://kcontrolv2-1.onrender.com/users';
 
 function obterToken(){
     return localStorage.getItem('token')
@@ -80,23 +80,64 @@ const app = {
             throw error
         }
     },
+
     async findUserAuthenticator() {
-    try {
+        try {
 
-        const response = await fetch(`${url_base}/login/auth`, {
-            method: 'GET',
-            headers: httpAuth()
-        })
+            const response = await fetch(`${url_base}/login/auth`, {
+                method: 'GET',
+                headers: httpAuth()
+            })
 
-        await verifyResponse(response)
+            await verifyResponse(response)
 
-        return response.json()
+            return response.json()
 
-    } catch (error) {
-        console.error(error)
-        throw error
+        } catch (error) {
+            console.error(error)
+            throw error
+        }
+    },
+    //Atualiza o perfil do usuário autenticado vulgo CATO V.N.M
+    async updateProfile(dados) {
+        const response = await fetch(`${url_base}/perfil`, {
+            method: 'PUT',
+            headers: httpAuth(),
+            body: JSON.stringify(dados)
+        });
+
+        await verifyResponse(response);
+        return response.json();
+    },
+
+    async updatePassword(dados) {
+        const response = await fetch(`${url_base}/senha`, {
+            method: 'PUT',
+            headers: httpAuth(),
+            body: JSON.stringify(dados)
+        });
+
+        await verifyResponse(response);
+        return response.json();
+    },
+
+    async updatePassword(dados) {
+        try {
+            const response = await fetch(`${url_base}/senha`, {
+                method: 'PUT',
+                headers: httpAuth(),
+                body: JSON.stringify(dados)
+            });
+
+            await verifyResponse(response);
+            return response.json();
+
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
     }
-}
+
 }
 
 
