@@ -9,6 +9,9 @@ const userRoutes = express.Router()
     userRoutes.post('/users/registro', UserController.registerUser)
     userRoutes.post('/users/login', UserController.loginUser)
     userRoutes.get('/users/login/auth', authMiddleware,  UserController.userAuthenticator)
+
+    userRoutes.put('/users/perfil',authMiddleware,UserController.updateProfile)
+    userRoutes.put('/users/senha',authMiddleware,UserController.updatePassword);
     
 
 export default userRoutes

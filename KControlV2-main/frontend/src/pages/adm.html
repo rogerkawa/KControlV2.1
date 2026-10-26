@@ -432,32 +432,199 @@
                             </button>
                         </div>
             </section>
-
+            <!-- Configurações -->
             <section class="page" id="Configurações">
 
-                <div class="config">
-                    <div class="profile">
-                        <label for="avatarInput" class="avatarConfig">
-                            <img id="avatarConfig" class="user-avatar" src="../assets/images/defaultAvatar.png"
-                                alt="Foto do usuário">
+                <div class="config-page">
 
-                            <span class="avatar-edit">
-                                ✎
-                            </span>
-                        </label>
-
-                        <input type="file" id="avatarInput" accept="image/png, image/jpeg" hidden>
-
+                    <header class="config-header">
                         <div>
-                            <span>Dados</span>
-                            <strong id="user-name" class="user-name">User</strong>
-                            <span class="user-email">@gmail.com</span>
-                            <span id="user-role" class="user-role">Usuário</span>
+                            <h1>Configurações</h1>
+                            <p>Gerencie sua conta e personalize sua experiência.</p>
                         </div>
-                    </div>
-                    <button id="btnTema" class="btnTema btnToggleTema">Alterar Tema</button>
+                    </header>
+
+                    <!-- PERFIL -->
+                    <section class="config-card">
+                        <div class="config-card-header">
+                            <div class="config-icon">
+                                <i class="fa-solid fa-user"></i>
+                            </div>
+
+                            <div>
+                                <h2>Perfil</h2>
+                                <p>Suas informações pessoais.</p>
+                            </div>
+                        </div>
+
+                        <div class="profile">
+                            <label for="avatarInput" class="avatarConfig">
+                                <img
+                                    id="avatarConfig"
+                                    class="user-avatar"
+                                    src="../assets/images/defaultAvatar.png"
+                                    alt="Foto do usuário"
+                                >
+
+                                <span class="avatar-edit">
+                                    <i class="fa-solid fa-camera"></i>
+                                </span>
+                            </label>
+
+                            <input
+                                type="file"
+                                id="avatarInput"
+                                accept="image/png, image/jpeg"
+                                hidden
+                            >
+
+                            <div class="profile-info">
+                                <span class="config-label">Conta conectada</span>
+                                <strong id="user-name" class="user-name">User</strong>
+                                <span id="user-email" class="user-email">
+                                    @gmail.com
+                                </span>
+                                <span id="user-role" class="user-role">Usuário</span>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- DADOS PESSOAIS -->
+                    <section class="config-card">
+                        <div class="config-card-header">
+                            <div class="config-icon">
+                                <i class="fa-solid fa-id-card"></i>
+                            </div>
+
+                            <div>
+                                <h2>Dados pessoais</h2>
+                                <p>Atualize as informações da sua conta.</p>
+                            </div>
+                        </div>
+
+                        <form id="formNome" class="config-form">
+                            <div class="form-group">
+                                <label for="novoNome">Nome de exibição</label>
+
+                                <input
+                                    type="text"
+                                    id="novoNome"
+                                    name="nome"
+                                    placeholder="Digite seu nome"
+                                    minlength="2"
+                                    maxlength="100"
+                                    autocomplete="name"
+                                    required
+                                >
+                            </div>
+
+                            <button type="submit" class="btn-config">
+                                <i class="fa-solid fa-floppy-disk"></i>
+                                Salvar alterações
+                            </button>
+                        </form>
+                    </section>
+
+                    <!-- APARÊNCIA -->
+                    <section class="config-card">
+                        <div class="config-card-header">
+                            <div class="config-icon">
+                                <i class="fa-solid fa-palette"></i>
+                            </div>
+
+                            <div>
+                                <h2>Aparência</h2>
+                                <p>Personalize a aparência do KControl.</p>
+                            </div>
+                        </div>
+
+                        <div class="config-option">
+                            <div class="config-option-info">
+                                <strong>Tema do sistema</strong>
+                                <span>Alterne entre o tema claro e escuro.</span>
+                            </div>
+
+                            <button
+                                type="button"
+                                id="btnTema"
+                                class="btnTema btnToggleTema"
+                            >
+                                <i class="fa-solid fa-moon"></i>
+                                Alterar tema
+                            </button>
+                        </div>
+                    </section>
+
+                    <!-- SEGURANÇA -->
+                    <section class="config-card">
+                        <div class="config-card-header">
+                            <div class="config-icon">
+                                <i class="fa-solid fa-shield-halved"></i>
+                            </div>
+
+                            <div>
+                                <h2>Segurança</h2>
+                                <p>Atualize sua senha para proteger sua conta.</p>
+                            </div>
+                        </div>
+
+                        <form id="formSenha" class="config-form">
+
+                            <div class="form-group">
+                                <label for="senhaAtual">Senha atual</label>
+
+                                <input
+                                    type="password"
+                                    id="senhaAtual"
+                                    name="senhaAtual"
+                                    placeholder="Digite sua senha atual"
+                                    autocomplete="current-password"
+                                    required
+                                >
+                            </div>
+
+                            <div class="form-group">
+                                <label for="novaSenha">Nova senha</label>
+
+                                <input
+                                    type="password"
+                                    id="novaSenha"
+                                    name="novaSenha"
+                                    placeholder="Digite sua nova senha"
+                                    autocomplete="new-password"
+                                    minlength="8"
+                                    required
+                                >
+                            </div>
+
+                            <div class="form-group">
+                                <label for="confirmarSenha">
+                                    Confirmar nova senha
+                                </label>
+
+                                <input
+                                    type="password"
+                                    id="confirmarSenha"
+                                    name="confirmarSenha"
+                                    placeholder="Repita sua nova senha"
+                                    autocomplete="new-password"
+                                    minlength="8"
+                                    required
+                                >
+                            </div>
+
+                            <button type="submit" class="btn-config">
+                                <i class="fa-solid fa-lock"></i>
+                                Atualizar senha
+                            </button>
+
+                        </form>
+                    </section>
+
                 </div>
+
             </section>
+
 
 
             <!-- Seção de gerenciamento de membros -->
