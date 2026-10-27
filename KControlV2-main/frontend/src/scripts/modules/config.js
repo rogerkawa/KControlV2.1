@@ -76,15 +76,28 @@ formSenha.addEventListener('submit', async (event) => {
         try {
             const resposta = await app.updateProfile({ nome });
 
-            userName.textContent = nome;
+            // Atualiza o nome em todos os elementos da página
+            document.querySelectorAll(".user-name, #user-name").forEach((elemento) => {
+                elemento.textContent = nome;
+            });
+
+            // Atualiza o campo de edição
             novoNome.value = nome;
 
-            alert(resposta.message || 'Nome atualizado com sucesso!');
-            
+            // Atualiza a saudação, se existir
+            const nomeBoasVindas = document.getElementById("nomeBoasVindas");
+
+            if (nomeBoasVindas) {
+                nomeBoasVindas.textContent = nome;
+            }
+
+            alert(resposta.message || "Nome atualizado com sucesso!");
+
         } catch (error) {
-            console.error('Erro ao atualizar nome:', error);
-            alert(error.message || 'Não foi possível atualizar o nome.');
+            console.error("Erro ao atualizar nome:", error);
+            alert(error.message || "Não foi possível atualizar o nome.");
         }
+
     });
 
     carregarPerfil();
