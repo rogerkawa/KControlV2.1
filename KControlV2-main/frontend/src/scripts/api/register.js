@@ -28,6 +28,16 @@ async function manipulaForm(event) {
   try {
     await app.registerUser({ nome, email, senha });
     alert("Usuário cadastrado com sucesso!");
+    form.reset()
+    mostrarToast(
+        "Cadastro realizado!",
+        "Agora você já pode entrar na sua conta.",
+        "sucesso"
+    );
+
+    setTimeout(() => {
+        window.location.href = "../index.html";
+    }, 1500);
   } catch (error) {
     console.error(error);
     alert(`Erro ao cadastrar usuário: ${error.message}`);

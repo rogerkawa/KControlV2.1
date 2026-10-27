@@ -1,3 +1,4 @@
+import { mostrarToast } from "../toast";
 
 async function verifyResponse(response) {
     if (!response.ok) {
@@ -99,7 +100,7 @@ avatarInput?.addEventListener("change", async () => {
     if (!arquivo) return;
 
     if (arquivo.size > 5 * 1024 * 1024) {
-        alert("A imagem deve ter no máximo 5 MB.");
+        mostrarToast('A imagem deve ter no máximo 5 MB.', 'aviso', 3000)
         avatarInput.value = "";
         return;
     }
@@ -126,10 +127,10 @@ avatarInput?.addEventListener("change", async () => {
 
         atualizarAvatares(dados.avatar_url);
 
-        alert("Foto de perfil atualizada!");
+        mostrarToast('Foto de perfil atualizada!', 'sucesso', 2500)
     } catch (erro) {
         console.error("Erro ao atualizar avatar:", erro);
-        alert(erro.message);
+        mostrarToast(erro.message, 'erro', 3000)
     } finally {
         avatarInput.value = "";
     }
