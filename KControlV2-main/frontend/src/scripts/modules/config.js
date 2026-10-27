@@ -1,4 +1,5 @@
 import app from '../api/api.js';
+import { mostrarToast } from '../toast.js';
 
 const userName = document.getElementById('user-name');
 const userEmail = document.getElementById('user-email');
@@ -15,13 +16,8 @@ formSenha.addEventListener('submit', async (event) => {
     const novaSenha = document.getElementById('novaSenha').value;
     const confirmarSenha = document.getElementById('confirmarSenha').value;
 
-    if (novaSenha.length < 8) {
-        alert('A nova senha deve ter pelo menos 8 caracteres.');
-        return;
-    }
-
     if (novaSenha !== confirmarSenha) {
-        alert('A nova senha e a confirmação não coincidem.');
+        mostrarToast('A nova senha e a confirmação não coincidem.', 'erro', 3000)
         return;
     }
 
@@ -33,11 +29,11 @@ formSenha.addEventListener('submit', async (event) => {
 
         formSenha.reset();
 
-        alert(resposta.message || 'Senha atualizada com sucesso!');
+        mostrarToast(resposta.message || 'Senha atualizada com sucesso!', 'sucesso', 2500)
 
     } catch (error) {
         console.error('Erro ao atualizar senha:', error);
-        alert(error.message || 'Não foi possível atualizar a senha.');
+        mostrarToast(error.message || 'Não foi possível atualizar a senha.', 'erro', 3000)
     }
 });
 
@@ -58,7 +54,7 @@ formSenha.addEventListener('submit', async (event) => {
 
         } catch (error) {
             console.error('Erro ao carregar perfil:', error);
-            alert('Não foi possível carregar os dados do perfil.');
+            mostrarToast('Não foi possível carregar os dados do perfil.', 'erro', 3000)
         }
     }
 
@@ -69,7 +65,7 @@ formSenha.addEventListener('submit', async (event) => {
         const nome = novoNome.value.trim();
 
         if (nome.length < 2) {
-            alert('O nome deve ter pelo menos 2 caracteres.');
+            mostrarToast('O nome deve ter pelo menos 2 caracteres.', 'aviso', 3000)
             return;
         }
 
@@ -91,11 +87,11 @@ formSenha.addEventListener('submit', async (event) => {
                 nomeBoasVindas.textContent = nome;
             }
 
-            alert(resposta.message || "Nome atualizado com sucesso!");
+            mostrarToast(resposta.message || "Nome atualizado com sucesso!", 'sucesso', 3000)
 
         } catch (error) {
             console.error("Erro ao atualizar nome:", error);
-            alert(error.message || "Não foi possível atualizar o nome.");
+            mostrarToast(error.message || "Não foi possível atualizar o nome.", 'erro', 3000)
         }
 
     });

@@ -469,7 +469,7 @@ document.addEventListener("keydown", (event) => {
             !membroSelecionadoId ||
             membroSelecionadoId === "undefined"
         ) {
-            alert("Não foi possível identificar o membro.");
+            mostrarToast('Não foi possível identificar o membro.', 'erro', 3000)
             return;
         }
 
@@ -505,7 +505,7 @@ document.addEventListener("keydown", (event) => {
 
         } catch (error) {
             console.error("Erro ao buscar membro:", error);
-            alert(error.message);
+            mostrarToast(error.message, 'erro', 3000);
         }
     });
 
@@ -515,7 +515,7 @@ document.addEventListener("keydown", (event) => {
         event.preventDefault();
 
         if (!membroSelecionadoId) {
-            alert("Selecione um membro para editar.");
+            mostrarToast('Selecione um membro para editar.', 'aviso', 3000)
             return;
         }
 
@@ -524,7 +524,7 @@ document.addEventListener("keydown", (event) => {
         const role = campoRole.value;
 
         if (!nome || !email || !role) {
-            alert("Preencha todos os campos.");
+            mostrarToast('Preencha todos os campos.', 'aviso', 3000)
             return;
         }
 
@@ -545,7 +545,7 @@ document.addEventListener("keydown", (event) => {
                 role
             );
 
-            alert("Membro atualizado com sucesso!");
+            mostrarToast('Membro atualizado com sucesso!', 'sucesso', 2500)
 
             modalEditar.hidden = true;
             membroSelecionadoId = null;
@@ -554,7 +554,7 @@ document.addEventListener("keydown", (event) => {
 
         } catch (error) {
             console.error("Erro ao atualizar membro:", error);
-            alert(error.message);
+            mostrarToast(error.message, 'erro', 3000);
 
         } finally {
             if (botaoSalvar) {

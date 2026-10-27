@@ -1,6 +1,6 @@
 import app from "./api.js";
 
-
+import { mostrarToast } from "../toast.js";
 
 const form = document.getElementById("formularioCadastro");
 
@@ -17,22 +17,21 @@ async function manipulaForm(event) {
   const confirmaSenha = document.getElementById("confirmarSenha").value;
 
   if (!nome || !email || !senha || !confirmaSenha) {
-    alert("Todos os campos são obrigatórios!");
+    mostrarToast('Todos os campos são obrigatórios!', 'aviso', 3000)
     return;
   }
 
   if (senha !== confirmaSenha) {
-    alert("As senhas não coincidem!");
+    mostrarToast('As senhas não coincidem!', 'erro', 3000)
     return;
   }
   try {
     await app.registerUser({ nome, email, senha });
-    alert("Usuário cadastrado com sucesso!");
     form.reset()
     mostrarToast(
         "Cadastro realizado!",
-        "Agora você já pode entrar na sua conta.",
-        "sucesso"
+        "sucesso",
+        2500
     );
 
     setTimeout(() => {
@@ -40,7 +39,7 @@ async function manipulaForm(event) {
     }, 1500);
   } catch (error) {
     console.error(error);
-    alert(`Erro ao cadastrar usuário: ${error.message}`);
+    mostrarToast(`Erro ao cadastrar usuário: ${error.message}`, 'erro', 3000)
   }
 }
 
