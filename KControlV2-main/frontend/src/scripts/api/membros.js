@@ -1,6 +1,5 @@
-import { mostrarToast } from "../toast.js";
-const url_base = "https://kcontrolv2-1.onrender.com";
 
+const url_base = "https://kcontrolv2-1.onrender.com";
 
 function obterToken() {
     return localStorage.getItem("token");
@@ -470,7 +469,7 @@ document.addEventListener("keydown", (event) => {
             !membroSelecionadoId ||
             membroSelecionadoId === "undefined"
         ) {
-            mostrarToast("Não foi possível identificar o membro.", "erro", 3000);
+            alert("Não foi possível identificar o membro.");
             return;
         }
 
@@ -506,7 +505,7 @@ document.addEventListener("keydown", (event) => {
 
         } catch (error) {
             console.error("Erro ao buscar membro:", error);
-            mostrarToast(error.message, "erro", 3000);
+            alert(error.message);
         }
     });
 
@@ -516,7 +515,7 @@ document.addEventListener("keydown", (event) => {
         event.preventDefault();
 
         if (!membroSelecionadoId) {
-            mostrarToast("Selecione um membro para editar.", "aviso", 3000);
+            alert("Selecione um membro para editar.");
             return;
         }
 
@@ -525,7 +524,7 @@ document.addEventListener("keydown", (event) => {
         const role = campoRole.value;
 
         if (!nome || !email || !role) {
-            mostrarToast("Preencha todos os campos.", "aviso", 3000);
+            alert("Preencha todos os campos.");
             return;
         }
 
@@ -546,7 +545,7 @@ document.addEventListener("keydown", (event) => {
                 role
             );
 
-            mostrarToast("Membro atualizado com sucesso!", "sucesso", 3000);
+            alert("Membro atualizado com sucesso!");
 
             modalEditar.hidden = true;
             membroSelecionadoId = null;
@@ -555,7 +554,7 @@ document.addEventListener("keydown", (event) => {
 
         } catch (error) {
             console.error("Erro ao atualizar membro:", error);
-            mostrarToast(error.message, "erro", 3000);
+            alert(error.message);
 
         } finally {
             if (botaoSalvar) {
