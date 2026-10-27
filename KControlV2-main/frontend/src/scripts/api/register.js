@@ -43,3 +43,4 @@ async function manipulaForm(event) {
     alert(`Erro ao cadastrar usuário: ${error.message}`);
   }
 }
+
