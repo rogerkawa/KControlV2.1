@@ -123,3 +123,6 @@ formSenha.addEventListener('submit', async (event) => {
         });
     });
 }
+
+
+

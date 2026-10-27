@@ -33,3 +33,4 @@ async function manipulaForm(event) {
     mostrarToast(`Erro ao cadastrar usuário: ${error.message}`, "erro", 3000);
   }
 }
+

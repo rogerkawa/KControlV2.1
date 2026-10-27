@@ -1,5 +1,5 @@
 import { mostrarToast } from "../toast.js";
-const url_base = "https://kcontrolv2-1.onrender.com";
+const url_base = "http://localhost:3000";
 
 
 function obterToken() {
@@ -568,3 +568,5 @@ document.addEventListener("keydown", (event) => {
     // CARREGAR TABELA QUANDO A PÁGINA ABRIR
     carregarMembros();
 });
+
+
