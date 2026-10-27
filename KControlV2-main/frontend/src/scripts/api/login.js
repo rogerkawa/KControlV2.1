@@ -1,4 +1,5 @@
 import { irParaPagina } from "../modules/transicaoPagina.js";
+import { mostrarToast } from "../toast.js";
 import app from "./api.js";
 
 const form = document.getElementById("formularioLogin");
@@ -15,7 +16,7 @@ async function manipulaForm(event) {
 
   try {
     if (!email || !senha) {
-      alert("Todos os campos precisam ser preenchidos!");
+      mostrarToast('Todos os campos precisam ser preenchidos!', 'aviso', 3000)
       return;
     }
 
@@ -34,6 +35,6 @@ async function manipulaForm(event) {
 }
   } catch (error) {
     console.error(error);
-    alert(`Erro ao logar com usuário: ${error.message}`);
+    mostrarToast(`Erro ao logar com usuário: ${error.message}`, 'erro', 3000)
   }
 }

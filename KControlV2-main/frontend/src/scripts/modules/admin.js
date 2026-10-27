@@ -1,4 +1,5 @@
 import registroApi from "../api/tableAdmin.js";
+import { mostrarToast } from "../toast.js";
 
 export default function registro() {
   const tabela = document.querySelector("#table");
@@ -183,7 +184,7 @@ async function abrirEdicao(id) {
   );
 
   if (!item) {
-    alert("Registro não encontrado.");
+    mostrarToast('Registro não encontrado.', 'erro', 3000)
     return;
   }
 
@@ -253,9 +254,7 @@ async function abrirEdicao(id) {
   } catch (erro) {
     console.error("Erro ao carregar salas para edição:", erro);
 
-    alert(
-      "Não foi possível carregar as salas. Verifique se o backend está funcionando.",
-    );
+    mostrarToast('Não foi possível carregar as salas. Verifique se o backend está funcionando.', 'erro', 3500)
   }
 }
 
@@ -269,7 +268,7 @@ async function abrirEdicao(id) {
     );
 
     if (!item || item.status !== "devolvida") {
-      alert("Não é possível remover. Registre a devolução primeiro.");
+      mostrarToast('Não é possível remover. Registre a devolução primeiro.', 'aviso', 3000)
       return;
     }
 
@@ -286,11 +285,12 @@ async function abrirEdicao(id) {
 
       await carregarRegistros();
 
-      alert("Registro excluído com sucesso!");
+      mostrarToast('Registro excluído com sucesso!', 'sucesso', 2500)
     } catch (erro) {
       console.error("Erro ao excluir registro:", erro);
 
-      alert(erro.message || "Não foi possível excluir o registro.");
+      
+      mostrarToast(erro.message || "Não foi possível excluir o registro.", 'erro', 3000)
     }
   }
 
@@ -308,7 +308,7 @@ async function abrirEdicao(id) {
       event.preventDefault();
 
       if (idAtual === null) {
-        alert("Selecione um registro para editar.");
+        mostrarToast('Selecione um registro para editar.', 'aviso', 3000)
         return;
       }
 
@@ -317,12 +317,12 @@ async function abrirEdicao(id) {
       const hora_entrega = editarEntrega.value || null;
 
       if (!responsavel) {
-        alert("Informe o nome do responsável.");
+        mostrarToast('Informe o nome do responsável.', 'aviso', 2500)
         return;
       }
 
       if (!Number.isInteger(id_sala) || id_sala <= 0) {
-        alert("Selecione uma sala válida.");
+        mostrarToast('Selecione uma sala válida.', 'aviso', 3000)
         return;
       }
 
@@ -339,10 +339,10 @@ async function abrirEdicao(id) {
 
         await carregarRegistros();
 
-        alert("Registro atualizado com sucesso!");
+        mostrarToast('Registro atualizado com sucesso!', 'sucesso', 2500)
       } catch (erro) {
         console.error("Erro ao atualizar registro:", erro);
-        alert(erro.message || "Não foi possível atualizar o registro.");
+        mostrarToast(erro.message || "Não foi possível atualizar o registro.", 'erro', 3000)
       } finally {
         salvarEdicao.disabled = false;
       }
@@ -364,7 +364,7 @@ async function abrirEdicao(id) {
       event.preventDefault();
 
       if (registros.length === 0) {
-        alert("Não existem registros para excluir.");
+        mostrarToast('Não existem registros para excluir.', 'aviso', 2500)
         return;
       }
 
@@ -385,7 +385,7 @@ async function abrirEdicao(id) {
         );
 
         if (registrosDisponiveis.length === 0) {
-          alert("Não existem registros devolvidos para excluir.");
+          mostrarToast('Não existem registros devolvidos para excluir.', 'aviso', 3000)
           return;
         }
 
@@ -395,14 +395,12 @@ async function abrirEdicao(id) {
 
         await carregarRegistros();
 
-        alert("Registros excluídos com sucesso!");
+        mostrarToast('Registros excluídos com sucesso!', 'sucesso', 2500)
       } catch (erro) {
         console.error("Erro ao limpar registros:", erro);
 
-        alert(
-          "Não foi possível excluir todos os registros. " +
-            "Recarregue a tabela e verifique quais foram removidos.",
-        );
+        mostrarToast("Não foi possível excluir todos os registros. " +
+            "Recarregue a tabela e verifique quais foram removidos.", 'erro', 3000)
 
         await carregarRegistros();
       } finally {
