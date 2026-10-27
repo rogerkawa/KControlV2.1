@@ -15,15 +15,15 @@ formSenha.addEventListener('submit', async (event) => {
     const novaSenha = document.getElementById('novaSenha').value;
     const confirmarSenha = document.getElementById('confirmarSenha').value;
 
-    if (novaSenha.length < 8) {
-        alert('A nova senha deve ter pelo menos 8 caracteres.');
-        return;
-    }
-
     if (novaSenha !== confirmarSenha) {
         alert('A nova senha e a confirmação não coincidem.');
         return;
     }
+
+/*     if (novaSenha.length < 8) {
+        alert('A nova senha deve ter pelo menos 8 caracteres.');
+        return;
+    } */
 
     try {
         const resposta = await app.updatePassword({
@@ -102,7 +102,7 @@ formSenha.addEventListener('submit', async (event) => {
 
     carregarPerfil();
 
-export default function toggleTema() {
+    export default function toggleTema() {
     const btnTema = document.querySelectorAll('.btnToggleTema');
     const html = document.documentElement;
 
