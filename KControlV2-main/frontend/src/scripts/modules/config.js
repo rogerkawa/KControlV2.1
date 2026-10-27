@@ -1,4 +1,3 @@
-import { mostrarToast } from '../toast.js';
 import app from '../api/api.js';
 
 const userName = document.getElementById('user-name');
@@ -16,15 +15,15 @@ formSenha.addEventListener('submit', async (event) => {
     const novaSenha = document.getElementById('novaSenha').value;
     const confirmarSenha = document.getElementById('confirmarSenha').value;
 
-    if (novaSenha !== confirmarSenha) {
-        mostrarToast('A nova senha e a confirmação não coincidem.', 'erro', 3000);
+    if (novaSenha.length < 8) {
+        alert('A nova senha deve ter pelo menos 8 caracteres.');
         return;
     }
 
-/*     if (novaSenha.length < 8) {
-        mostrarToast('A nova senha deve ter pelo menos 8 caracteres.', 'aviso', 3000);
+    if (novaSenha !== confirmarSenha) {
+        alert('A nova senha e a confirmação não coincidem.');
         return;
-    } */
+    }
 
     try {
         const resposta = await app.updatePassword({
@@ -34,10 +33,11 @@ formSenha.addEventListener('submit', async (event) => {
 
         formSenha.reset();
 
-        mostrarToast(resposta.message || 'Senha atualizada com sucesso!', 'sucesso', 3000);
+        alert(resposta.message || 'Senha atualizada com sucesso!');
+
     } catch (error) {
         console.error('Erro ao atualizar senha:', error);
-        mostrarToast(error.message || 'Não foi possível atualizar a senha.', 'erro', 3000);
+        alert(error.message || 'Não foi possível atualizar a senha.');
     }
 });
 
@@ -58,7 +58,7 @@ formSenha.addEventListener('submit', async (event) => {
 
         } catch (error) {
             console.error('Erro ao carregar perfil:', error);
-            mostrarToast('Não foi possível carregar os dados do perfil.', 'erro', 3000);
+            alert('Não foi possível carregar os dados do perfil.');
         }
     }
 
@@ -69,7 +69,7 @@ formSenha.addEventListener('submit', async (event) => {
         const nome = novoNome.value.trim();
 
         if (nome.length < 2) {
-            mostrarToast('O nome deve ter pelo menos 2 caracteres.', 'aviso', 3000);
+            alert('O nome deve ter pelo menos 2 caracteres.');
             return;
         }
 
@@ -91,18 +91,18 @@ formSenha.addEventListener('submit', async (event) => {
                 nomeBoasVindas.textContent = nome;
             }
 
-            mostrarToast(resposta.message || "Nome atualizado com sucesso!", 'sucesso', 3000);
+            alert(resposta.message || "Nome atualizado com sucesso!");
 
         } catch (error) {
             console.error("Erro ao atualizar nome:", error);
-            mostrarToast(error.message || "Não foi possível atualizar o nome.", 'erro', 3000);
+            alert(error.message || "Não foi possível atualizar o nome.");
         }
 
     });
 
     carregarPerfil();
 
-    export default function toggleTema() {
+export default function toggleTema() {
     const btnTema = document.querySelectorAll('.btnToggleTema');
     const html = document.documentElement;
 
