@@ -141,11 +141,11 @@ class UserController {
               });
           }
 
-          if (novaSenha.length < 8) {
+/*           if (novaSenha.length < 8) {
               return res.status(400).json({
                   message: 'A nova senha deve ter pelo menos 8 caracteres.'
               });
-          }
+          } */
 
           const user = await userModel.findEmail(req.user.email);
 
