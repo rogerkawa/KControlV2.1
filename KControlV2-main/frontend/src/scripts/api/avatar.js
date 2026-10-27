@@ -1,4 +1,4 @@
-import { mostrarToast } from "../toast";
+import { mostrarToast } from "../toast.js";
 
 async function verifyResponse(response) {
     if (!response.ok) {
