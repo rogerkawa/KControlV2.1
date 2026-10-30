@@ -5,15 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KControl</title>
-        <meta
-  name="description"
-  content="KControl: sistema inteligente para gerenciamento de chaves e salas. Controle retiradas, devoluções e acompanhe registros em tempo real."/>
-<meta
-  name="keywords"
-  content="KControl, gerenciamento de chaves, controle de salas, sistema de chaves"/>
-<meta name="author" content="KControl" />
-<meta name="robots" content="index, follow" />
-<link rel="canonical" href="https://kcontrolv21-src.vercel.app/" />
+    <meta name="description"
+        content="KControl: sistema inteligente para gerenciamento de chaves e salas. Controle retiradas, devoluções e acompanhe registros em tempo real." />
+    <meta name="keywords" content="KControl, gerenciamento de chaves, controle de salas, sistema de chaves" />
+    <meta name="author" content="KControl" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://kcontrolv21-src.vercel.app/" />
 
     <link rel="icon" href="../assets/images/kcontrol_icone_branco_transparente.png" id="favicon">
     <link rel="stylesheet" href="../styles/style.css">
@@ -30,7 +27,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
 
 
 
@@ -326,7 +323,7 @@
                         <strong id="totalPendentes">0</strong>
                         <p>Aguardando devolução</p>
                     </div>
-                    
+
                     <div class="dashboard-box">
                         <h3>Lista de pendentes</h3>
 
@@ -475,24 +472,15 @@
 
                         <div class="profile">
                             <label for="avatarInput" class="avatarConfig">
-                                <img
-                                    id="avatarConfig"
-                                    class="user-avatar"
-                                    src="../assets/images/defaultAvatar.png"
-                                    alt="Foto do usuário"
-                                >
+                                <img id="avatarConfig" class="user-avatar" src="../assets/images/defaultAvatar.png"
+                                    alt="Foto do usuário">
 
                                 <span class="avatar-edit">
                                     <i class="fa-solid fa-camera"></i>
                                 </span>
                             </label>
 
-                            <input
-                                type="file"
-                                id="avatarInput"
-                                accept="image/png, image/jpeg"
-                                hidden
-                            >
+                            <input type="file" id="avatarInput" accept="image/png, image/jpeg" hidden>
 
                             <div class="profile-info">
                                 <span class="config-label">Conta conectada</span>
@@ -522,16 +510,8 @@
                             <div class="form-group">
                                 <label for="novoNome">Nome de exibição</label>
 
-                                <input
-                                    type="text"
-                                    id="novoNome"
-                                    name="nome"
-                                    placeholder="Digite seu nome"
-                                    minlength="2"
-                                    maxlength="100"
-                                    autocomplete="name"
-                                    required
-                                >
+                                <input type="text" id="novoNome" name="nome" placeholder="Digite seu nome" minlength="2"
+                                    maxlength="100" autocomplete="name" required>
                             </div>
 
                             <button type="submit" class="btn-config">
@@ -560,11 +540,7 @@
                                 <span>Alterne entre o tema claro e escuro.</span>
                             </div>
 
-                            <button
-                                type="button"
-                                id="btnTema"
-                                class="btnTema btnToggleTema"
-                            >
+                            <button type="button" id="btnTema" class="btnTema btnToggleTema">
                                 <i class="fa-solid fa-moon"></i>
                                 Alterar tema
                             </button>
@@ -589,27 +565,15 @@
                             <div class="form-group">
                                 <label for="senhaAtual">Senha atual</label>
 
-                                <input
-                                    type="password"
-                                    id="senhaAtual"
-                                    name="senhaAtual"
-                                    placeholder="Digite sua senha atual"
-                                    autocomplete="current-password"
-                                    required
-                                >
+                                <input type="password" id="senhaAtual" name="senhaAtual"
+                                    placeholder="Digite sua senha atual" autocomplete="current-password" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="novaSenha">Nova senha</label>
 
-                                <input
-                                    type="password"
-                                    id="novaSenha"
-                                    name="novaSenha"
-                                    placeholder="Digite sua nova senha"
-                                    autocomplete="new-password"
-                                    required
-                                >
+                                <input type="password" id="novaSenha" name="novaSenha"
+                                    placeholder="Digite sua nova senha" autocomplete="new-password" required>
                             </div>
 
                             <div class="form-group">
@@ -617,14 +581,8 @@
                                     Confirmar nova senha
                                 </label>
 
-                                <input
-                                    type="password"
-                                    id="confirmarSenha"
-                                    name="confirmarSenha"
-                                    placeholder="Repita sua nova senha"
-                                    autocomplete="new-password"
-                                    required
-                                >
+                                <input type="password" id="confirmarSenha" name="confirmarSenha"
+                                    placeholder="Repita sua nova senha" autocomplete="new-password" required>
                             </div>
 
                             <button type="submit" class="btn-config">
@@ -725,13 +683,11 @@
                                     Todos
                                 </button>
 
-                                <button type="button" class="membros-filtro" data-filtro="admin" aria-pressed="false"
-                                    >
+                                <button type="button" class="membros-filtro" data-filtro="admin" aria-pressed="false">
                                     Administradores
                                 </button>
 
-                                <button type="button" class="membros-filtro" data-filtro="user" aria-pressed="false"
-                                    >
+                                <button type="button" class="membros-filtro" data-filtro="user" aria-pressed="false">
                                     Usuários
                                 </button>
 
@@ -761,12 +717,7 @@
                                         <td>
                                             <div class="membro-identidade">
                                                 <div class="membro-avatar">
-                                                    <img
-                                                        class="membro-avatar-img"
-                                                        src=""
-                                                        alt=""
-                                                        hidden
-                                                    >
+                                                    <img class="membro-avatar-img" src="" alt="" hidden>
                                                     <span class="membro-avatar-iniciais">MC</span>
                                                 </div>
 
@@ -952,6 +903,69 @@
                             </div>
 
                         </form>
+                    </div>
+                </div>
+
+                <!-- Modal de visualização do membro -->
+                <div class="membros-modal" id="modalPerfilMembro" role="dialog" aria-modal="true"
+                    aria-labelledby="perfilMembroNome" hidden>
+                    <div class="membros-modal-card membros-perfil-card">
+
+                        <div class="membros-modal-header">
+                            <div class="membros-modal-icon">
+                                <i class="ti ti-user"></i>
+                            </div>
+
+                            <button type="button" class="membros-modal-fechar" id="fecharPerfilMembro"
+                                aria-label="Fechar modal">
+                                <i class="ti ti-x"></i>
+                            </button>
+                        </div>
+
+                        <div class="perfil-membro-identidade">
+
+                            <div class="perfil-membro-avatar">
+                                <img id="perfilMembroFoto" src="" alt="" hidden>
+
+                                <span id="perfilMembroIniciais"></span>
+                            </div>
+
+                            <h2 id="perfilMembroNome">Nome do membro</h2>
+
+                            <span class="membro-role" id="perfilMembroCargo">
+                                Usuário
+                            </span>
+
+                        </div>
+
+                        <div class="perfil-membro-informacoes">
+
+                            <div class="perfil-membro-item">
+                                <span>ENDEREÇO DE E-MAIL</span>
+
+                                <div>
+                                    <i class="ti ti-mail"></i>
+                                    <p id="perfilMembroEmail"></p>
+                                </div>
+                            </div>
+
+                            <div class="perfil-membro-item">
+                                <span>CARGO NO SISTEMA</span>
+
+                                <div>
+                                    <i class="ti ti-shield-check"></i>
+                                    <p id="perfilMembroCargoTexto"></p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="membros-modal-acoes">
+                            <button type="button" class="membros-btn-cancelar" id="fecharPerfilMembroRodape">
+                                Fechar
+                            </button>
+                        </div>
+
                     </div>
                 </div>
 
@@ -1313,7 +1327,8 @@
                             <article class="sobre-tutorial-card">
                                 <div class="sobre-tutorial-imagem">
                                     <div class="sobre-print-placeholder">
-                                        <img class="imgSobre" src="../assets/images/registroPage.png" alt="Tela de Registro">
+                                        <img class="imgSobre" src="../assets/images/registroPage.png"
+                                            alt="Tela de Registro">
                                     </div>
                                     <span class="sobre-tutorial-numero">02</span>
                                 </div>
